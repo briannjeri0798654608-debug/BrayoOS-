@@ -1,3 +1,6 @@
+# BrayoOS — Built by Brayo & ARIA — Kenya 2026
+# Copyright (C) 2026 Brayo. GPL-3.0 License
+
 import tkinter as tk
 from tkinter import simpledialog, scrolledtext
 import httpx
