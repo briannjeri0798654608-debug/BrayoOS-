@@ -1,0 +1,20 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.brayo.launcher'
+    compileSdk 34
+    defaultConfig {
+        applicationId "com.brayo.launcher"
+        minSdk 23
+        targetSdk 34
+        versionCode 1
+        versionName "2.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}

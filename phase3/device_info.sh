@@ -1,0 +1,17 @@
+#!/bin/bash
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "⚡ BrayoOS Device Scanner"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "📱 Model: $(getprop ro.product.model)"
+echo "🏷️  Brand: $(getprop ro.product.brand)"
+echo "📦 Android: $(getprop ro.build.version.release)"
+echo "🔧 Build: $(getprop ro.build.display.id)"
+echo "💻 CPU: $(getprop ro.product.cpu.abi)"
+echo "🔓 Bootloader: $(getprop ro.boot.verifiedbootstate)"
+echo "🔒 Security: $(getprop ro.build.version.security_patch)"
+echo "📡 Codename: $(getprop ro.product.device)"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "🔑 Root Status:"
+su -c "echo ✅ ROOTED!" 2>/dev/null || \
+    echo "❌ Not rooted"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
