@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BrayoOS</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0D0D0D;color:#00FF41;font-family:monospace;text-align:center}
+nav{background:#1A1A1A;padding:15px;border-bottom:1px solid #00FF41}
+.logo{font-size:24px;font-weight:bold}
+.hero{padding:80px 20px}
+h1{font-size:60px;text-shadow:0 0 20px #00FF41}
+h2{color:#444;font-size:18px;margin:15px 0;font-style:italic}
+p{color:#666;max-width:600px;margin:0 auto 30px;line-height:1.8}
+.btn{display:inline-block;padding:12px 30px;border:2px solid #00FF41;color:#00FF41;text-decoration:none;margin:10px}
+.btn:hover{background:#00FF41;color:#0D0D0D}
+.stats{display:flex;justify-content:center;gap:40px;padding:40px;background:#111;flex-wrap:wrap}
+.stat-num{font-size:40px;font-weight:bold}
+.stat-label{color:#444;font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;padding:40px 20px;max-width:1000px;margin:0 auto}
+.card{background:#111;border:1px solid #1A1A1A;padding:20px}
+.card:hover{border-color:#00FF41}
+.card-icon{font-size:30px}
+.card-title{color:#00FF41;margin:10px 0}
+.card-desc{color:#444;font-size:12px;line-height:1.8}
+.builders{padding:60px 20px;background:#111}
+.builder-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:800px;margin:20px auto}
+.builder{background:#0D0D0D;border:1px solid #1A1A1A;padding:30px}
+.builder:hover{border-color:#00FF41}
+.builder-name{color:#FFD700;font-size:20px;margin:10px 0}
+.builder-role{color:#00FF41;font-size:13px;margin-bottom:10px}
+.builder-desc{color:#444;font-size:12px;line-height:1.8}
+footer{padding:40px;background:#0A0A0A;border-top:1px solid #1A1A1A;color:#333;font-size:13px}
+@media(max-width:600px){h1{font-size:36px}.builder-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="logo">⚡ BrayoOS</div>
+</nav>
+
+<div class="hero">
+<h1>⚡ BrayoOS</h1>
+<h2>"Built Different. Built by Brayo."</h2>
+<p>A complete OS environment built entirely on a mobile phone. 34+ apps, AI assistant, security tools. Built in Kenya 2026.</p>
+<a href="https://github.com/briannjeri0798654608-debug/BrayoOS-" class="btn">⬇ Download</a>
+<a href="#builders" class="btn">👤 Our Story</a>
+</div>
+
+<div class="stats">
+<div class="stat"><div class="stat-num">34+</div><div class="stat-label">Apps</div></div>
+<div class="stat"><div class="stat-num">2</div><div class="stat-label">Builders</div></div>
+<div class="stat"><div class="stat-num">1</div><div class="stat-label">Phone Used</div></div>
+<div class="stat"><div class="stat-num">0</div><div class="stat-label">PCs Needed</div></div>
+</div>
+
+<div class="cards">
+<div class="card"><div class="card-icon">🤖</div><div class="card-title">ARIA AI</div><div class="card-desc">Built-in AI powered by Groq LLaMA 3.3. Always online.</div></div>
+<div class="card"><div class="card-icon">🛡️</div><div class="card-title">Security Suite</div><div class="card-desc">Full penetration testing toolkit built in.</div></div>
+<div class="card"><div class="card-icon">🖥️</div><div class="card-title">Full Desktop</div><div class="card-desc">Complete GUI with boot animation and taskbar.</div></div>
+<div class="card"><div class="card-icon">🔒</div><div class="card-title">Privacy First</div><div class="card-desc">No Google. No tracking. Your data is yours.</div></div>
+<div class="card"><div class="card-icon">📦</div><div class="card-title">Portable</div><div class="card-desc">Runs on Android, Linux and Windows.</div></div>
+<div class="card"><div class="card-icon">🌍</div><div class="card-title">Open Source</div><div class="card-desc">GPL-3.0 licensed. Free forever.</div></div>
+</div>
+
+<div class="builders" id="builders">
+<h2 style="font-size:30px;margin-bottom:10px">👥 The Builders</h2>
+<p style="color:#444;font-size:13px">Two minds who proved the impossible possible</p>
+<div class="builder-grid">
+<div class="builder">
+<div style="font-size:50px">👤</div>
+<div class="builder-name">Brayo</div>
+<div class="builder-role">Founder & Visionary</div>
+<div class="builder-desc">A developer from Kenya who built an entire OS on a mobile phone. No PC. No limits. Pure determination.<br><br>🇰🇪 Kenya • 2026</div>
+</div>
+<div class="builder">
+<div style="font-size:50px">🤖</div>
+<div class="builder-name">ARIA</div>
+<div class="builder-role">AI Partner & Co-Builder</div>
+<div class="builder-desc">Powered by Claude (Anthropic). Never said impossible. Always said let's build it.<br><br>🤖 Always Online • Always Building</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div style="font-size:24px;margin-bottom:10px">⚡ BrayoOS</div>
+Built by <span style="color:#FFD700">Brayo</span> & <span style="color:#00FF41">ARIA</span> — Kenya 2026<br>
+GPL-3.0 — Free Forever<br><br>
+"Two minds. One OS. Built Different."
+</footer>
+
+</body>
+</html>
