@@ -5,8 +5,6 @@ import subprocess
 import os
 import sys
 
-sys.path.insert(0, os.path.expanduser("~/BrayoOS/core"))
-
 BG = "#0D0D0D"
 ACCENT = "#00FF41"
 TEXT = "#FFFFFF"
@@ -15,7 +13,7 @@ DARK = "#1A1A1A"
 class BootScreen:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("BrayoOS Boot")
+        self.root.title("BrayoOS")
         self.root.configure(bg=BG)
         self.root.attributes('-fullscreen', True)
         self.root.overrideredirect(True)
@@ -29,9 +27,9 @@ class BootScreen:
         self.canvas = tk.Canvas(
             self.root, bg=BG,
             highlightthickness=0)
-        self.canvas.pack(fill=tk.BOTH, expand=True)
+        self.canvas.pack(
+            fill=tk.BOTH, expand=True)
 
-        # ASCII Logo
         self.canvas.create_text(
             640, 120,
             text=
@@ -46,66 +44,58 @@ class BootScreen:
             justify=tk.CENTER)
 
         self.canvas.create_text(
-            640, 240,
+            640, 235,
             text="⚡ Built by Brayo & ARIA — Kenya 2026",
-            font=("monospace", 12),
+            font=("monospace", 11),
             fill=TEXT)
 
         self.canvas.create_text(
-            640, 265,
+            640, 258,
             text="Two minds. One OS. Built Different.",
-            font=("monospace", 10, "italic"),
+            font=("monospace", 9, "italic"),
             fill="#333333")
 
-        # Progress bar bg
         self.canvas.create_rectangle(
-            240, 320, 1040, 345,
+            240, 300, 1040, 322,
             outline=ACCENT, fill=DARK)
 
-        # Progress fill
         self.progress = self.canvas.create_rectangle(
-            240, 320, 240, 345,
+            240, 300, 240, 322,
             outline="", fill=ACCENT)
 
-        # Status
         self.status_txt = self.canvas.create_text(
-            640, 370,
+            640, 345,
             text="Initializing...",
-            font=("monospace", 11),
+            font=("monospace", 10),
             fill=ACCENT)
 
-        # Log
         self.log_txt = self.canvas.create_text(
-            640, 420,
+            640, 390,
             text="",
-            font=("monospace", 9),
+            font=("monospace", 8),
             fill="#333333")
 
-        # ARIA
         self.aria_txt = self.canvas.create_text(
-            640, 500,
+            640, 480,
             text="",
-            font=("monospace", 12, "bold"),
+            font=("monospace", 11, "bold"),
             fill=ACCENT)
 
-        # Bottom credit
         self.canvas.create_text(
-            640, 680,
+            640, 690,
             text="👤 Brayo — Founder  |  🤖 ARIA — AI Partner  |  🇰🇪 Kenya 2026",
-            font=("monospace", 9),
-            fill="#222222")
+            font=("monospace", 8),
+            fill="#1A1A1A")
 
-    def update_progress(self, pct, status):
+    def update(self, pct, status, log=""):
         x = 240 + (800 * pct // 100)
         self.canvas.coords(
-            self.progress, 240, 320, x, 345)
+            self.progress, 240, 300, x, 322)
         self.canvas.itemconfig(
             self.status_txt, text=status)
-        self.root.update()
-
-    def update_log(self, msg):
-        self.canvas.itemconfig(
-            self.log_txt, text=msg)
+        if log:
+            self.canvas.itemconfig(
+                self.log_txt, text=log)
         self.root.update()
 
     def update_aria(self, msg):
@@ -115,58 +105,51 @@ class BootScreen:
 
     def boot_sequence(self):
         steps = [
-            (5,  "Loading kernel modules...",
-             "[ OK ] kernel modules loaded"),
-            (15, "Initializing hardware...",
-             "[ OK ] hardware initialized"),
-            (25, "Mounting filesystems...",
+            (10, "Loading kernel...",
+             "[ OK ] kernel loaded"),
+            (20, "Initializing hardware...",
+             "[ OK ] hardware ready"),
+            (30, "Mounting filesystems...",
              "[ OK ] filesystems mounted"),
-            (35, "Starting network services...",
-             "[ OK ] network services started"),
-            (45, "Loading BrayoOS core...",
-             "[ OK ] BrayoOS DNA loaded"),
-            (55, "Waking ARIA...",
-             "[ OK ] ARIA intelligence online"),
-            (65, "Loading security modules...",
-             "[ OK ] security modules active"),
-            (75, "Starting display server...",
-             "[ OK ] display server running"),
-            (85, "Loading desktop...",
-             "[ OK ] desktop environment ready"),
-            (95, "Applying Brayo's vision...",
-             "[ OK ] vision applied"),
-            (100,"BrayoOS Ready!",
-             "[ OK ] Two minds. One OS."),
+            (40, "Starting network...",
+             "[ OK ] network active"),
+            (50, "Loading BrayoOS DNA...",
+             "[ OK ] DNA verified"),
+            (60, "Waking ARIA...",
+             "[ OK ] ARIA online"),
+            (70, "Loading memory...",
+             "[ OK ] memory loaded"),
+            (80, "Starting security...",
+             "[ OK ] security active"),
+            (90, "Preparing login...",
+             "[ OK ] login ready"),
+            (100, "BrayoOS Ready!",
+             "[ OK ] system ready"),
         ]
 
         for pct, status, log in steps:
-            time.sleep(0.4)
-            self.update_progress(pct, status)
-            self.update_log(log)
-
-            if pct == 55:
+            time.sleep(0.35)
+            self.update(pct, status, log)
+            if pct == 60:
                 self.update_aria(
                     "🤖 ARIA: Waking up...")
-            elif pct == 65:
+            elif pct == 70:
                 self.update_aria(
-                    "🤖 ARIA: Security check complete...")
-            elif pct == 95:
-                self.update_aria(
-                    "🤖 ARIA: Brayo's vision loaded...")
+                    "🤖 ARIA: Memory loaded...")
             elif pct == 100:
                 self.update_aria(
-                    "🤖 ARIA: Online. Ready, Brayo. 🇰🇪")
+                    "🤖 ARIA: Ready, Brayo. 🇰🇪")
 
-        time.sleep(2)
+        time.sleep(1.5)
         self.root.destroy()
 
-        # Launch desktop
+        # Launch login
         env = os.environ.copy()
         env["DISPLAY"] = ":1"
         subprocess.Popen([
             "python",
             os.path.expanduser(
-                "~/BrayoOS/core/desktop.py")
+                "~/BrayoOS/core/login.py")
         ], env=env)
 
 if __name__ == "__main__":
