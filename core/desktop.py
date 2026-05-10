@@ -1,9 +1,7 @@
 import tkinter as tk
-from tkinter import messagebox
-import hashlib
-import json
-import os
 import subprocess
+import os
+import time
 
 BG = "#0D0D0D"
 ACCENT = "#00FF41"
@@ -11,13 +9,9 @@ TEXT = "#FFFFFF"
 DARK = "#1A1A1A"
 RED = "#FF4444"
 
-VAULT_FILE = os.path.expanduser(
-    "~/BrayoOS/memory/vault.json")
-
-# Apps visible to everyone
 PUBLIC_APPS = [
     ("🖥️\nTerminal", "terminal"),
-    ("🤖\nARIA", "aria.py"),
+    ("🤖\nARIA", "aria_max.py"),
     ("🌐\nBrowser", "mini_browser.py"),
     ("📁\nFiles", "files.py"),
     ("🎵\nMusic", "music_player.py"),
@@ -26,20 +20,32 @@ PUBLIC_APPS = [
     ("💰\nCrypto", "crypto_tracker.py"),
     ("🌤️\nWeather", "weather.py"),
     ("📰\nNews", "hackernews.py"),
-    ("📊\nSystem", "system_monitor.py"),
-    ("⚙️\nSettings", "settings.py"),
-    ("📖\nOur Story", "our_story.py"),
+    ("📊\nTasks", "task_manager.py"),
+    ("🔢\nCalc", "calculator.py"),
+    ("📝\nEditor", "text_editor.py"),
+    ("🕐\nClock", "clock.py"),
+    ("🖼️\nImages", "image_viewer.py"),
     ("💾\nBackup", "backup.py"),
+    ("📖\nOur Story", "our_story.py"),
+    ("⚙️\nSettings", "settings.py"),
+    ("🧠\nARIA Neural", "aria_neural_core.py"),
+    ("👁️\nGhost Mode", "ghost_mode.py"),
+    ("🔐\nDNA Vault", "dna_vault.py"),
+    ("📡\nSignal", "signal_interceptor.py"),
+    ("🎭\nIdentity", "identity_switcher.py"),
+    ("⚡\nOverclock", "overclock_dashboard.py"),
+    ("🔴\nThreat Map", "live_threat_map.py"),
+    ("🧬\nSelf-Heal", "self_healing.py"),
+    ("🖼️\nWallpaper", "wallpaper_changer.py"),
 ]
 
-# Hidden hacking tools — require PIN
 HIDDEN_APPS = [
     ("🛡️\nVuln Scan", "vuln_scanner.py"),
     ("🌐\nNetwork", "network.py"),
     ("📡\nWiFi", "wifi_manager.py"),
     ("🌍\nIP Track", "ip_tracker.py"),
     ("🔐\nPasswords", "password_manager.py"),
-    ("📦\nApp Store", "app_store.py"),
+    ("📦\nPkg Mgr", "package_manager.py"),
     ("💻\nCode", "code_editor.py"),
     ("🔑\nHash", "hash_cracker.py"),
     ("💣\nPayloads", "payload_generator.py"),
@@ -55,140 +61,84 @@ HIDDEN_APPS = [
     ("🛡️\nPrivacy", "privacy_shield.py"),
     ("📡\nWiFi+", "wifi_cracker.py"),
     ("🔍\nProcs", "process_monitor.py"),
+    ("🔒\nHash Crack", "hash_cracker.py"),
 ]
-
-class VaultSystem:
-    def __init__(self):
-        self.data = self.load()
-
-    def load(self):
-        if os.path.exists(VAULT_FILE):
-            with open(VAULT_FILE) as f:
-                return json.load(f)
-        # Default PIN: 1337
-        return {
-            "pin": hashlib.sha256(
-                "1337".encode()).hexdigest(),
-            "hint": "Default PIN: 1337",
-            "locked": True
-        }
-
-    def save(self):
-        os.makedirs(os.path.dirname(VAULT_FILE),
-                   exist_ok=True)
-        with open(VAULT_FILE, 'w') as f:
-            json.dump(self.data, f)
-
-    def verify_pin(self, pin):
-        return self.data["pin"] == \
-               hashlib.sha256(
-                   pin.encode()).hexdigest()
-
-    def set_pin(self, new_pin):
-        self.data["pin"] = hashlib.sha256(
-            new_pin.encode()).hexdigest()
-        self.save()
-
-vault = VaultSystem()
 
 class BrayoOS:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("BrayoOS v2.0")
-        self.root.configure(bg=BG_COLOR)
+        self.root.configure(bg=BG)
         self.root.geometry("1280x720+0+0")
-        self.vault_unlocked = False
-        self.build_desktop()
+        self.root.focus_force()
+        self.vault_open = False
+        self.build_ui()
         self.root.mainloop()
 
-BG_COLOR = "#0D0D0D"
-TASKBAR_BG = "#1A1A1A"
-
-class BrayoOSDesktop:
-    def __init__(self):
-        self.root = tk.Tk()
-        self.root.title("BrayoOS v2.0")
-        self.root.configure(bg=BG_COLOR)
-        self.root.geometry("1280x720+0+0")
-        self.vault_unlocked = False
-        self.build_desktop()
-        self.root.mainloop()
-
-    def build_desktop(self):
-        import time
-
-        # TOP BAR
+    def build_ui(self):
+        # Top bar
         topbar = tk.Frame(self.root,
-                         bg=TASKBAR_BG, height=35)
+                         bg=DARK, height=35)
         topbar.pack(side=tk.TOP, fill=tk.X)
         topbar.pack_propagate(False)
 
-        tk.Label(topbar, text="⚡ BrayoOS v2.0",
-                bg=TASKBAR_BG, fg=ACCENT,
+        tk.Label(topbar,
+                text="⚡ BrayoOS v2.0",
+                bg=DARK, fg=ACCENT,
                 font=("monospace", 11,
                       "bold")).pack(
                     side=tk.LEFT, padx=10)
 
-        self.clock = tk.Label(topbar, text="",
-                             bg=TASKBAR_BG,
-                             fg=TEXT,
+        self.clock = tk.Label(topbar,
+                             text="",
+                             bg=DARK, fg=TEXT,
                              font=("monospace", 10))
         self.clock.pack(side=tk.RIGHT, padx=10)
-        self.update_clock()
+        self.tick()
 
-        # MAIN
-        main = tk.Frame(self.root, bg=BG_COLOR)
+        # Main canvas with scroll
+        main = tk.Frame(self.root, bg=BG)
         main.pack(fill=tk.BOTH, expand=True)
 
-        tk.Label(main,
-                text="⚡ BrayoOS Desktop",
-                bg=BG_COLOR, fg=ACCENT,
-                font=("monospace", 14,
-                      "bold")).pack(pady=8)
+        self.canvas = tk.Canvas(main, bg=BG,
+                               highlightthickness=0)
+        scroll = tk.Scrollbar(main,
+                             orient="vertical",
+                             command=self.canvas.yview)
+        self.canvas.configure(
+            yscrollcommand=scroll.set)
+        scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        self.canvas.pack(side=tk.LEFT,
+                        fill=tk.BOTH, expand=True)
 
-        # Scrollable canvas
-        canvas = tk.Canvas(main, bg=BG_COLOR,
-                          highlightthickness=0)
-        scrollbar = tk.Scrollbar(
-            main, orient="vertical",
-            command=canvas.yview)
-        canvas.configure(
-            yscrollcommand=scrollbar.set)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        canvas.pack(side=tk.LEFT,
-                   fill=tk.BOTH, expand=True)
-
-        self.app_frame = tk.Frame(canvas,
-                                 bg=BG_COLOR)
-        canvas.create_window(
+        self.app_frame = tk.Frame(
+            self.canvas, bg=BG)
+        self.canvas_window = self.canvas.create_window(
             (0, 0), window=self.app_frame,
             anchor="nw")
 
-        self.show_apps()
+        self.app_frame.bind(
+            "<Configure>",
+            lambda e: self.canvas.configure(
+                scrollregion=self.canvas.bbox("all")))
 
-        self.app_frame.update_idletasks()
-        canvas.configure(
-            scrollregion=canvas.bbox("all"))
-
-        # BOTTOM TASKBAR
+        # Bottom taskbar
         taskbar = tk.Frame(self.root,
-                          bg=TASKBAR_BG,
-                          height=50)
+                          bg=DARK, height=50)
         taskbar.pack(side=tk.BOTTOM, fill=tk.X)
         taskbar.pack_propagate(False)
 
         tk.Button(taskbar,
                  text="🤖 ARIA",
-                 bg=ACCENT, fg=BG_COLOR,
+                 bg=ACCENT, fg=BG,
                  font=("monospace", 10, "bold"),
                  relief=tk.FLAT,
                  command=lambda: self.launch(
-                     "aria.py"),
+                     "aria_max.py"),
                  cursor="hand2").pack(
                      side=tk.LEFT,
                      padx=10, pady=8)
 
-        # Vault button
         self.vault_btn = tk.Button(
             taskbar,
             text="🔒 Vault",
@@ -200,41 +150,46 @@ class BrayoOSDesktop:
         self.vault_btn.pack(
             side=tk.LEFT, padx=5, pady=8)
 
-        # Status
-        self.vault_status = tk.Label(
-            taskbar,
-            text="🔒 Vault Locked",
-            bg=TASKBAR_BG, fg=RED,
-            font=("monospace", 9))
-        self.vault_status.pack(
-            side=tk.RIGHT, padx=10)
+        for name, script in [
+            ("🖥️ Terminal", "terminal"),
+            ("🌐 Network", "network.py"),
+            ("📊 Tasks", "task_manager.py"),
+        ]:
+            tk.Button(taskbar, text=name,
+                     bg=DARK, fg=ACCENT,
+                     font=("monospace", 9),
+                     relief=tk.FLAT,
+                     command=lambda s=script:
+                     self.launch(s),
+                     cursor="hand2").pack(
+                         side=tk.LEFT,
+                         padx=3, pady=8)
 
-        self.aria_label = tk.Label(
+        self.aria_lbl = tk.Label(
             taskbar,
             text="🤖 ARIA: Online",
-            bg=TASKBAR_BG, fg=ACCENT,
+            bg=DARK, fg=ACCENT,
             font=("monospace", 9))
-        self.aria_label.pack(
+        self.aria_lbl.pack(
             side=tk.RIGHT, padx=10)
-        self.pulse_aria()
+        self.pulse()
 
-    def show_apps(self):
+        self.load_apps()
+
+    def load_apps(self):
         for w in self.app_frame.winfo_children():
             w.destroy()
 
-        # Show public apps always
         apps = PUBLIC_APPS.copy()
-
-        # Show hidden apps only if vault unlocked
-        if self.vault_unlocked:
+        if self.vault_open:
             apps += HIDDEN_APPS
 
         row, col = 0, 0
         for name, script in apps:
-            # Highlight hidden apps
-            is_hidden = (name, script) in HIDDEN_APPS
-            bg = "#1A0A0A" if is_hidden \
-                else TASKBAR_BG
+            is_hidden = (name, script) in \
+                       HIDDEN_APPS
+            bg = "#1A0505" if is_hidden \
+                else DARK
             fg = RED if is_hidden else ACCENT
 
             btn = tk.Button(
@@ -246,106 +201,86 @@ class BrayoOSDesktop:
                 cursor="hand2",
                 command=lambda s=script:
                 self.launch(s),
-                width=10, height=3,
+                width=10, height=4,
                 activebackground=ACCENT,
-                activeforeground=BG_COLOR,
-                bd=1)
+                activeforeground=BG,
+                bd=2)
             btn.grid(row=row, column=col,
-                    padx=4, pady=4)
+                    padx=5, pady=5)
             col += 1
             if col > 5:
                 col = 0
                 row += 1
 
+        self.app_frame.update_idletasks()
+        self.canvas.configure(
+            scrollregion=self.canvas.bbox("all"))
+
     def toggle_vault(self):
-        if self.vault_unlocked:
-            # Lock vault
-            self.vault_unlocked = False
+        if self.vault_open:
+            self.vault_open = False
             self.vault_btn.config(
-                text="🔒 Vault",
-                fg=RED)
-            self.vault_status.config(
-                text="🔒 Vault Locked",
-                fg=RED)
-            self.show_apps()
+                text="🔒 Vault", fg=RED)
+            self.load_apps()
         else:
-            # Show PIN dialog
-            self.show_pin_dialog()
+            self.ask_pin()
 
-    def show_pin_dialog(self):
+    def ask_pin(self):
         dialog = tk.Toplevel(self.root)
-        dialog.title("🔓 Unlock Vault")
-        dialog.configure(bg=BG_COLOR)
-        dialog.geometry("300x250")
-        dialog.resizable(False, False)
+        dialog.title("🔓 Vault PIN")
+        dialog.configure(bg=BG)
+        dialog.geometry("280x200")
+        dialog.focus_force()
 
         tk.Label(dialog,
-                text="🔒 Enter Vault PIN",
-                bg=BG_COLOR, fg=ACCENT,
+                text="Enter PIN:",
+                bg=BG, fg=ACCENT,
                 font=("monospace", 14,
-                      "bold")).pack(pady=20)
+                      "bold")).pack(pady=15)
 
-        tk.Label(dialog,
-                text=f"Hint: {vault.data['hint']}",
-                bg=BG_COLOR, fg="#444444",
-                font=("monospace", 9)).pack()
+        pin = tk.Entry(dialog,
+                      bg=DARK, fg=ACCENT,
+                      font=("monospace", 18),
+                      show="●",
+                      justify=tk.CENTER,
+                      insertbackground=ACCENT)
+        pin.pack(padx=20, fill=tk.X)
+        pin.focus()
 
-        pin_entry = tk.Entry(
-            dialog,
-            bg=DARK, fg=ACCENT,
-            font=("monospace", 18),
-            show="●",
-            justify=tk.CENTER,
-            insertbackground=ACCENT)
-        pin_entry.pack(pady=15,
-                      padx=20, fill=tk.X)
-        pin_entry.focus()
+        msg = tk.Label(dialog, text="",
+                      bg=BG, fg=RED,
+                      font=("monospace", 10))
+        msg.pack(pady=5)
 
-        status = tk.Label(dialog, text="",
-                         bg=BG_COLOR, fg=RED,
-                         font=("monospace", 10))
-        status.pack()
-
-        def verify():
-            pin = pin_entry.get()
-            if vault.verify_pin(pin):
-                self.vault_unlocked = True
+        def check():
+            if pin.get() == "1337":
+                self.vault_open = True
                 self.vault_btn.config(
-                    text="🔓 Vault Open",
-                    fg=ACCENT)
-                self.vault_status.config(
-                    text="🔓 Vault Unlocked",
-                    fg=ACCENT)
-                self.show_apps()
+                    text="🔓 Vault", fg=ACCENT)
+                self.load_apps()
                 dialog.destroy()
             else:
-                status.config(
-                    text="❌ Wrong PIN!")
-                pin_entry.delete(0, tk.END)
+                msg.config(text="❌ Wrong PIN!")
+                pin.delete(0, tk.END)
 
-        pin_entry.bind(
-            "<Return>", lambda e: verify())
-
+        pin.bind("<Return>", lambda e: check())
         tk.Button(dialog,
                  text="🔓 Unlock",
-                 bg=ACCENT, fg=BG_COLOR,
-                 font=("monospace", 11,
-                       "bold"),
+                 bg=ACCENT, fg=BG,
+                 font=("monospace", 11),
                  relief=tk.FLAT,
-                 command=verify).pack(pady=10)
+                 command=check).pack(pady=10)
 
-    def update_clock(self):
-        import time
+    def tick(self):
         self.clock.config(
             text=time.strftime("🕐 %H:%M:%S"))
-        self.root.after(1000, self.update_clock)
+        self.root.after(1000, self.tick)
 
-    def pulse_aria(self):
-        current = self.aria_label.cget("fg")
-        self.aria_label.config(
-            fg=ACCENT if current == TASKBAR_BG
-            else TASKBAR_BG)
-        self.root.after(1000, self.pulse_aria)
+    def pulse(self):
+        fg = self.aria_lbl.cget("fg")
+        self.aria_lbl.config(
+            fg=ACCENT if fg == DARK else DARK)
+        self.root.after(1000, self.pulse)
 
     def launch(self, script):
         env = os.environ.copy()
@@ -364,4 +299,21 @@ class BrayoOSDesktop:
             print(f"Error: {e}")
 
 if __name__ == "__main__":
-    BrayoOSDesktop()
+    BrayoOS()
+
+# BrayoOS Apps v2.0 — Added by ARIA
+APPS_V2 = [
+    ("🧠 ARIA Neural", "aria_neural_core.py"),
+    ("👁️ Ghost Mode", "ghost_mode.py"),
+    ("🔐 DNA Vault", "dna_vault.py"),
+    ("📡 Signal Interceptor", "signal_interceptor.py"),
+    ("🎭 Identity Switcher", "identity_switcher.py"),
+    ("⚡ Overclock", "overclock_dashboard.py"),
+    ("🖼️ Wallpaper", "wallpaper_changer.py"),
+]
+
+import subprocess, os
+for name, script in APPS_V2:
+    path = os.path.expanduser(f"~/BrayoOS/core/apps/{script}")
+    if os.path.exists(path):
+        print(f"✅ Registered: {name}")
