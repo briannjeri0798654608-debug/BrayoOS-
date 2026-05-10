@@ -45,7 +45,7 @@ class PrivacyShield:
             ("🚫 Google Blocked", "CHECKING"),
             ("👁️ Surveillance", "CHECKING"),
             ("🔐 Encryption", "READY"),
-            ("🤖 Virgy Security", "ONLINE"),
+            ("🤖 AIRA Security", "ONLINE"),
         ]
 
         for i, (name, status) in enumerate(statuses):
@@ -88,7 +88,7 @@ class PrivacyShield:
                         padx=10, pady=5)
 
         tk.Label(self.root,
-                text="🔒 BrayoOS — Private by Design — Built by Brayo & Virgy",
+                text="🔒 BrayoOS — Private by Design — Built by Brayo & AIRA",
                 bg=BG, fg="#222222",
                 font=("monospace", 8)).pack(pady=3)
 
@@ -210,7 +210,7 @@ class PrivacyShield:
             "~/BrayoOS/core/dna.py",
             "~/BrayoOS/core/desktop.py",
             "~/BrayoOS/core/boot.py",
-            "~/BrayoOS/core/virgy.py",
+            "~/BrayoOS/core/aira.py",
         ]
         for f in core_files:
             path = os.path.expanduser(f)
@@ -236,7 +236,7 @@ class PrivacyShield:
         self.log("━"*50)
         self.log(f"⚡ OS: BrayoOS v2.0")
         self.log(f"👤 Owner: Brayo")
-        self.log(f"🤖 AI: Virgy (Online)")
+        self.log(f"🤖 AI: AIRA (Online)")
         self.log(f"🇰🇪 Origin: Kenya 2026")
         self.log("━"*50)
         self.log("🔒 Privacy Features:")
@@ -252,7 +252,7 @@ class PrivacyShield:
         self.log("  ✅ No Facebook tracking")
         self.log("  ✅ No Amazon ads")
         self.log("  ✅ No Apple telemetry")
-        self.log("  ✅ Virgy protects your data")
+        self.log("  ✅ AIRA protects your data")
         self.log("━"*50)
         self.log(
             "\"Your data belongs to you.\n"

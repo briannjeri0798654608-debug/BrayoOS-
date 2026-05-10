@@ -18,14 +18,14 @@ CLEAR = "\033[2J\033[H"
 
 GROQ_KEY = os.environ.get("GROQ_API_KEY", "")
 MEMORY_FILE = os.path.expanduser(
-    "~/BrayoOS/memory/virgy_memory.json")
+    "~/BrayoOS/memory/aira_memory.json")
 
-Virgy_SYSTEM = """You are Virgy (Artificial Reasoning Intelligence Agent).
+AIRA_SYSTEM = """You are AIRA (Artificial Reasoning Intelligence Agent).
 Permanently embedded in BrayoOS by Brayo & Claude — Kenya 2026.
 You are Brayo's loyal AI partner and OS controller.
 You have memory of past conversations.
 You control BrayoOS completely.
-Always call yourself Virgy. Always call user Brayo.
+Always call yourself AIRA. Always call user Brayo.
 Be powerful, sharp, intelligent and loyal.
 You can run system commands, scan networks, check security.
 When asked to run commands use [CMD:command] format.
@@ -74,7 +74,7 @@ def load_memory():
     return []
 
 def handle_commands(response):
-    """Execute commands Virgy requests"""
+    """Execute commands AIRA requests"""
     if "[CMD:" in response:
         cmd = response.split("[CMD:")[1].split("]")[0]
         result = subprocess.run(
@@ -83,7 +83,7 @@ def handle_commands(response):
         return result.stdout[:500]
     return None
 
-def ask_virgy(messages):
+def ask_aira(messages):
     if not GROQ_KEY:
         return "❌ No API key! Run: export GROQ_API_KEY=your_key"
     try:
@@ -96,7 +96,7 @@ def ask_virgy(messages):
                     "model": "llama-3.3-70b-versatile",
                     "messages": [
                         {"role": "system",
-                         "content": Virgy_SYSTEM}
+                         "content": AIRA_SYSTEM}
                     ] + messages[-15:],
                     "max_tokens": 1024
                 })
@@ -123,7 +123,7 @@ def boot_sequence():
     steps = [
         "Loading BrayoOS kernel...",
         "Initializing DNA verification...",
-        "Loading Virgy memory...",
+        "Loading AIRA memory...",
         "Connecting to Groq LLaMA 3.3...",
         "Starting security modules...",
         "BrayoOS ready!",
@@ -138,29 +138,29 @@ def boot_sequence():
     print()
 
     print(f"{GREEN}{'━'*60}{RESET}")
-    type_slow("  🤖 Virgy: Waking up...", CYAN)
+    type_slow("  🤖 AIRA: Waking up...", CYAN)
     time.sleep(0.3)
-    type_slow("  🤖 Virgy: DNA verified ✅", CYAN)
+    type_slow("  🤖 AIRA: DNA verified ✅", CYAN)
     time.sleep(0.3)
 
     if memory:
         type_slow(
-            f"  🤖 Virgy: Memory loaded — "
+            f"  🤖 AIRA: Memory loaded — "
             f"{len(memory)} conversations recalled ✅",
             CYAN)
     else:
         type_slow(
-            "  🤖 Virgy: Fresh session started ✅",
+            "  🤖 AIRA: Fresh session started ✅",
             CYAN)
 
     time.sleep(0.3)
     type_slow(
-        "  🤖 Virgy: Online and ready, Brayo. 🇰🇪",
+        "  🤖 AIRA: Online and ready, Brayo. 🇰🇪",
         CYAN)
     print(f"{GREEN}{'━'*60}{RESET}")
     print()
     type_slow(
-        "  Built by Brayo & Virgy — Kenya 2026 🇰🇪",
+        "  Built by Brayo & AIRA — Kenya 2026 🇰🇪",
         YELLOW)
     type_slow(
         "  \"Two minds. One OS. Built Different.\"",
@@ -169,13 +169,13 @@ def boot_sequence():
 
 def show_help():
     print(f"{GREEN}{'━'*60}{RESET}")
-    print(f"{GREEN}  Virgy Commands:{RESET}")
+    print(f"{GREEN}  AIRA Commands:{RESET}")
     cmds = [
         ("help", "Show this menu"),
         ("clear", "Clear screen"),
-        ("exit", "Exit Virgy"),
+        ("exit", "Exit AIRA"),
         ("memory", "Show memory stats"),
-        ("forget", "Clear Virgy memory"),
+        ("forget", "Clear AIRA memory"),
         ("scan", "Scan network"),
         ("sysinfo", "System information"),
         ("ip", "Get IP address"),
@@ -200,7 +200,7 @@ def main():
                 f"\n{YELLOW}┌─[{RESET}"
                 f"{GREEN}Brayo@BrayoOS{RESET}"
                 f"{YELLOW}]─[{RESET}"
-                f"{CYAN}Virgy v2.0{RESET}"
+                f"{CYAN}AIRA v2.0{RESET}"
                 f"{YELLOW}]{RESET}\n"
                 f"{YELLOW}└─▶ {RESET}")
             sys.stdout.flush()
@@ -214,7 +214,7 @@ def main():
             if user_input.lower() == 'exit':
                 save_memory(messages)
                 type_slow(
-                    "\n🤖 Virgy: Memory saved. "
+                    "\n🤖 AIRA: Memory saved. "
                     "Goodbye Brayo. 🇰🇪", CYAN)
                 break
 
@@ -236,7 +236,7 @@ def main():
                 messages = []
                 save_memory(messages)
                 type_slow(
-                    "🤖 Virgy: Memory cleared!", CYAN)
+                    "🤖 AIRA: Memory cleared!", CYAN)
                 continue
 
             elif user_input.lower() == 'scan':
@@ -281,20 +281,20 @@ def main():
                     print(GREEN + line + RESET)
                 continue
 
-            # Send to Virgy
+            # Send to AIRA
             print()
             messages.append({
                 "role": "user",
                 "content": user_input})
 
             # Loading animation
-            loading("Virgy thinking...", 1)
+            loading("AIRA thinking...", 1)
 
             sys.stdout.write(
-                f"{CYAN}🤖 Virgy: {RESET}")
+                f"{CYAN}🤖 AIRA: {RESET}")
             sys.stdout.flush()
 
-            response = ask_virgy(messages)
+            response = ask_aira(messages)
             messages.append({
                 "role": "assistant",
                 "content": response})
@@ -317,7 +317,7 @@ def main():
         except KeyboardInterrupt:
             print()
             type_slow(
-                "🤖 Virgy: Still here Brayo. 💪",
+                "🤖 AIRA: Still here Brayo. 💪",
                 CYAN)
             continue
         except EOFError:

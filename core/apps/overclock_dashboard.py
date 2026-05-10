@@ -87,7 +87,7 @@ class OverclockDashboard:
                   font=("Courier", 10, "bold"), bg="#001a00", fg="#00FF41",
                   relief="flat", padx=12, pady=6).pack(side="left", padx=4)
 
-        tk.Label(self.root, text="BrayoOS Overclock Engine v1.0 • Brayo & Virgy 🇰🇪",
+        tk.Label(self.root, text="BrayoOS Overclock Engine v1.0 • Brayo & AIRA 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#002200").pack(side="bottom", pady=4)
 
     def log(self, msg):

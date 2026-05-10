@@ -4,10 +4,10 @@ import time
 import hashlib
 
 MEMORY_DIR = os.path.expanduser("~/BrayoOS/memory/")
-MEMORY_FILE = os.path.join(MEMORY_DIR, "virgy_memory.json")
-FACTS_FILE = os.path.join(MEMORY_DIR, "virgy_facts.json")
+MEMORY_FILE = os.path.join(MEMORY_DIR, "aira_memory.json")
+FACTS_FILE = os.path.join(MEMORY_DIR, "aira_facts.json")
 
-class VirgyMemory:
+class AIRAMemory:
     def __init__(self):
         os.makedirs(MEMORY_DIR, exist_ok=True)
         self.messages = self.load_messages()
@@ -28,7 +28,7 @@ class VirgyMemory:
             "user": "Brayo",
             "location": "Kenya",
             "os": "BrayoOS v2.0",
-            "builder": "Brayo & Virgy",
+            "builder": "Brayo & AIRA",
             "year": "2026",
             "preferences": [],
             "important": []
@@ -76,7 +76,7 @@ class VirgyMemory:
         return self.messages[-limit:]
 
     def get_context(self):
-        """Get context for Virgy"""
+        """Get context for AIRA"""
         return f"""
 User: {self.facts['user']}
 Location: {self.facts['location']}
@@ -102,10 +102,10 @@ Total conversations: {len(self.messages)}
         }
 
 if __name__ == "__main__":
-    mem = VirgyMemory()
+    mem = AIRAMemory()
     stats = mem.stats()
     print("━"*40)
-    print("🧠 Virgy Memory Stats")
+    print("🧠 AIRA Memory Stats")
     print("━"*40)
     for k, v in stats.items():
         print(f"{k}: {v}")

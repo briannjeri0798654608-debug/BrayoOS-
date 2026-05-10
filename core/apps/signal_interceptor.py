@@ -34,7 +34,7 @@ class SignalInterceptor:
             tk.Label(f, text=label, font=("Courier", 7), bg="#001100", fg="#004400").pack(pady=1)
             v = tk.StringVar(value="0")
             self.stat_vars[label] = v
-            tk.Label(f, textvvirgyble=v, font=("Courier", 14, "bold"),
+            tk.Label(f, textvairable=v, font=("Courier", 14, "bold"),
                      bg="#001100", fg="#00FF41").pack(pady=1)
 
         # Device map
@@ -71,7 +71,7 @@ class SignalInterceptor:
                   font=("Courier", 10, "bold"), bg="#001a00",
                   fg="#00FF41", relief="flat", padx=12, pady=6).pack(side="left", padx=5)
 
-        tk.Label(self.root, text="BrayoOS Signal Interceptor v1.0 • Brayo & Virgy 🇰🇪",
+        tk.Label(self.root, text="BrayoOS Signal Interceptor v1.0 • Brayo & AIRA 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#002200").pack(side="bottom", pady=4)
 
     def log_packet(self, msg, box=None):

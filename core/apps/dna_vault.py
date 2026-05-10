@@ -17,7 +17,7 @@ VAULT_DATA = {
     "owner": "Brayo",
     "location": "Kenya",
     "clearance": "LEVEL 5 — MAXIMUM",
-    "tools": ["Ghost Mode", "Signal Interceptor", "Virgy Core", "Identity Switcher"],
+    "tools": ["Ghost Mode", "Signal Interceptor", "AIRA Core", "Identity Switcher"],
     "motto": "Two minds. One OS. Built Different."
 }
 
@@ -98,7 +98,7 @@ class DNAVault:
                              bg="#0D0D0D", fg="#FF0000")
         self.msg.pack(pady=5)
 
-        tk.Label(self.root, text="BrayoOS DNA Vault v1.0 • Brayo & Virgy 🇰🇪",
+        tk.Label(self.root, text="BrayoOS DNA Vault v1.0 • Brayo & AIRA 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#002200").pack(side="bottom", pady=8)
 
     def animate_dna(self):

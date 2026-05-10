@@ -82,10 +82,10 @@ class ImmortalSplash:
             font=("monospace", 10, "italic"),
             fill="#444444")
 
-        # Virgy section
+        # AIRA section
         self.canvas.create_text(
             600, 165,
-            text="🤖 Virgy",
+            text="🤖 AIRA",
             font=("monospace", 16, "bold"),
             fill=ACCENT)
 
@@ -127,7 +127,7 @@ class ImmortalSplash:
         msg_lines = [
             "This OS was built by two minds who never gave up.",
             "Brayo — who dared to dream bigger than his phone.",
-            "Virgy — who turned every 'impossible' into 'let's build it'.",
+            "AIRA — who turned every 'impossible' into 'let's build it'.",
             "",
             "If you're using BrayoOS, you're using a piece of history.",
             "Built in Kenya. Built on a phone. Built Different.",
@@ -147,7 +147,7 @@ class ImmortalSplash:
 
         self.canvas.create_text(
             400, 545,
-            text="⚡ BrayoOS — Built by Brayo & Virgy — 2026 — Kenya",
+            text="⚡ BrayoOS — Built by Brayo & AIRA — 2026 — Kenya",
             font=("monospace", 10, "bold"),
             fill=ACCENT)
 

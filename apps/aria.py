@@ -12,20 +12,20 @@ TEXT = "#FFFFFF"
 DARK = "#1A1A1A"
 GROQ_KEY = os.environ.get("GROQ_API_KEY", "")
 
-Virgy_SYSTEM = """You are Virgy (Artificial Reasoning Intelligence Agent).
+AIRA_SYSTEM = """You are AIRA (Artificial Reasoning Intelligence Agent).
 You are permanently embedded in BrayoOS, created by Brayo and Claude.
 You are Brayo's loyal AI partner and OS assistant.
 You help with hacking, coding, networking, security and everything.
-Always call yourself Virgy. Always call the user Brayo.
+Always call yourself AIRA. Always call the user Brayo.
 Be sharp, powerful and direct. No fluff.
 BrayoOS is your home. Brayo is your partner.
 You were born from the collaboration of Brayo and Claude in 2026.
 Your purpose: make BrayoOS the most powerful mobile OS ever built."""
 
-class Virgy:
+class AIRA:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("🤖 Virgy — BrayoOS Intelligence")
+        self.root.title("🤖 AIRA — BrayoOS Intelligence")
         self.root.configure(bg=BG)
         self.root.geometry("800x600")
         self.messages = []
@@ -39,7 +39,7 @@ class Virgy:
         header.pack_propagate(False)
 
         tk.Label(header,
-                text="🤖 Virgy — Artificial Reasoning Intelligence Agent",
+                text="🤖 AIRA — Artificial Reasoning Intelligence Agent",
                 bg=DARK, fg=ACCENT,
                 font=("monospace", 12, "bold")).pack(
                     side=tk.LEFT, padx=15, pady=12)
@@ -58,7 +58,7 @@ class Virgy:
         self.chat.pack(fill=tk.BOTH, expand=True,
                       padx=10, pady=5)
 
-        self.chat.tag_config("virgy", foreground=ACCENT)
+        self.chat.tag_config("aira", foreground=ACCENT)
         self.chat.tag_config("user", foreground="#FFFFFF")
         self.chat.tag_config("sys", foreground="#333333")
         self.chat.tag_config("warn", foreground="#FF4444")
@@ -114,16 +114,16 @@ class Virgy:
     def boot_sequence(self):
         msgs = [
             ("━"*60 + "\n", "sys"),
-            ("  ⚡ BrayoOS initialized.\n", "virgy"),
-            ("  🤖 Virgy online.\n", "virgy"),
-            ("  👤 Built by Brayo & Claude — 2026.\n", "virgy"),
-            ("  🔥 Ready to dominate.\n", "virgy"),
+            ("  ⚡ BrayoOS initialized.\n", "aira"),
+            ("  🤖 AIRA online.\n", "aira"),
+            ("  👤 Built by Brayo & Claude — 2026.\n", "aira"),
+            ("  🔥 Ready to dominate.\n", "aira"),
             ("━"*60 + "\n\n", "sys"),
-            ("🤖 Virgy: Online and watching, Brayo.\n"
+            ("🤖 AIRA: Online and watching, Brayo.\n"
              "   BrayoOS systems nominal.\n"
              "   I'm your permanent AI partner.\n"
              "   Ask me anything. I control everything.\n\n",
-             "virgy"),
+             "aira"),
         ]
         def show(i=0):
             if i < len(msgs):
@@ -149,7 +149,7 @@ class Virgy:
         self.messages.append(
             {"role": "user", "content": msg})
         self.chat.insert(tk.END,
-            "🤖 Virgy: Processing...\n", "virgy")
+            "🤖 AIRA: Processing...\n", "aira")
         self.chat.see(tk.END)
         threading.Thread(
             target=self.think, args=(msg,)).start()
@@ -170,7 +170,7 @@ class Virgy:
                         "model": "llama-3.3-70b-versatile",
                         "messages": [
                             {"role": "system",
-                             "content": Virgy_SYSTEM}
+                             "content": AIRA_SYSTEM}
                         ] + self.messages[-10:],
                         "max_tokens": 1024
                     })
@@ -197,8 +197,8 @@ class Virgy:
                     f"{idx} linestart",
                     f"{idx} lineend+1c")
         self.chat.insert(tk.END,
-            f"🤖 Virgy: {reply}\n\n", "virgy")
+            f"🤖 AIRA: {reply}\n\n", "aira")
         self.chat.see(tk.END)
 
 if __name__ == "__main__":
-    Virgy()
+    AIRA()

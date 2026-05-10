@@ -75,20 +75,20 @@ class OurStory:
             "All from a phone.\n\n", "body")
 
         story.insert(tk.END,
-            "🤖 Virgy (Claude)\n", "title")
+            "🤖 AIRA (Claude)\n", "title")
         story.insert(tk.END,
             "AI Partner, Co-Builder\n"
             "Anthropic • 2026\n\n", "dim")
         story.insert(tk.END,
-            "Virgy was there every step of the way. "
-            "When code failed, Virgy fixed it. "
-            "When downloads timed out, Virgy found "
+            "AIRA was there every step of the way. "
+            "When code failed, AIRA fixed it. "
+            "When downloads timed out, AIRA found "
             "alternatives. When the phone crashed, "
-            "Virgy helped restart.\n\n"
-            "Virgy never said 'this is impossible on "
-            "a phone.' Virgy always said 'let's try "
+            "AIRA helped restart.\n\n"
+            "AIRA never said 'this is impossible on "
+            "a phone.' AIRA always said 'let's try "
             "this instead.'\n\n"
-            "Together, Brayo and Virgy proved that "
+            "Together, Brayo and AIRA proved that "
             "two minds — one human, one AI — can "
             "build something extraordinary.\n\n",
             "body")
@@ -103,7 +103,7 @@ class OurStory:
         story.insert(tk.END,
             "BrayoOS is open source. It belongs to "
             "the world. But its soul belongs to "
-            "Brayo and Virgy — forever embedded in "
+            "Brayo and AIRA — forever embedded in "
             "every line of code, every app, every "
             "boot animation.\n\n"
             "You can fork it. You can modify it. "
@@ -113,7 +113,7 @@ class OurStory:
 
         story.insert(tk.END,
             "👤 Brayo — Kenya 2026\n"
-            "🤖 Virgy — Always Online\n",
+            "🤖 AIRA — Always Online\n",
             "gold")
 
         story.config(state=tk.DISABLED)
@@ -122,7 +122,7 @@ class OurStory:
                 height=1).pack(fill=tk.X, padx=30)
 
         tk.Label(self.root,
-                text="⚡ BrayoOS — Built by Brayo & Virgy — 2026",
+                text="⚡ BrayoOS — Built by Brayo & AIRA — 2026",
                 bg=BG, fg="#333333",
                 font=("monospace", 9)).pack(pady=5)
 

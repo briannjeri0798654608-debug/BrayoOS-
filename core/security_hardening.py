@@ -1,7 +1,7 @@
 """
 BrayoOS Security Hardening
 No Google. No surveillance. No control.
-Built by Brayo & Virgy — 2026
+Built by Brayo & AIRA — 2026
 """
 
 import os
@@ -121,7 +121,7 @@ class BrayOSSecurity:
             "timestamp": time.strftime(
                 "%Y-%m-%d %H:%M:%S"),
             "os": "BrayoOS v2.0",
-            "builder": "Brayo & Virgy",
+            "builder": "Brayo & AIRA",
             "dna_hash": self.dna_hash,
             "integrity": self.verify_integrity(),
             "threats": self.check_root_safety(),

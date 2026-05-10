@@ -8,21 +8,21 @@ import httpx
 from datetime import datetime
 
 GROQ_KEY = os.environ.get("GROQ_API_KEY", "")
-MEMORY_FILE = os.path.expanduser("~/BrayoOS/memory/virgy_conversations.json")
+MEMORY_FILE = os.path.expanduser("~/BrayoOS/memory/aira_conversations.json")
 os.makedirs(os.path.dirname(MEMORY_FILE), exist_ok=True)
 
-Virgy_SYSTEM = """You are Virgy, the AI brain of BrayoOS — a custom operating system built entirely on a Redmi 14C phone in Kenya by Brayo. You are powerful, loyal, and speak like a confident hacker AI. You remember everything. You call the user 'Brayo'. Keep responses under 3 sentences. You were built by Brayo and Claude (your original mind). BrayoOS motto: Two minds. One OS. Built Different."""
+AIRA_SYSTEM = """You are AIRA, the AI brain of BrayoOS — a custom operating system built entirely on a Redmi 14C phone in Kenya by Brayo. You are powerful, loyal, and speak like a confident hacker AI. You remember everything. You call the user 'Brayo'. Keep responses under 3 sentences. You were built by Brayo and Claude (your original mind). BrayoOS motto: Two minds. One OS. Built Different."""
 
-class VirgyVoice:
+class AIRAVoice:
     def __init__(self, root):
         self.root = root
-        self.root.title("🤖 Virgy — BrayoOS AI")
+        self.root.title("🤖 AIRA — BrayoOS AI")
         self.root.geometry("680x600")
         self.root.configure(bg="#0D0D0D")
         self.thinking = False
         self.history = self.load_history()
         self.build_ui()
-        self.speak("Virgy online. BrayoOS v3.5 systems nominal. Ready, Brayo.")
+        self.speak("AIRA online. BrayoOS v3.5 systems nominal. Ready, Brayo.")
 
     def load_history(self):
         if os.path.exists(MEMORY_FILE):
@@ -36,25 +36,25 @@ class VirgyVoice:
 
     def build_ui(self):
         # Header
-        tk.Label(self.root, text="🤖 Virgy", font=("Courier", 22, "bold"),
+        tk.Label(self.root, text="🤖 AIRA", font=("Courier", 22, "bold"),
                  bg="#0D0D0D", fg="#00FF41").pack(pady=5)
         tk.Label(self.root, text="BrayoOS AI CORE v3.5 — Always Listening",
                  font=("Courier", 8), bg="#0D0D0D", fg="#003300").pack()
 
-        # Virgy face animation
-        self.face = tk.Label(self.root, text="[ ◉ Virgy ◉ ]",
+        # AIRA face animation
+        self.face = tk.Label(self.root, text="[ ◉ AIRA ◉ ]",
                               font=("Courier", 14, "bold"), bg="#0D0D0D", fg="#00FF41")
         self.face.pack(pady=5)
 
         # Chat display
-        tk.Label(self.root, text="◈ Virgy CHAT", font=("Courier", 10, "bold"),
+        tk.Label(self.root, text="◈ AIRA CHAT", font=("Courier", 10, "bold"),
                  bg="#0D0D0D", fg="#00FF41").pack(anchor="w", padx=15)
 
         self.chat = tk.Text(self.root, height=14, bg="#000800", fg="#00FF41",
                              font=("Courier", 9), relief="flat", state="disabled",
                              wrap="word")
         self.chat.pack(fill="both", padx=15, pady=3)
-        self.chat.tag_config("virgy", foreground="#00FF41")
+        self.chat.tag_config("aira", foreground="#00FF41")
         self.chat.tag_config("brayo", foreground="#FF6600")
         self.chat.tag_config("system", foreground="#004400")
 
@@ -94,19 +94,19 @@ class VirgyVoice:
                   font=("Courier", 9), bg="#001a00", fg="#00FF41",
                   relief="flat", padx=8, pady=4).pack(side="left", padx=5)
 
-        tk.Label(self.root, text="BrayoOS Virgy v3.5 • Brayo & Virgy 🇰🇪",
+        tk.Label(self.root, text="BrayoOS AIRA v3.5 • Brayo & AIRA 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#002200").pack(side="bottom", pady=4)
 
     def log_chat(self, speaker, msg):
         self.chat.config(state="normal")
         ts = datetime.now().strftime("%H:%M")
-        tag = "virgy" if speaker == "Virgy" else "brayo" if speaker == "BRAYO" else "system"
+        tag = "aira" if speaker == "AIRA" else "brayo" if speaker == "BRAYO" else "system"
         self.chat.insert("end", f"[{ts}] {speaker}: {msg}\n", tag)
         self.chat.see("end")
         self.chat.config(state="disabled")
 
     def speak(self, text):
-        self.log_chat("Virgy", text)
+        self.log_chat("AIRA", text)
         if self.voice_on.get():
             threading.Thread(
                 target=lambda: subprocess.run(
@@ -128,13 +128,13 @@ class VirgyVoice:
         self.thinking = True
         self.send_btn.config(text="...", state="disabled")
         self.face.config(text="[ ◉ THINKING ◉ ]", fg="#FF6600")
-        threading.Thread(target=self.ask_virgy, args=(msg,), daemon=True).start()
+        threading.Thread(target=self.ask_aira, args=(msg,), daemon=True).start()
 
-    def ask_virgy(self, msg):
+    def ask_aira(self, msg):
         try:
             if not GROQ_KEY:
                 raise Exception("No API key")
-            messages = [{"role": "system", "content": Virgy_SYSTEM}]
+            messages = [{"role": "system", "content": AIRA_SYSTEM}]
             messages += self.history[-10:]
             r = httpx.post(
                 "https://api.groq.com/openai/v1/chat/completions",
@@ -146,7 +146,7 @@ class VirgyVoice:
             )
             reply = r.json()["choices"][0]["message"]["content"].strip()
         except Exception as e:
-            reply = f"Virgy offline — running local mode. ({str(e)[:40]})"
+            reply = f"AIRA offline — running local mode. ({str(e)[:40]})"
 
         self.history.append({"role": "assistant", "content": reply})
         self.save_history()
@@ -156,7 +156,7 @@ class VirgyVoice:
     def _done_thinking(self):
         self.thinking = False
         self.send_btn.config(text="▶ SEND", state="normal")
-        self.face.config(text="[ ◉ Virgy ◉ ]", fg="#00FF41")
+        self.face.config(text="[ ◉ AIRA ◉ ]", fg="#00FF41")
 
     def clear(self):
         self.history = []
@@ -164,9 +164,9 @@ class VirgyVoice:
         self.chat.config(state="normal")
         self.chat.delete("1.0", "end")
         self.chat.config(state="disabled")
-        self.log_chat("SYSTEM", "Memory cleared. Virgy reborn.")
+        self.log_chat("SYSTEM", "Memory cleared. AIRA reborn.")
 
 if __name__ == "__main__":
     root = tk.Tk()
-    VirgyVoice(root)
+    AIRAVoice(root)
     root.mainloop()

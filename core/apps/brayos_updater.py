@@ -11,7 +11,7 @@ CHANGELOG = [
     ("v2.0", "2026-04-01", "40+ apps, full XFCE desktop, flashable ROM"),
     ("v2.5", "2026-05-01", "Ghost Mode, DNA Vault, Signal Interceptor"),
     ("v3.0", "2026-05-10", "Identity Switcher, Threat Map, Self-Healing"),
-    ("v3.5", "2026-05-10", "Virgy AI Voice, App Store, Multi-User, Updater ← YOU ARE HERE"),
+    ("v3.5", "2026-05-10", "AIRA AI Voice, App Store, Multi-User, Updater ← YOU ARE HERE"),
 ]
 
 class BrayoOSUpdater:
@@ -80,7 +80,7 @@ class BrayoOSUpdater:
                   font=("Courier", 10, "bold"), bg="#001a00", fg="#00FF41",
                   relief="flat", padx=12, pady=6).pack(side="left", padx=4)
 
-        tk.Label(self.root, text="BrayoOS Updater v1.0 • Brayo & Virgy 🇰🇪",
+        tk.Label(self.root, text="BrayoOS Updater v1.0 • Brayo & AIRA 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#002200").pack(side="bottom", pady=4)
 
     def log(self, msg):

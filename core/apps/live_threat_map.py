@@ -50,7 +50,7 @@ class LiveThreatMap:
             tk.Label(f, text=label, font=("Courier", 7), bg="#110000", fg="#330000").pack(pady=1)
             v = tk.StringVar(value="0")
             self.stat_vars[label] = v
-            tk.Label(f, textvvirgyble=v, font=("Courier", 14, "bold"),
+            tk.Label(f, textvairable=v, font=("Courier", 14, "bold"),
                      bg="#110000", fg=color).pack(pady=1)
 
         # World map canvas
@@ -77,7 +77,7 @@ class LiveThreatMap:
                   font=("Courier", 9, "bold"), bg="#001a00", fg="#00FF41",
                   relief="flat", padx=10, pady=4).pack(side="left", padx=4)
 
-        tk.Label(self.root, text="BrayoOS Threat Engine v1.0 • Brayo & Virgy 🇰🇪",
+        tk.Label(self.root, text="BrayoOS Threat Engine v1.0 • Brayo & AIRA 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#220000").pack(side="bottom", pady=4)
 
     def draw_map(self):
@@ -164,7 +164,7 @@ class LiveThreatMap:
         self.log_attack("⏹ Threat monitor stopped.")
 
     def block_all(self):
-        self.log_attack("🛡️ Virgy activating global block — all threats neutralized!")
+        self.log_attack("🛡️ AIRA activating global block — all threats neutralized!")
         self.stat_vars["BLOCKED"].set(str(self.attack_count))
 
 if __name__ == "__main__":

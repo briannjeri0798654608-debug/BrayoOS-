@@ -99,7 +99,7 @@ class UserManager:
                                 font=("Courier", 8), relief="flat", state="disabled")
         self.log_box.pack(fill="both", padx=15, pady=5)
 
-        tk.Label(self.root, text="BrayoOS User Engine v1.0 • Brayo & Virgy 🇰🇪",
+        tk.Label(self.root, text="BrayoOS User Engine v1.0 • Brayo & AIRA 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#002200").pack(side="bottom", pady=4)
 
     def render_users(self):

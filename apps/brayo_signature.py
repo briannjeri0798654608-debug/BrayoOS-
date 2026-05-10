@@ -45,7 +45,7 @@ class BrayoSignature:
 
         self.canvas.create_text(
             300, 270,
-            text="Built by Brayo & Virgy",
+            text="Built by Brayo & AIRA",
             font=("monospace", 14),
             fill=GOLD)
 

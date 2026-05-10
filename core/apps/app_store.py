@@ -33,7 +33,7 @@ class AppStore:
     def build_ui(self):
         tk.Label(self.root, text="🏪 BRAYOOS APP STORE", font=("Courier", 18, "bold"),
                  bg="#0D0D0D", fg="#00FF41").pack(pady=8)
-        tk.Label(self.root, text="[ POWERED BY VIRGY — BUILT DIFFERENT 🇰🇪 ]",
+        tk.Label(self.root, text="[ POWERED BY AIRA — BUILT DIFFERENT 🇰🇪 ]",
                  font=("Courier", 8), bg="#0D0D0D", fg="#003300").pack()
 
         # Search bar
@@ -79,7 +79,7 @@ class AppStore:
                                 font=("Courier", 8), relief="flat", state="disabled")
         self.log_box.pack(fill="x", padx=15, pady=3)
 
-        tk.Label(self.root, text="BrayoOS App Store v1.0 • Brayo & Virgy 🇰🇪",
+        tk.Label(self.root, text="BrayoOS App Store v1.0 • Brayo & AIRA 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#002200").pack(side="bottom", pady=4)
 
     def render_apps(self, apps):

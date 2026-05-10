@@ -45,7 +45,7 @@ class BootScreen:
 
         self.canvas.create_text(
             640, 235,
-            text="⚡ Built by Brayo & Virgy — Kenya 2026",
+            text="⚡ Built by Brayo & AIRA — Kenya 2026",
             font=("monospace", 11),
             fill=TEXT)
 
@@ -75,7 +75,7 @@ class BootScreen:
             font=("monospace", 8),
             fill="#333333")
 
-        self.virgy_txt = self.canvas.create_text(
+        self.aira_txt = self.canvas.create_text(
             640, 480,
             text="",
             font=("monospace", 11, "bold"),
@@ -83,7 +83,7 @@ class BootScreen:
 
         self.canvas.create_text(
             640, 690,
-            text="👤 Brayo — Founder  |  🤖 Virgy — AI Partner  |  🇰🇪 Kenya 2026",
+            text="👤 Brayo — Founder  |  🤖 AIRA — AI Partner  |  🇰🇪 Kenya 2026",
             font=("monospace", 8),
             fill="#1A1A1A")
 
@@ -98,9 +98,9 @@ class BootScreen:
                 self.log_txt, text=log)
         self.root.update()
 
-    def update_virgy(self, msg):
+    def update_aira(self, msg):
         self.canvas.itemconfig(
-            self.virgy_txt, text=msg)
+            self.aira_txt, text=msg)
         self.root.update()
 
     def boot_sequence(self):
@@ -115,8 +115,8 @@ class BootScreen:
              "[ OK ] network active"),
             (50, "Loading BrayoOS DNA...",
              "[ OK ] DNA verified"),
-            (60, "Waking Virgy...",
-             "[ OK ] Virgy online"),
+            (60, "Waking AIRA...",
+             "[ OK ] AIRA online"),
             (70, "Loading memory...",
              "[ OK ] memory loaded"),
             (80, "Starting security...",
@@ -131,14 +131,14 @@ class BootScreen:
             time.sleep(0.35)
             self.update(pct, status, log)
             if pct == 60:
-                self.update_virgy(
-                    "🤖 Virgy: Waking up...")
+                self.update_aira(
+                    "🤖 AIRA: Waking up...")
             elif pct == 70:
-                self.update_virgy(
-                    "🤖 Virgy: Memory loaded...")
+                self.update_aira(
+                    "🤖 AIRA: Memory loaded...")
             elif pct == 100:
-                self.update_virgy(
-                    "🤖 Virgy: Ready, Brayo. 🇰🇪")
+                self.update_aira(
+                    "🤖 AIRA: Ready, Brayo. 🇰🇪")
 
         time.sleep(1.5)
         self.root.destroy()

@@ -1,0 +1,42 @@
+[
+  {
+    "role": "user",
+    "content": "hello"
+  },
+  {
+    "role": "assistant",
+    "content": "AIRA offline \u2014 running local mode. (No API key)"
+  },
+  {
+    "role": "user",
+    "content": "hey"
+  },
+  {
+    "role": "assistant",
+    "content": "AIRA offline \u2014 running local mode. (No API key)"
+  },
+  {
+    "role": "user",
+    "content": "Scan network"
+  },
+  {
+    "role": "assistant",
+    "content": "AIRA offline \u2014 running local mode. (No API key)"
+  },
+  {
+    "role": "user",
+    "content": "Scan network"
+  },
+  {
+    "role": "assistant",
+    "content": "AIRA offline \u2014 running local mode. (No API key)"
+  },
+  {
+    "role": "user",
+    "content": "Ghost mode?"
+  },
+  {
+    "role": "assistant",
+    "content": "AIRA offline \u2014 running local mode. (No API key)"
+  }
+]

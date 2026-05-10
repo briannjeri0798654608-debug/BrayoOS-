@@ -7,13 +7,13 @@ import os
 import random
 from datetime import datetime
 
-MEMORY_FILE = os.path.expanduser("~/BrayoOS/memory/virgy_neural.json")
+MEMORY_FILE = os.path.expanduser("~/BrayoOS/memory/aira_neural.json")
 os.makedirs(os.path.dirname(MEMORY_FILE), exist_ok=True)
 
-class VirgyNeuralCore:
+class AIRANeuralCore:
     def __init__(self, root):
         self.root = root
-        self.root.title("🧠 Virgy Neural Core")
+        self.root.title("🧠 AIRA Neural Core")
         self.root.geometry("700x550")
         self.root.configure(bg="#0D0D0D")
         self.memory = self.load_memory()
@@ -32,7 +32,7 @@ class VirgyNeuralCore:
             json.dump(self.memory, f, indent=2)
 
     def build_ui(self):
-        tk.Label(self.root, text="🧠 Virgy NEURAL CORE", font=("Courier", 18, "bold"),
+        tk.Label(self.root, text="🧠 AIRA NEURAL CORE", font=("Courier", 18, "bold"),
                  bg="#0D0D0D", fg="#00FF41").pack(pady=10)
         tk.Label(self.root, text="[ LEARNING YOUR PATTERNS — SESSION #{} ]".format(
             self.memory["sessions"]), font=("Courier", 9), bg="#0D0D0D", fg="#004400").pack()
@@ -55,14 +55,14 @@ class VirgyNeuralCore:
             lbl.pack(pady=2)
             self.stat_labels[key] = lbl
 
-        tk.Label(self.root, text="◈ Virgy THOUGHT STREAM", font=("Courier", 10, "bold"),
+        tk.Label(self.root, text="◈ AIRA THOUGHT STREAM", font=("Courier", 10, "bold"),
                  bg="#0D0D0D", fg="#00FF41").pack(anchor="w", padx=20)
 
         self.feed = tk.Text(self.root, height=12, bg="#000800", fg="#00FF41",
                             font=("Courier", 9), relief="flat", state="disabled")
         self.feed.pack(fill="both", padx=20, pady=5)
 
-        tk.Label(self.root, text="◈ Virgy PREDICTS YOUR NEXT MOVE", font=("Courier", 10, "bold"),
+        tk.Label(self.root, text="◈ AIRA PREDICTS YOUR NEXT MOVE", font=("Courier", 10, "bold"),
                  bg="#0D0D0D", fg="#FF6600").pack(anchor="w", padx=20)
 
         self.predict_box = tk.Label(self.root, text="Analyzing...", font=("Courier", 11),
@@ -73,14 +73,14 @@ class VirgyNeuralCore:
         btn_frame.pack(pady=10)
 
         for text, cmd in [
-            ("🧠 TRAIN Virgy", self.train), ("📊 SHOW PATTERNS", self.show_patterns),
+            ("🧠 TRAIN AIRA", self.train), ("📊 SHOW PATTERNS", self.show_patterns),
             ("🗑️ RESET MEMORY", self.reset_memory)
         ]:
             tk.Button(btn_frame, text=text, command=cmd,
                       font=("Courier", 9, "bold"), bg="#001a00", fg="#00FF41",
                       relief="flat", padx=10, pady=5).pack(side="left", padx=5)
 
-        tk.Label(self.root, text="BrayoOS Neural Engine v1.0 • Brayo & Virgy 🇰🇪",
+        tk.Label(self.root, text="BrayoOS Neural Engine v1.0 • Brayo & AIRA 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#002200").pack(side="bottom", pady=5)
 
     def log(self, msg):
@@ -106,13 +106,13 @@ class VirgyNeuralCore:
             "Cross-referencing memory bank...",
             "Predicting next 3 user actions...",
             "Encrypting learned data to vault...",
-            "Virgy learning complete. Adapting..."
+            "AIRA learning complete. Adapting..."
         ]
         predictions = [
             "You will open Terminal in the next 2 minutes",
             "Network scan likely within this session",
             "High probability of Vault access detected",
-            "Virgy suggests: backup your files now",
+            "AIRA suggests: backup your files now",
             "You are more active between 11PM - 2AM",
             "Suspicious pattern: repeated failed auth detected",
             "CPU spike predicted in 5 minutes",
@@ -153,9 +153,9 @@ class VirgyNeuralCore:
     def reset_memory(self):
         self.memory = {"sessions": 0, "patterns": [], "predictions": [], "user_habits": {}, "threat_score": 0}
         self.save_memory()
-        self.log("🗑️ Neural memory wiped. Virgy reborn from zero.")
+        self.log("🗑️ Neural memory wiped. AIRA reborn from zero.")
 
 if __name__ == "__main__":
     root = tk.Tk()
-    VirgyNeuralCore(root)
+    AIRANeuralCore(root)
     root.mainloop()
