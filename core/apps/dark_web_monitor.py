@@ -61,7 +61,7 @@ class DarkWebMonitor:
             tk.Label(f, text=lbl, font=("Courier", 7), bg="#110000", fg="#330000").pack(pady=1)
             v = tk.StringVar(value="0")
             self.svars[lbl] = v
-            tk.Label(f, textvariable=v, font=("Courier", 13, "bold"),
+            tk.Label(f, textvvirgyble=v, font=("Courier", 13, "bold"),
                      bg="#110000", fg=color).pack(pady=1)
 
         # Protected data panel
@@ -106,7 +106,7 @@ class DarkWebMonitor:
                   font=("Courier", 10, "bold"), bg="#001a00",
                   fg="#00FF41", relief="flat", padx=12, pady=6).pack(side="left", padx=4)
 
-        tk.Label(self.root, text="BrayoOS Dark Web Engine v1.0 • Brayo & ARIA 🇰🇪",
+        tk.Label(self.root, text="BrayoOS Dark Web Engine v1.0 • Brayo & Virgy 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#220000").pack(side="bottom", pady=4)
 
     def log(self, msg):
@@ -157,7 +157,7 @@ class DarkWebMonitor:
             self.root.after(0, self.log,
                 f"🚨 ALERT! {breach} detected on {site}!")
             self.root.after(0, self.log,
-                f"   → ARIA activating countermeasures...")
+                f"   → Virgy activating countermeasures...")
             self.root.after(2000, self._resolve_alert)
         else:
             self.root.after(0, self.svars["DATA SAFE"].set, "✅ YES")
@@ -175,7 +175,7 @@ class DarkWebMonitor:
         self.log("🛡️ Encrypting all identity data with AES-256...")
         self.log("🔐 Rotating digital fingerprints...")
         self.log("👻 Activating Ghost Mode integration...")
-        self.log("✅ Brayo identity fully secured by ARIA.")
+        self.log("✅ Brayo identity fully secured by Virgy.")
 
 if __name__ == "__main__":
     root = tk.Tk()

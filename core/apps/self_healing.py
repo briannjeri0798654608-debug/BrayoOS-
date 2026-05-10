@@ -8,7 +8,7 @@ from datetime import datetime
 
 CORE_FILES = [
     "core/desktop.py",
-    "core/apps/aria_neural_core.py",
+    "core/apps/virgy_neural_core.py",
     "core/apps/ghost_mode.py",
     "core/apps/dna_vault.py",
     "core/apps/signal_interceptor.py",
@@ -54,7 +54,7 @@ class SelfHealingOS:
             tk.Label(f, text=lbl, font=("Courier", 7), bg="#001100", fg="#004400").pack(pady=1)
             v = tk.StringVar(value="0")
             self.svars[lbl] = v
-            tk.Label(f, textvariable=v, font=("Courier", 14, "bold"),
+            tk.Label(f, textvvirgyble=v, font=("Courier", 14, "bold"),
                      bg="#001100", fg=color).pack(pady=1)
 
         self.svars["FILES WATCHED"].set(str(len(CORE_FILES)))
@@ -103,7 +103,7 @@ class SelfHealingOS:
                   font=("Courier", 10, "bold"), bg="#001a00", fg="#00FF41",
                   relief="flat", padx=12, pady=6).pack(side="left", padx=4)
 
-        tk.Label(self.root, text="BrayoOS Healing Engine v1.0 • Brayo & ARIA 🇰🇪",
+        tk.Label(self.root, text="BrayoOS Healing Engine v1.0 • Brayo & Virgy 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#002200").pack(side="bottom", pady=4)
 
     def log(self, msg):

@@ -17,7 +17,7 @@ VAULT_FILE = os.path.expanduser(
 # Apps visible to everyone
 PUBLIC_APPS = [
     ("🖥️\nTerminal", "terminal"),
-    ("🤖\nARIA", "aria.py"),
+    ("🤖\nVirgy", "virgy.py"),
     ("🌐\nBrowser", "mini_browser.py"),
     ("📁\nFiles", "files.py"),
     ("🎵\nMusic", "music_player.py"),
@@ -178,12 +178,12 @@ class BrayoOSDesktop:
         taskbar.pack_propagate(False)
 
         tk.Button(taskbar,
-                 text="🤖 ARIA",
+                 text="🤖 Virgy",
                  bg=ACCENT, fg=BG_COLOR,
                  font=("monospace", 10, "bold"),
                  relief=tk.FLAT,
                  command=lambda: self.launch(
-                     "aria.py"),
+                     "virgy.py"),
                  cursor="hand2").pack(
                      side=tk.LEFT,
                      padx=10, pady=8)
@@ -209,14 +209,14 @@ class BrayoOSDesktop:
         self.vault_status.pack(
             side=tk.RIGHT, padx=10)
 
-        self.aria_label = tk.Label(
+        self.virgy_label = tk.Label(
             taskbar,
-            text="🤖 ARIA: Online",
+            text="🤖 Virgy: Online",
             bg=TASKBAR_BG, fg=ACCENT,
             font=("monospace", 9))
-        self.aria_label.pack(
+        self.virgy_label.pack(
             side=tk.RIGHT, padx=10)
-        self.pulse_aria()
+        self.pulse_virgy()
 
     def show_apps(self):
         for w in self.app_frame.winfo_children():
@@ -340,12 +340,12 @@ class BrayoOSDesktop:
             text=time.strftime("🕐 %H:%M:%S"))
         self.root.after(1000, self.update_clock)
 
-    def pulse_aria(self):
-        current = self.aria_label.cget("fg")
-        self.aria_label.config(
+    def pulse_virgy(self):
+        current = self.virgy_label.cget("fg")
+        self.virgy_label.config(
             fg=ACCENT if current == TASKBAR_BG
             else TASKBAR_BG)
-        self.root.after(1000, self.pulse_aria)
+        self.root.after(1000, self.pulse_virgy)
 
     def launch(self, script):
         env = os.environ.copy()

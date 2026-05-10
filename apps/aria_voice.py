@@ -31,7 +31,7 @@ def listen():
     except:
         return None
 
-def ask_aria(text):
+def ask_virgy(text):
     if not GROQ_KEY:
         return "API key not set"
     try:
@@ -44,7 +44,7 @@ def ask_aria(text):
                     "model": "llama-3.3-70b-versatile",
                     "messages": [
                         {"role": "system",
-                         "content": "You are ARIA, BrayoOS AI by Brayo. Be brief and sharp."},
+                         "content": "You are Virgy, BrayoOS AI by Brayo. Be brief and sharp."},
                         {"role": "user",
                          "content": text}
                     ],
@@ -56,11 +56,11 @@ def ask_aria(text):
         return f"Error: {e}"
 
 def main():
-    print(f"{GREEN}🎤 ARIA Voice Mode{RESET}")
-    print(f"{CYAN}Built by Brayo & ARIA — Kenya 2026{RESET}")
+    print(f"{GREEN}🎤 Virgy Voice Mode{RESET}")
+    print(f"{CYAN}Built by Brayo & Virgy — Kenya 2026{RESET}")
     print(f"{YELLOW}Say something or type 'exit'{RESET}\n")
 
-    speak("ARIA voice mode activated. Ready Brayo.")
+    speak("Virgy voice mode activated. Ready Brayo.")
 
     while True:
         print(f"{YELLOW}🎤 Listening...{RESET}")
@@ -71,8 +71,8 @@ def main():
             if 'exit' in voice.lower():
                 speak("Goodbye Brayo")
                 break
-            response = ask_aria(voice)
-            print(f"{CYAN}🤖 ARIA: {response}{RESET}")
+            response = ask_virgy(voice)
+            print(f"{CYAN}🤖 Virgy: {response}{RESET}")
             speak(response)
         else:
             # Fall back to text
@@ -82,8 +82,8 @@ def main():
             if text == 'exit':
                 break
             if text:
-                response = ask_aria(text)
-                print(f"{CYAN}🤖 ARIA: {response}{RESET}")
+                response = ask_virgy(text)
+                print(f"{CYAN}🤖 Virgy: {response}{RESET}")
                 speak(response)
 
 if __name__ == "__main__":

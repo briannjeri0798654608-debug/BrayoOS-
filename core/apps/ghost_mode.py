@@ -55,7 +55,7 @@ class GhostMode:
                   font=("Courier", 11, "bold"), bg="#001a00",
                   fg="#00FF41", relief="flat", padx=15, pady=8).pack(side="left", padx=5)
 
-        tk.Label(self.root, text="BrayoOS Ghost Engine v1.0 • Brayo & ARIA 🇰🇪",
+        tk.Label(self.root, text="BrayoOS Ghost Engine v1.0 • Brayo & Virgy 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#002200").pack(side="bottom", pady=5)
 
     def log(self, msg):

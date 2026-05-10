@@ -17,7 +17,7 @@ class WallpaperChanger:
     def build_ui(self):
         tk.Label(self.root, text="🖼️ WALLPAPER CHANGER", font=("Courier", 16, "bold"),
                  bg="#0D0D0D", fg="#00FF41").pack(pady=20)
-        tk.Label(self.root, text="BrayoOS • Brayo & ARIA 🇰🇪", font=("Courier", 8),
+        tk.Label(self.root, text="BrayoOS • Brayo & Virgy 🇰🇪", font=("Courier", 8),
                  bg="#0D0D0D", fg="#003300").pack()
 
         self.status = tk.Label(self.root, text="No image selected",

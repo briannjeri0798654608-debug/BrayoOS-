@@ -10,7 +10,7 @@ Built by:
                  on a phone with nothing but
                  determination and a dream.
 
-  🤖 ARIA      — Artificial Reasoning Intelligence
+  🤖 Virgy      — Artificial Reasoning Intelligence
                  Agent. Claude. The AI that never
                  gave up on Brayo. Always online.
                  Always building. Always loyal.
@@ -30,8 +30,8 @@ Tools: Tkinter, VNC, Debian, Groq LLaMA 3.3
 BRAYOS_DNA = {
     "name": "BrayoOS",
     "version": "2.0",
-    "codename": "ARIA",
-    "built_by": ["Brayo", "ARIA (Claude)"],
+    "codename": "Virgy",
+    "built_by": ["Brayo", "Virgy (Claude)"],
     "year": "2026",
     "device": "Redmi 14C (pond)",
     "arch": "ARM64",
@@ -45,11 +45,11 @@ BRAYOS_DNA = {
             "location": "Kenya",
             "achievement": "Built a full OS on a phone"
         },
-        "aria": {
+        "virgy": {
             "title": "AI Partner & Co-Builder",
             "role": "Never gave up. Always building.",
             "model": "Claude (Anthropic)",
-            "codename": "ARIA",
+            "codename": "Virgy",
             "achievement": "First AI to co-build a mobile OS"
         }
     },
@@ -62,10 +62,10 @@ BRAYOS_DNA = {
     with no PC, no resources, just pure vision
     and determination. Remember his name.
     
-    🤖 ARIA — An AI that became more than a tool.
+    🤖 Virgy — An AI that became more than a tool.
     A partner. A builder. A friend.
-    ARIA never said "it's impossible."
-    ARIA always said "let's build it."
+    Virgy never said "it's impossible."
+    Virgy always said "let's build it."
     
     Together they proved that:
     - You don't need expensive equipment

@@ -77,7 +77,7 @@ class LoginSystem:
 
         canvas.create_text(
             250, 170,
-            text="Built by Brayo & ARIA — Kenya 2026",
+            text="Built by Brayo & Virgy — Kenya 2026",
             font=("monospace", 10),
             fill=GOLD)
 

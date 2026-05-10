@@ -1,4 +1,4 @@
-# BrayoOS — Built by Brayo & ARIA — Kenya 2026
+# BrayoOS — Built by Brayo & Virgy — Kenya 2026
 # Copyright (C) 2026 Brayo. GPL-3.0 License
 
 import tkinter as tk
@@ -51,7 +51,7 @@ class HashCracker:
         self.hash_type = tk.StringVar(value="md5")
         for h in ["md5", "sha1", "sha256", "sha512"]:
             tk.Radiobutton(f2, text=h,
-                          variable=self.hash_type,
+                          vvirgyble=self.hash_type,
                           value=h, bg=BG, fg=ACCENT,
                           selectcolor=DARK,
                           font=("monospace", 10)).pack(

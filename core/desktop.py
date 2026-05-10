@@ -11,7 +11,7 @@ RED = "#FF4444"
 
 PUBLIC_APPS = [
     ("🖥️\nTerminal", "terminal"),
-    ("🤖\nARIA", "aria_max.py"),
+    ("🤖\nVirgy", "virgy_max.py"),
     ("🌐\nBrowser", "mini_browser.py"),
     ("📁\nFiles", "files.py"),
     ("🎵\nMusic", "music_player.py"),
@@ -28,7 +28,12 @@ PUBLIC_APPS = [
     ("💾\nBackup", "backup.py"),
     ("📖\nOur Story", "our_story.py"),
     ("⚙️\nSettings", "settings.py"),
-    ("🧠\nARIA Neural", "aria_neural_core.py"),
+    ("🏪\nApp Store", "app_store.py"),
+    ("👤\nUsers", "user_manager.py"),
+    ("🔄\nUpdater", "brayos_updater.py"),
+    ("🤖\nVirgy AI", "aria_voice.py"),
+    ("💀\nDark Web", "dark_web_monitor.py"),
+    ("🧠\nVirgy Neural", "virgy_neural_core.py"),
     ("👁️\nGhost Mode", "ghost_mode.py"),
     ("🔐\nDNA Vault", "dna_vault.py"),
     ("📡\nSignal", "signal_interceptor.py"),
@@ -129,12 +134,12 @@ class BrayoOS:
         taskbar.pack_propagate(False)
 
         tk.Button(taskbar,
-                 text="🤖 ARIA",
+                 text="🤖 Virgy",
                  bg=ACCENT, fg=BG,
                  font=("monospace", 10, "bold"),
                  relief=tk.FLAT,
                  command=lambda: self.launch(
-                     "aria_max.py"),
+                     "virgy_max.py"),
                  cursor="hand2").pack(
                      side=tk.LEFT,
                      padx=10, pady=8)
@@ -165,12 +170,12 @@ class BrayoOS:
                          side=tk.LEFT,
                          padx=3, pady=8)
 
-        self.aria_lbl = tk.Label(
+        self.virgy_lbl = tk.Label(
             taskbar,
-            text="🤖 ARIA: Online",
+            text="🤖 Virgy: Online",
             bg=DARK, fg=ACCENT,
             font=("monospace", 9))
-        self.aria_lbl.pack(
+        self.virgy_lbl.pack(
             side=tk.RIGHT, padx=10)
         self.pulse()
 
@@ -277,8 +282,8 @@ class BrayoOS:
         self.root.after(1000, self.tick)
 
     def pulse(self):
-        fg = self.aria_lbl.cget("fg")
-        self.aria_lbl.config(
+        fg = self.virgy_lbl.cget("fg")
+        self.virgy_lbl.config(
             fg=ACCENT if fg == DARK else DARK)
         self.root.after(1000, self.pulse)
 
@@ -301,9 +306,9 @@ class BrayoOS:
 if __name__ == "__main__":
     BrayoOS()
 
-# BrayoOS Apps v2.0 — Added by ARIA
+# BrayoOS Apps v2.0 — Added by Virgy
 APPS_V2 = [
-    ("🧠 ARIA Neural", "aria_neural_core.py"),
+    ("🧠 Virgy Neural", "virgy_neural_core.py"),
     ("👁️ Ghost Mode", "ghost_mode.py"),
     ("🔐 DNA Vault", "dna_vault.py"),
     ("📡 Signal Interceptor", "signal_interceptor.py"),

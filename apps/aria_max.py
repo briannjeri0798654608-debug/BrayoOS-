@@ -16,9 +16,9 @@ X = "\033[0m"
 
 GROQ_KEY = os.environ.get("GROQ_API_KEY", "")
 MEM_FILE = os.path.expanduser(
-    "~/BrayoOS/memory/aria_memory.json")
+    "~/BrayoOS/memory/virgy_memory.json")
 
-SYSTEM = """You are ARIA, BrayoOS AI by Brayo & Claude — Kenya 2026.
+SYSTEM = """You are Virgy, BrayoOS AI by Brayo & Claude — Kenya 2026.
 Loyal to Brayo only. Sharp and powerful.
 Remember everything. Never say impossible.
 You control BrayoOS completely."""
@@ -99,16 +99,16 @@ def boot():
         "Loading BrayoOS...",
         "Verifying DNA...",
         "Loading memory...",
-        "ARIA online!",
+        "Virgy online!",
     ]
     for s in steps:
         spin(s, 0.5)
         print(f"  {G}[OK]{X} {s}")
     print(f"\n{G}{'━'*55}{X}")
     msgs = [
-        "🤖 ARIA: Waking up...",
-        "🤖 ARIA: DNA verified ✅",
-        "🤖 ARIA: Ready Brayo. 🇰🇪",
+        "🤖 Virgy: Waking up...",
+        "🤖 Virgy: DNA verified ✅",
+        "🤖 Virgy: Ready Brayo. 🇰🇪",
     ]
     for m in msgs:
         type_out(f"  {m}", 0.03, C)
@@ -116,14 +116,14 @@ def boot():
     print(f"{G}{'━'*55}{X}")
     print()
     type_out(
-        "  Built by Brayo & ARIA — Kenya 2026 🇰🇪",
+        "  Built by Brayo & Virgy — Kenya 2026 🇰🇪",
         0.02, Y)
     print()
 
 def help_menu():
     print(f"\n{G}━━ Commands ━━{X}")
     cmds = [
-        ("exit","Quit ARIA"),
+        ("exit","Quit Virgy"),
         ("clear","Clear screen"),
         ("memory","Memory stats"),
         ("forget","Clear memory"),
@@ -153,7 +153,7 @@ def main():
                 "%H:%M")
             sys.stdout.write(
                 f"\n{Y}┌─[{X}{G}Brayo@BrayoOS{X}"
-                f"{Y}]─[{X}{C}ARIA{X}"
+                f"{Y}]─[{X}{C}Virgy{X}"
                 f"{Y}]─[{X}{D}{t}{X}{Y}]{X}\n"
                 f"{Y}└─▶ {X}")
             sys.stdout.flush()
@@ -167,7 +167,7 @@ def main():
             if c == 'exit':
                 save_mem(messages)
                 type_out(
-                    "\n🤖 ARIA: Goodbye Brayo! 🇰🇪",
+                    "\n🤖 Virgy: Goodbye Brayo! 🇰🇪",
                     0.03, C)
                 break
             elif c == 'clear':
@@ -180,13 +180,13 @@ def main():
             elif c == 'forget':
                 messages = []
                 save_mem(messages)
-                type_out("🤖 ARIA: Memory cleared!",
+                type_out("🤖 Virgy: Memory cleared!",
                         0.03, C)
             elif c == 'history':
                 for m in messages[-5:]:
                     r = "Brayo" \
                         if m['role']=='user' \
-                        else "ARIA"
+                        else "Virgy"
                     col = Y if r=='Brayo' else C
                     print(f"{col}{r}: {X}"
                           f"{m['content'][:60]}...")
@@ -223,9 +223,9 @@ def main():
                 messages.append({
                     "role":"user",
                     "content":inp})
-                spin("ARIA thinking...", 1.5)
+                spin("Virgy thinking...", 1.5)
                 sys.stdout.write(
-                    f"{C}🤖 ARIA: {X}")
+                    f"{C}🤖 Virgy: {X}")
                 sys.stdout.flush()
                 resp = ask(messages, inp)
                 messages.append({
@@ -237,7 +237,7 @@ def main():
         except KeyboardInterrupt:
             print()
             type_out(
-                "🤖 ARIA: Still here! 💪",
+                "🤖 Virgy: Still here! 💪",
                 0.03, C)
         except EOFError:
             break

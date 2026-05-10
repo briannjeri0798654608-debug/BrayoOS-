@@ -28,7 +28,7 @@ class FileManager:
         path_frame.pack(fill=tk.X, padx=10)
 
         self.path_var = tk.StringVar()
-        self.path_entry = tk.Entry(path_frame, textvariable=self.path_var,
+        self.path_entry = tk.Entry(path_frame, textvvirgyble=self.path_var,
                                   bg="#1A1A1A", fg=ACCENT,
                                   font=("monospace", 11),
                                   insertbackground=ACCENT)

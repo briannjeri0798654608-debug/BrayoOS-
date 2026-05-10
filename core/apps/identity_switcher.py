@@ -73,7 +73,7 @@ class IdentitySwitcher:
                   font=("Courier", 10, "bold"), bg="#001a00", fg="#00FF41",
                   relief="flat", padx=12, pady=6).pack(side="left", padx=4)
 
-        tk.Label(self.root, text="BrayoOS Identity Engine v1.0 • Brayo & ARIA 🇰🇪",
+        tk.Label(self.root, text="BrayoOS Identity Engine v1.0 • Brayo & Virgy 🇰🇪",
                  font=("Courier", 7), bg="#0D0D0D", fg="#002200").pack(side="bottom", pady=4)
 
     def random_mac(self):
