@@ -54,7 +54,7 @@ class SelfHealingOS:
             tk.Label(f, text=lbl, font=("Courier", 7), bg="#001100", fg="#004400").pack(pady=1)
             v = tk.StringVar(value="0")
             self.svars[lbl] = v
-            tk.Label(f, textvairable=v, font=("Courier", 14, "bold"),
+            tk.Label(f, textvariable=v, font=("Courier", 14, "bold"),
                      bg="#001100", fg=color).pack(pady=1)
 
         self.svars["FILES WATCHED"].set(str(len(CORE_FILES)))

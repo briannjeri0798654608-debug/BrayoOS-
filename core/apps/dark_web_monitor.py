@@ -61,7 +61,7 @@ class DarkWebMonitor:
             tk.Label(f, text=lbl, font=("Courier", 7), bg="#110000", fg="#330000").pack(pady=1)
             v = tk.StringVar(value="0")
             self.svars[lbl] = v
-            tk.Label(f, textvairable=v, font=("Courier", 13, "bold"),
+            tk.Label(f, textvariable=v, font=("Courier", 13, "bold"),
                      bg="#110000", fg=color).pack(pady=1)
 
         # Protected data panel

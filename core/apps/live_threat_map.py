@@ -50,7 +50,7 @@ class LiveThreatMap:
             tk.Label(f, text=label, font=("Courier", 7), bg="#110000", fg="#330000").pack(pady=1)
             v = tk.StringVar(value="0")
             self.stat_vars[label] = v
-            tk.Label(f, textvairable=v, font=("Courier", 14, "bold"),
+            tk.Label(f, textvariable=v, font=("Courier", 14, "bold"),
                      bg="#110000", fg=color).pack(pady=1)
 
         # World map canvas

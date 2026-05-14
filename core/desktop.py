@@ -28,6 +28,8 @@ APPS = [
     ("◆", "Identity",  "identity_switcher.py",  "#FF6644"),
     ("▲", "Overclock", "overclock_dashboard.py","#FF4444"),
     ("●", "Threats",   "live_threat_map.py",    "#FF0044"),
+    ("🔒", "Prox Lock", "proximity_lock.py", "#FF0044"),
+    ("🔒", "Prox Lock", "proximity_lock.py", "#FF0044"),
     ("🌐", "Web Agent", "aira_web_agent.py",  "#00AAFF"),
     ("⊕", "Self-Heal", "self_healing.py",       "#44FF88"),
     ("▦", "Wallpaper", "wallpaper_changer.py",  "#FFAA00"),

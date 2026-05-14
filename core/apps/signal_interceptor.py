@@ -34,7 +34,7 @@ class SignalInterceptor:
             tk.Label(f, text=label, font=("Courier", 7), bg="#001100", fg="#004400").pack(pady=1)
             v = tk.StringVar(value="0")
             self.stat_vars[label] = v
-            tk.Label(f, textvairable=v, font=("Courier", 14, "bold"),
+            tk.Label(f, textvariable=v, font=("Courier", 14, "bold"),
                      bg="#001100", fg="#00FF41").pack(pady=1)
 
         # Device map
