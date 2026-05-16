@@ -38,5 +38,21 @@
   {
     "role": "assistant",
     "content": "AIRA offline \u2014 running local mode. (No API key)"
+  },
+  {
+    "role": "user",
+    "content": "scan for kelvin mugwe using osint"
+  },
+  {
+    "role": "assistant",
+    "content": "AIRA offline \u2014 running local mode. (No API key)"
+  },
+  {
+    "role": "user",
+    "content": "Who built you?"
+  },
+  {
+    "role": "assistant",
+    "content": "AIRA offline \u2014 running local mode. (No API key)"
   }
 ]
