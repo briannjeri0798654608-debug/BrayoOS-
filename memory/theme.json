@@ -1,0 +1,11 @@
+{
+  "theme": "Cyber Blue",
+  "colors": {
+    "bg": "#080F10",
+    "bg2": "#0D141A",
+    "bg3": "#12202A",
+    "primary": "#0044FF",
+    "neon": "#44AAFF",
+    "accent": "#00FFFF"
+  }
+}
