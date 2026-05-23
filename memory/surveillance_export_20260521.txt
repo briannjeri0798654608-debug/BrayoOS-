@@ -1,0 +1,9 @@
+BrayoOS Surveillance Report — 2026-05-21 11:14:41.612876
+
+[11:08:43] 🎥 Surveillance system ARMED
+[11:09:03] ⚠️ USB device connected
+[11:11:03] ⚠️ USB device connected
+[11:12:13] ⚠️ Bluetooth probe received
+[11:12:33] ⚠️ USB device connected
+[11:14:33] ⚠️ Bluetooth probe received
+[11:14:39] 📸 Photo saved: snap_20260521_111436.jpg

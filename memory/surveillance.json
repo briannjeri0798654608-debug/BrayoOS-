@@ -1,0 +1,67 @@
+[
+  {
+    "msg": "\ud83c\udfa5 Surveillance system ARMED",
+    "tag": "r",
+    "time": "11:08:43"
+  },
+  {
+    "msg": "\u26a0\ufe0f USB device connected",
+    "tag": "y",
+    "time": "11:09:03"
+  },
+  {
+    "msg": "\u26a0\ufe0f USB device connected",
+    "tag": "y",
+    "time": "11:11:03"
+  },
+  {
+    "msg": "\u26a0\ufe0f Bluetooth probe received",
+    "tag": "y",
+    "time": "11:12:13"
+  },
+  {
+    "msg": "\u26a0\ufe0f USB device connected",
+    "tag": "y",
+    "time": "11:12:33"
+  },
+  {
+    "msg": "\u26a0\ufe0f Bluetooth probe received",
+    "tag": "y",
+    "time": "11:14:33"
+  },
+  {
+    "msg": "\ud83d\udcf8 Photo saved: snap_20260521_111436.jpg",
+    "tag": "y",
+    "time": "11:14:39"
+  },
+  {
+    "msg": "\ud83d\udcbe Exported to surveillance_export_20260521.txt",
+    "tag": "g",
+    "time": "11:14:41"
+  },
+  {
+    "msg": "\u26a0\ufe0f Location access requested",
+    "tag": "y",
+    "time": "11:15:13"
+  },
+  {
+    "msg": "\u26a0\ufe0f Network scan detected from 192.168.1.1",
+    "tag": "r",
+    "time": "11:18:24"
+  },
+  {
+    "msg": "\ud83d\udcf8 Photo saved: snap_20260521_111824.jpg",
+    "tag": "y",
+    "time": "11:18:27"
+  },
+  {
+    "msg": "\u26a0\ufe0f Motion detected near device",
+    "tag": "r",
+    "time": "11:19:14"
+  },
+  {
+    "msg": "\ud83d\udcf8 Photo saved: snap_20260521_111914.jpg",
+    "tag": "y",
+    "time": "11:19:16"
+  }
+]

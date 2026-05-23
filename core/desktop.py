@@ -209,6 +209,7 @@ class BrayoOS:
             ("◉", "Ghost",    "ghost_mode.py",         "#44FFCC"),
             ("◫", "Store",    "app_store.py",          "#00AAFF"),
             ("✦", "Settings", "settings.py",           "#CCCCFF"),
+        ]
         for icon, name, script, color in docked:
             f = tk.Frame(bottom, bg=BG2, cursor="hand2", padx=2)
             f.pack(side="left", padx=8, pady=4)
@@ -295,7 +296,7 @@ class BrayoOS:
                     self.root.after(2000, lambda:
                         self.aira_msg.config(text="Ready, Brayo."))
                 else:
-                        text=f"⚠ Not found:\n{script[:18]}")
+                    self.aira_msg.config(text="Not found: "+script[:18])
         except Exception as e:
             self.aira_msg.config(text=f"Error:\n{str(e)[:25]}")
     def clock_tick(self):
