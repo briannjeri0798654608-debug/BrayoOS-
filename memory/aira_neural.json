@@ -1,5 +1,5 @@
 {
-  "sessions": 1,
+  "sessions": 2,
   "patterns": [
     "Encrypting learned data to vault...",
     "manual_train_470_files",
@@ -50,7 +50,8 @@
     "Updating neural weights...",
     "Updating neural weights...",
     "Calculating threat probability...",
-    "Detecting anomalies in session..."
+    "Detecting anomalies in session...",
+    "manual_train_334_files"
   ],
   "predictions": [
     "Suspicious pattern: repeated failed auth detected",
@@ -117,8 +118,43 @@
     "You tend to run WiFi scanner after boot",
     "Network scan likely within this session",
     "You are more active between 11PM - 2AM",
-    "High probability of Vault access detected"
+    "High probability of Vault access detected",
+    "You are more active between 11PM - 2AM",
+    "Network scan likely within this session",
+    "You will open Terminal in the next 2 minutes",
+    "CPU spike predicted in 5 minutes",
+    "You are more active between 11PM - 2AM",
+    "CPU spike predicted in 5 minutes",
+    "CPU spike predicted in 5 minutes",
+    "Suspicious pattern: repeated failed auth detected",
+    "Network scan likely within this session",
+    "You will open Terminal in the next 2 minutes",
+    "High probability of Vault access detected",
+    "High probability of Vault access detected",
+    "Network scan likely within this session",
+    "You are more active between 11PM - 2AM",
+    "Suspicious pattern: repeated failed auth detected",
+    "High probability of Vault access detected",
+    "You will open Terminal in the next 2 minutes",
+    "Network scan likely within this session",
+    "You are more active between 11PM - 2AM",
+    "You tend to run WiFi scanner after boot",
+    "You will open Terminal in the next 2 minutes",
+    "Network scan likely within this session",
+    "Network scan likely within this session",
+    "You are more active between 11PM - 2AM",
+    "You will open Terminal in the next 2 minutes",
+    "AIRA suggests: backup your files now",
+    "Network scan likely within this session",
+    "High probability of Vault access detected",
+    "You will open Terminal in the next 2 minutes",
+    "Network scan likely within this session",
+    "You are more active between 11PM - 2AM",
+    "Suspicious pattern: repeated failed auth detected",
+    "Suspicious pattern: repeated failed auth detected",
+    "You tend to run WiFi scanner after boot",
+    "You are more active between 11PM - 2AM"
   ],
   "user_habits": {},
-  "threat_score": 79
+  "threat_score": 100
 }

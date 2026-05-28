@@ -1,0 +1,32 @@
+from rich.console import Console
+import time
+import os
+
+console = Console()
+
+logo = r"""
+██████╗ ██████╗  █████╗ ██╗   ██╗ ██████╗ ███████╗
+██╔══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝██╔═══██╗██╔════╝
+██████╔╝██████╔╝███████║ ╚████╔╝ ██║   ██║███████╗
+██╔══██╗██╔══██╗██╔══██║  ╚██╔╝  ██║   ██║╚════██║
+██████╔╝██║  ██║██║  ██║   ██║   ╚██████╔╝███████║
+╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚══════╝
+"""
+
+def startup_animation():
+
+    os.system("clear")
+
+    console.print(f"[bold green]{logo}[/bold green]")
+
+    loading = [
+        "Loading kernel...",
+        "Starting AI systems...",
+        "Initializing cyber modules...",
+        "Securing environment...",
+        "Launching BrayoOS..."
+    ]
+
+    for item in loading:
+        console.print(f"[green][+][/green] {item}")
+        time.sleep(1)

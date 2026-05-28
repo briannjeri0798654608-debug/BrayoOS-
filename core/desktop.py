@@ -1,743 +1,677 @@
-"""
-BrayoOS Desktop v5.0 — Upgraded by Brayo & Claude 2026
-"""
 import tkinter as tk
-import subprocess
-import os
-import threading
-import time
-import json
-import urllib.request
+import subprocess,os,threading,time,json,random
 from datetime import datetime
 
-BG      = "#080810"
-BG2     = "#0D0D1A"
-BG3     = "#12122A"
-BG4     = "#0A0A18"
-PURPLE  = "#9D00FF"
-PURPLE2 = "#6A0DAD"
-PURPLE3 = "#3D0066"
-NEON    = "#CC44FF"
-NEON2   = "#FF44FF"
-GREEN   = "#00FF41"
-CYAN    = "#00FFFF"
-AMBER   = "#FFB300"
-RED     = "#FF0044"
-WHITE   = "#E0E0FF"
-DIM     = "#444466"
-DIM2    = "#222244"
-GLOW    = "#7700CC"
+# ── THEME v5.0 ─────────────────────────────────────────────────
+BG="#080810";BG2="#0D0D1A";BG3="#12122A";BG4="#0A0A18"
+PURPLE="#9D00FF";NEON="#CC44FF";NEON2="#FF44FF"
+GREEN="#44FF88";CYAN="#44FFFF";AMBER="#FFB300"
+RED="#FF0044";WHITE="#E0E0FF";DIM="#444466"
+PURPLE2="#6A0DAD";PURPLE3="#3D0066";PURPLE4="#1A0033"
 
-BASE       = os.path.expanduser("~/BrayoOS")
-MEM_DIR    = os.path.join(BASE, "memory")
-STATS_FILE = os.path.join(MEM_DIR, "desktop_stats.json")
-os.makedirs(MEM_DIR, exist_ok=True)
+# ── PATHS ──────────────────────────────────────────────────────
+BASE=os.path.expanduser("~/BrayoOS")
+APPS_DIR=os.path.join(BASE,"core","apps")
+MEM_DIR=os.path.join(BASE,"memory")
+STATS=os.path.join(MEM_DIR,"stats.json")
+os.makedirs(MEM_DIR,exist_ok=True)
 
-APPS = [
-    ("⌨", "Terminal",    "terminal",               PURPLE),
-    ("★", "AIRA AI",     "aria_voice.py",           NEON2),
-    ("◈", "Neural",      "aria_neural_core.py",     NEON),
-    ("◉", "Ghost",       "ghost_mode.py",           CYAN),
-    ("▣", "Vault",       "dna_vault.py",            AMBER),
-    ("◎", "Signal",      "signal_interceptor.py",   "#44CCFF"),
-    ("◆", "Identity",    "identity_switcher.py",    "#FF6644"),
-    ("▲", "Overclock",   "overclock_dashboard.py",  RED),
-    ("●", "Threats",     "live_threat_map.py",      RED),
-    ("🎨", "AI Images",  "ai_image_gen.py",         NEON2),
-    ("🤖", "Auto AIRA",  "aira_autonomous.py",      NEON),
-    ("🕷", "Dark Browse", "dark_web_browser.py",    RED),
-    ("💀", "Hacker RPG", "hacker_rpg.py",           GREEN),
-    ("☁", "Cloud",       "brayos_cloud.py",         CYAN),
-    ("📶", "WiFi Pass",  "wifi_passwords.py",        "#44AAFF"),
-    ("🎯", "IP Grabber", "ip_grabber.py",            RED),
-    ("🔑", "Pass Mgr",   "password_manager.py",     AMBER),
-    ("🔐", "Encryptor",  "file_encryptor.py",       CYAN),
-    ("🧠", "Habits",     "habit_learner.py",        NEON),
-    ("🔮", "Quantum",    "quantum_vault.py",        CYAN),
-    ("🌍", "World Map",  "world_map.py",            RED),
-    ("📱", "Phone Ctrl", "phone_controller.py",     NEON),
-    ("📰", "AI News",    "ai_news.py",              AMBER),
-    ("📡", "eSIM",       "esim_manager.py",         CYAN),
-    ("🌐", "VPN",        "vpn_engine.py",           GREEN),
-    ("🛸", "Satellites", "satellite_tracker.py",    CYAN),
-    ("🔥", "Firewall",   "firewall.py",             RED),
-    ("🌙", "Dream Mode", "dream_mode.py",           PURPLE),
-    ("💀", "Hack Term",  "hack_terminal.py",        GREEN),
-    ("📱", "Social Hub", "social_hub.py",           "#1DA1F2"),
-    ("📷", "Surveil",    "surveillance.py",         RED),
-    ("📊", "Sys Mon",    "system_monitor.py",       GREEN),
-    ("🎨", "Themes",     "theme_changer.py",        NEON2),
-    ("🔐", "Adv Vault",  "advanced_vault.py",       AMBER),
-    ("📡", "Net Scan",   "network_scanner.py",      CYAN),
-    ("🤖", "AIRA Tasks", "aira_tasks.py",           NEON),
-    ("🔒", "Prox Lock",  "proximity_lock.py",       RED),
-    ("🌐", "Web Agent",  "aira_web_agent.py",       "#00AAFF"),
-    ("⊕", "Self-Heal",  "self_healing.py",          GREEN),
-    ("▦", "Wallpaper",  "wallpaper_changer.py",     AMBER),
-    ("☠", "Dark Web",   "dark_web_monitor.py",      RED),
-    ("◫", "App Store",  "app_store.py",             "#00AAFF"),
-    ("♟", "Users",      "user_manager.py",          "#AAAAFF"),
-    ("↻", "Updater",    "brayos_updater.py",        GREEN),
-    ("⊗", "Browser",    "browser.py",              "#44AAFF"),
-    ("♫", "Music",      "music_player.py",          "#FF44AA"),
-    ("▤", "Files",      "file_manager.py",          AMBER),
-    ("▧", "Editor",     "editor.py",               "#88FFAA"),
-    ("#", "Calc",       "calculator.py",            "#FFFF44"),
-    ("◷", "Clock",      "clock.py",                CYAN),
-    ("☁", "Weather",    "weather.py",              "#88AAFF"),
-    ("¤", "Crypto",     "crypto.py",               AMBER),
-    ("▨", "News",       "news.py",                 AMBER),
-    ("✓", "Tasks",      "tasks.py",                GREEN),
-    ("▯", "SMS",        "sms.py",                  NEON2),
-    ("♛", "Contacts",   "contacts.py",             "#FFAAFF"),
-    ("▪", "Backup",     "backup.py",               "#AAFFAA"),
-    ("▶", "Our Story",  "our_story.py",            AMBER),
-    ("✦", "Settings",   "settings.py",             "#CCCCFF"),
+# ── APPS v5.0 ──────────────────────────────────────────────────
+APPS=[
+    ("★","AIRA AI","aria_voice.py",NEON2),
+    ("◈","Neural","aria_neural_core.py",NEON),
+    ("🤖","Auto AIRA","aira_autonomous.py",NEON),
+    ("🎯","AIRA Tasks","aira_tasks.py",NEON),
+    ("🌐","Web Agent","aira_web_agent.py","#00AAFF"),
+    ("🎨","AI Images","ai_image_gen.py",NEON2),
+    ("📰","AI News","ai_news.py",AMBER),
+    ("🧠","Habits","habit_learner.py",NEON),
+    ("◉","Ghost Mode","ghost_mode.py",CYAN),
+    ("▣","DNA Vault","dna_vault.py",AMBER),
+    ("🔮","Quantum","quantum_vault.py",CYAN),
+    ("🔐","Adv Vault","advanced_vault.py",AMBER),
+    ("◎","Signal","signal_interceptor.py","#44CCFF"),
+    ("◆","Identity","identity_switcher.py","#FF6644"),
+    ("●","Threats","live_threat_map.py",RED),
+    ("☠","Dark Web","dark_web_monitor.py",RED),
+    ("🕷","Dark Browse","dark_web_browser.py",RED),
+    ("🔍","OSINT","osint_suite.py","#CC44FF"),
+    ("🔥","Firewall","firewall.py",RED),
+    ("🌐","VPN","vpn_engine.py",GREEN),
+    ("📡","eSIM","esim_manager.py",CYAN),
+    ("📶","WiFi Pass","wifi_passwords.py","#44AAFF"),
+    ("🎯","IP Grabber","ip_grabber.py",RED),
+    ("📡","Net Scan","network_scanner.py",CYAN),
+    ("📷","Surveil","surveillance.py",RED),
+    ("🔑","Pass Mgr","password_manager.py",AMBER),
+    ("🔐","Encryptor","file_encryptor.py",CYAN),
+    ("👁","Face Lock","face_lock.py","#44FFCC"),
+    ("📶","WiFi Audit","wifi_auditor.py","#44AAFF"),
+    ("🧬","Lie Detect","lie_detector.py",NEON),
+    ("▲","Overclock","overclock_dashboard.py",RED),
+    ("📊","Sys Mon","system_monitor.py",GREEN),
+    ("🧬","Self-Heal","self_healing.py",GREEN),
+    ("♟","Users","user_manager.py","#AAAAFF"),
+    ("↻","Updater","brayos_updater.py",GREEN),
+    ("☁","Cloud","brayos_cloud.py",CYAN),
+    ("🌙","Dream Mode","dream_mode.py",PURPLE),
+    ("🎨","Themes","theme_changer.py",NEON2),
+    ("🛸","Satellites","satellite_tracker.py",CYAN),
+    ("🌍","World Map","world_map.py",RED),
+    ("📱","Phone Ctrl","phone_controller.py",NEON),
+    ("💀","Hack Term","hack_terminal.py",GREEN),
+    ("💀","Hacker RPG","hacker_rpg.py",GREEN),
+    ("📱","Social Hub","social_hub.py","#1DA1F2"),
+    ("💰","Crypto Wallet","crypto_wallet.py",AMBER),
+    ("🎙","Voice Cmd","voice_commands.py",NEON2),
+    ("⊗","Browser","browser.py","#44AAFF"),
+    ("♫","Music","music_player.py","#FF44AA"),
+    ("☁","Weather","weather.py","#88AAFF"),
+    ("¤","Crypto","crypto.py",AMBER),
+    ("▨","News","news.py",AMBER),
+    ("▤","Files","file_manager.py",AMBER),
+    ("▧","Editor","editor.py","#88FFAA"),
+    ("#","Calc","calculator.py","#FFFF44"),
+    ("◷","Clock","clock.py",CYAN),
+    ("✓","Tasks","tasks.py",GREEN),
+    ("▯","SMS","sms.py",NEON2),
+    ("♛","Contacts","contacts.py","#FFAAFF"),
+    ("▦","Wallpaper","wallpaper_changer.py",AMBER),
+    ("◫","App Store","app_store.py","#00AAFF"),
+    ("▪","Backup","backup.py","#AAFFAA"),
+    ("▶","Our Story","our_story.py",AMBER),
+    ("✦","Settings","settings.py","#CCCCFF"),
 ]
 
-CATS = {
-    "ALL":      None,
-    "AI":       ["aria_voice.py","aria_neural_core.py","aira_autonomous.py",
-                 "aira_tasks.py","aira_web_agent.py","ai_image_gen.py","ai_news.py"],
-    "SECURITY": ["ghost_mode.py","dna_vault.py","signal_interceptor.py",
-                 "identity_switcher.py","live_threat_map.py","dark_web_monitor.py",
-                 "firewall.py","vpn_engine.py","proximity_lock.py","quantum_vault.py"],
-    "SYSTEM":   ["overclock_dashboard.py","self_healing.py","brayos_updater.py",
-                 "user_manager.py","settings.py","backup.py","system_monitor.py"],
-    "TOOLS":    ["calculator.py","clock.py","editor.py","tasks.py",
-                 "wallpaper_changer.py","app_store.py","file_encryptor.py",
-                 "password_manager.py","habit_learner.py"],
-    "MEDIA":    ["music_player.py","browser.py","weather.py","news.py",
-                 "crypto.py","world_map.py","satellite_tracker.py"],
-    "PERSONAL": ["sms.py","contacts.py","file_manager.py","our_story.py",
-                 "social_hub.py","phone_controller.py"],
-    "HACK":     ["hack_terminal.py","dark_web_browser.py","hacker_rpg.py",
-                 "network_scanner.py","ip_grabber.py","wifi_passwords.py",
-                 "signal_interceptor.py"],
+CATS={
+    "ALL":None,
+    "AI":["aria_voice.py","aria_neural_core.py","aira_autonomous.py",
+          "aira_tasks.py","aira_web_agent.py","ai_image_gen.py",
+          "ai_news.py","habit_learner.py"],
+    "SECURITY":["ghost_mode.py","dna_vault.py","quantum_vault.py",
+                "signal_interceptor.py","identity_switcher.py",
+                "live_threat_map.py","dark_web_monitor.py","firewall.py",
+                "vpn_engine.py","proximity_lock.py","advanced_vault.py",
+                "face_lock.py","lie_detector.py"],
+    "HACK":["hack_terminal.py","dark_web_browser.py","hacker_rpg.py",
+            "network_scanner.py","ip_grabber.py","wifi_passwords.py",
+            "wifi_auditor.py","osint_suite.py","signal_interceptor.py"],
+    "NETWORK":["vpn_engine.py","esim_manager.py","satellite_tracker.py",
+               "network_scanner.py","ip_grabber.py"],
+    "SYSTEM":["overclock_dashboard.py","self_healing.py","brayos_updater.py",
+              "user_manager.py","settings.py","backup.py","system_monitor.py",
+              "dream_mode.py","brayos_cloud.py","theme_changer.py"],
+    "TOOLS":["calculator.py","clock.py","editor.py","tasks.py",
+             "wallpaper_changer.py","app_store.py","file_encryptor.py",
+             "password_manager.py","voice_commands.py"],
+    "MEDIA":["music_player.py","browser.py","weather.py","crypto.py",
+             "world_map.py","satellite_tracker.py","ai_news.py",
+             "social_hub.py","crypto_wallet.py"],
+    "PERSONAL":["sms.py","contacts.py","file_manager.py","our_story.py",
+                "phone_controller.py","surveillance.py"],
 }
 
-ARIA_MESSAGES = [
-    "Watching over you 👁",
-    "All systems nominal.",
-    "Ready when you are.",
-    "Threat level: zero.",
-    "Neural core active.",
-    "Encrypted. Secure.",
-    "Built Different 🇰🇪",
-    "Brayo's got this.",
-]
+def load_stats():
+    try:
+        with open(STATS) as f:return json.load(f)
+    except:return {"launches":0,"most_used":{},"last_boot":str(datetime.now())}
+
+def save_stats(s):
+    try:
+        with open(STATS,"w") as f:json.dump(s,f,indent=2)
+    except:pass
+
+class BootScreen:
+    def __init__(self,root,on_done):
+        self.root=root
+        self.on_done=on_done
+        self.frame=tk.Frame(root,bg="#000000")
+        self.frame.place(relwidth=1,relheight=1)
+        self.canvas=tk.Canvas(self.frame,bg="#000000",highlightthickness=0)
+        self.canvas.pack(fill="both",expand=True)
+        self.y=60
+        self.idx=0
+        self.lines=[
+            ("◈ BrayoOS v5.0 — Initializing kernel...",PURPLE),
+            ("  [OK] Loading Python 3.13 runtime",GREEN),
+            ("  [OK] Mounting BrayoOS filesystem",GREEN),
+            ("  [OK] Starting AIRA neural engine...",NEON),
+            ("  [OK] Loading 63 applications",GREEN),
+            ("  [OK] Decrypting DNA Vault",AMBER),
+            ("  [OK] Arming Ghost Mode",CYAN),
+            ("  [OK] Connecting Groq AI (LLaMA 3.3 70B)",NEON),
+            ("  [OK] Calibrating threat detection",RED),
+            ("  [OK] Initializing satellite tracker",CYAN),
+            ("  [OK] Loading BrayoOS v5.0 theme",PURPLE),
+            ("  [OK] Two minds. One OS. Built Different.",GREEN),
+            ("",""),
+            ("  ██████╗ ██████╗  █████╗ ██╗   ██╗ ██████╗  ██████╗ ███████╗",PURPLE),
+            ("  ██╔══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝██╔═══██╗██╔════╝ ██╔════╝",PURPLE),
+            ("  ██████╔╝██████╔╝███████║ ╚████╔╝ ██║   ██║╚█████╗  ███████╗",NEON),
+            ("  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═╝   ╚═════╝  ╚═════╝  ╚══════╝",NEON),
+            ("",""),
+            ("  v5.0 — Kenya 🇰🇪 — Built by Brayo & AIRA",AMBER),
+            ("  Welcome back, Brayo. Systems ready.",GREEN),
+        ]
+        self._type_next()
+
+    def _type_next(self):
+        if self.idx<len(self.lines):
+            text,color=self.lines[self.idx]
+            if text:
+                self.canvas.create_text(
+                    40,self.y,text=text,fill=color,
+                    font=("Courier",10),anchor="w")
+                self.y+=22
+            else:
+                self.y+=8
+            self.idx+=1
+            delay=60 if "██" in text else 120
+            self.root.after(delay,self._type_next)
+        else:
+            self.root.after(800,self._finish)
+
+    def _finish(self):
+        self.frame.destroy()
+        self.on_done()
+
+class NotifCenter:
+    def __init__(self,root):
+        self.root=root
+        self.notifs=[]
+        self.win=None
+
+    def add(self,title,msg,color=NEON):
+        ts=datetime.now().strftime("%H:%M")
+        self.notifs.insert(0,{"title":title,"msg":msg,"color":color,"time":ts})
+        if self.win and self.win.winfo_exists():
+            self._render()
+
+    def toggle(self):
+        if self.win and self.win.winfo_exists():
+            self.win.destroy();self.win=None;return
+        self.win=tk.Toplevel(self.root)
+        self.win.title("Notifications")
+        self.win.geometry("300x400+900+50")
+        self.win.configure(bg=BG2)
+        self.win.attributes("-topmost",True)
+        hdr=tk.Frame(self.win,bg=BG3)
+        hdr.pack(fill="x",padx=6,pady=6)
+        tk.Label(hdr,text="🔔 NOTIFICATIONS",font=("Courier",10,"bold"),bg=BG3,fg=NEON).pack(side="left",padx=8,pady=6)
+        tk.Button(hdr,text="CLEAR",font=("Courier",8),bg=PURPLE3,fg=WHITE,
+                 relief="flat",command=self.clear).pack(side="right",padx=6,pady=4)
+        self.notif_frame=tk.Frame(self.win,bg=BG2)
+        self.notif_frame.pack(fill="both",expand=True,padx=6)
+        self._render()
+
+    def _render(self):
+        if not self.win:return
+        for w in self.notif_frame.winfo_children():w.destroy()
+        if not self.notifs:
+            tk.Label(self.notif_frame,text="No notifications",
+                    font=("Courier",9),bg=BG2,fg=DIM).pack(pady=20)
+            return
+        for n in self.notifs[:10]:
+            card=tk.Frame(self.notif_frame,bg=BG3);card.pack(fill="x",pady=3)
+            tk.Frame(card,bg=n["color"],width=3).pack(side="left",fill="y")
+            c=tk.Frame(card,bg=BG3);c.pack(side="left",fill="x",expand=True,padx=6,pady=5)
+            tk.Label(c,text=n["title"],font=("Courier",9,"bold"),bg=BG3,fg=n["color"]).pack(anchor="w")
+            tk.Label(c,text=n["msg"],font=("Courier",8),bg=BG3,fg=WHITE,wraplength=200).pack(anchor="w")
+            tk.Label(card,text=n["time"],font=("Courier",6),bg=BG3,fg=DIM).pack(side="right",padx=4,anchor="n",pady=4)
+
+    def clear(self):
+        self.notifs=[]
+        self._render()
+
+class WidgetBar:
+    def __init__(self,parent,root):
+        self.root=root
+        self.frame=tk.Frame(parent,bg=BG4,height=82)
+        self.frame.pack(fill="x")
+        self.frame.pack_propagate(False)
+        tk.Frame(self.frame,bg=PURPLE3,height=1).pack(fill="x")
+        inner=tk.Frame(self.frame,bg=BG4)
+        inner.pack(fill="both",expand=True,padx=8,pady=4)
+
+        # Clock widget
+        cw=self._widget(inner,PURPLE)
+        self.clock_lbl=tk.Label(cw,text="",font=("Courier",15,"bold"),bg=BG3,fg=NEON)
+        self.clock_lbl.pack(pady=(4,0))
+        self.date_lbl=tk.Label(cw,text="",font=("Courier",7),bg=BG3,fg=DIM)
+        self.date_lbl.pack(pady=(0,4))
+
+        # AIRA widget
+        aw=self._widget(inner,NEON2)
+        tk.Label(aw,text="AIRA v5.0",font=("Courier",8,"bold"),bg=BG3,fg=NEON2).pack(pady=(4,0))
+        self.aira_dot=tk.Label(aw,text="◉ ONLINE",font=("Courier",7),bg=BG3,fg=GREEN)
+        self.aira_dot.pack()
+        self.aira_msg=tk.Label(aw,text="Watching over you",font=("Courier",6),bg=BG3,fg=DIM,wraplength=120)
+        self.aira_msg.pack(pady=(0,4))
+
+        # Battery widget
+        bw=self._widget(inner,AMBER)
+        tk.Label(bw,text="BATTERY",font=("Courier",7,"bold"),bg=BG3,fg=AMBER).pack(pady=(4,0))
+        self.bat_lbl=tk.Label(bw,text="--",font=("Courier",14,"bold"),bg=BG3,fg=AMBER)
+        self.bat_lbl.pack()
+        self.bat_bar=tk.Canvas(bw,width=100,height=6,bg=BG3,highlightthickness=0)
+        self.bat_bar.pack(pady=(0,4))
+
+        # Stats widget
+        sw=self._widget(inner,GREEN)
+        tk.Label(sw,text="BRAYOOS",font=("Courier",7,"bold"),bg=BG3,fg=GREEN).pack(pady=(4,0))
+        self.apps_lbl=tk.Label(sw,text=f"{len(APPS)} apps",font=("Courier",8),bg=BG3,fg=WHITE)
+        self.apps_lbl.pack()
+        self.launch_lbl=tk.Label(sw,text="0 launches",font=("Courier",6),bg=BG3,fg=DIM)
+        self.launch_lbl.pack(pady=(0,4))
+
+        # Uptime widget
+        self.start=datetime.now()
+        uw=self._widget(inner,CYAN)
+        tk.Label(uw,text="SESSION",font=("Courier",7,"bold"),bg=BG3,fg=CYAN).pack(pady=(4,0))
+        self.uptime_lbl=tk.Label(uw,text="00:00",font=("Courier",14,"bold"),bg=BG3,fg=CYAN)
+        self.uptime_lbl.pack()
+        tk.Label(uw,text="🇰🇪 Built Different",font=("Courier",6),bg=BG3,fg=DIM).pack(pady=(0,4))
+
+        # Version widget
+        vw=self._widget(inner,PURPLE)
+        tk.Label(vw,text="VERSION",font=("Courier",7,"bold"),bg=BG3,fg=PURPLE).pack(pady=(4,0))
+        tk.Label(vw,text="v5.0",font=("Courier",14,"bold"),bg=BG3,fg=NEON).pack()
+        tk.Label(vw,text="Brayo & AIRA",font=("Courier",6),bg=BG3,fg=DIM).pack(pady=(0,4))
+
+        tk.Frame(self.frame,bg=PURPLE3,height=1).pack(fill="x")
+        self._tick()
+
+    def _widget(self,parent,color):
+        outer=tk.Frame(parent,bg=color,padx=1,pady=1)
+        outer.pack(side="left",padx=5,pady=2)
+        inner=tk.Frame(outer,bg=BG3,width=125)
+        inner.pack();inner.pack_propagate(False)
+        return inner
+
+    def _tick(self):
+        now=datetime.now()
+        self.clock_lbl.config(text=now.strftime("%H:%M:%S"))
+        self.date_lbl.config(text=now.strftime("%a %d %b %Y"))
+        elapsed=now-self.start
+        m,s=divmod(int(elapsed.total_seconds()),60)
+        h,m=divmod(m,60)
+        self.uptime_lbl.config(text=f"{h:02}:{m:02}:{s:02}" if h else f"{m:02}:{s:02}")
+        self._get_battery()
+        self.root.after(1000,self._tick)
+
+    def _get_battery(self):
+        try:
+            r=subprocess.run(["termux-battery-status"],capture_output=True,text=True,timeout=2)
+            if r.returncode==0:
+                d=json.loads(r.stdout)
+                p=d.get("percentage",0)
+                st=d.get("status","")
+                col=GREEN if p>50 else AMBER if p>20 else RED
+                self.bat_lbl.config(text=f"{p}%{'⚡' if st=='CHARGING' else ''}",fg=col)
+                self.bat_bar.delete("all")
+                self.bat_bar.create_rectangle(0,0,100,6,fill=BG2,outline="")
+                self.bat_bar.create_rectangle(0,0,p,6,fill=col,outline="")
+        except:
+            self.bat_lbl.config(text="OK",fg=GREEN)
+
+    def set_launches(self,n):
+        self.launch_lbl.config(text=f"{n} launches")
+
+    def set_aira(self,msg):
+        self.aira_msg.config(text=msg)
 
 class BrayoOS:
     def __init__(self):
-        self.root = tk.Tk()
+        self.root=tk.Tk()
         self.root.title("BrayoOS v5.0")
-        self.root.attributes("-fullscreen", True)
+        self.root.geometry("1280x800")
         self.root.configure(bg=BG)
-        self.current_cat = "ALL"
-        self.pulse_state = True
-        self.search_query = ""
-        self.recent_apps = []
-        self.notif_visible = False
-        self.notifications = []
-        self.launch_count = self._load_launches()
-        self.aria_chat_history = []
-        self._boot_sequence()
-
-    def _load_launches(self):
-        try:
-            with open(STATS_FILE) as f:
-                return json.load(f).get("launches", 0)
-        except:
-            return 0
-
-    def _save_launches(self):
-        try:
-            with open(STATS_FILE, "w") as f:
-                json.dump({"launches": self.launch_count,
-                           "date": datetime.now().strftime("%Y-%m-%d")}, f)
-        except:
-            pass
-
-    def _boot_sequence(self):
-        self.boot_frame = tk.Frame(self.root, bg="#000000")
-        self.boot_frame.place(relwidth=1, relheight=1)
-        self.boot_canvas = tk.Canvas(self.boot_frame, bg="#000000",
-                                     highlightthickness=0)
-        self.boot_canvas.pack(fill="both", expand=True)
-        self.boot_canvas.create_text(
-            200, 40, text="◈ BrayoOS v5.0", fill=PURPLE,
-            font=("Courier", 18, "bold"), anchor="w")
-        self.boot_canvas.create_text(
-            200, 65, text="Two minds. One OS. Built Different. 🇰🇪",
-            fill=DIM, font=("Courier", 9), anchor="w")
-        lines = [
-            ("  Initializing kernel...",          PURPLE),
-            ("  Loading neural core...",          NEON),
-            ("  Starting ARIA AI partner...",     NEON2),
-            ("  Mounting security layer...",      GREEN),
-            ("  Decrypting DNA vault...",         AMBER),
-            ("  Calibrating threat detection...", RED),
-            (f"  Loading {len(APPS)} apps...",    CYAN),
-            ("  Applying BrayoOS theme...",       PURPLE),
-            ("  System ready. Welcome, Brayo.",   GREEN),
-        ]
-        self._boot_lines = lines
-        self._boot_idx = 0
-        self._boot_y = 100
-        self._show_boot_line()
-
-    def _show_boot_line(self):
-        if self._boot_idx < len(self._boot_lines):
-            text, color = self._boot_lines[self._boot_idx]
-            self.boot_canvas.create_text(
-                60, self._boot_y, text=text, fill=color,
-                font=("Courier", 11), anchor="w")
-            self._boot_y += 26
-            self._boot_idx += 1
-            self.root.after(160, self._show_boot_line)
-        else:
-            self.root.after(500, self._finish_boot)
-
-    def _finish_boot(self):
-        self.boot_frame.destroy()
-        self._build_ui()
+        self.root.resizable(True,True)
+        self.cat="ALL"
+        self.search_q=""
+        self.stats=load_stats()
+        self.notif=NotifCenter(self.root)
+        self.pulse_state=True
+        self._setup_keys()
+        BootScreen(self.root,self._build)
         self.root.mainloop()
 
-    def _build_ui(self):
-        self._build_topbar()
-        self._build_widget_bar()
-        self._build_search_bar()
-        self._build_catbar()
-        self._build_main()
-        self._build_taskbar()
-        self._setup_shortcuts()
-        self._add_notification("BrayoOS v5.0", "System booted successfully", GREEN)
-        self._add_notification("ARIA", "AI partner online and ready", NEON)
-        self._add_notification("Security", "All systems nominal", CYAN)
-        self._clock_tick()
-        self._pulse_loop()
-        self._aria_rotate()
+    def _setup_keys(self):
+        self.root.bind("<F5>",lambda e:self.render_apps(self.cat))
+        self.root.bind("<Escape>",lambda e:self._focus_search())
+        self.root.bind("<Control-q>",lambda e:self.root.destroy())
+        self.root.bind("<F1>",lambda e:self._show_help())
 
-    def _build_topbar(self):
-        top = tk.Frame(self.root, bg=BG2, height=40)
-        top.pack(fill="x", side="top")
-        top.pack_propagate(False)
-        lf = tk.Frame(top, bg=BG2)
-        lf.pack(side="left", padx=10)
-        tk.Label(lf, text="◈ ", font=("Courier", 13, "bold"),
-                 bg=BG2, fg=PURPLE).pack(side="left")
-        tk.Label(lf, text="BrayoOS", font=("Courier", 13, "bold"),
-                 bg=BG2, fg=WHITE).pack(side="left")
-        tk.Label(lf, text=" v5.0", font=("Courier", 9),
-                 bg=BG2, fg=DIM).pack(side="left")
-        self.notif_badge = tk.Label(top, text="3", font=("Courier", 7, "bold"),
-                                    bg=RED, fg=WHITE, padx=3)
-        self.notif_badge.pack(side="right", padx=(0,2))
-        notif_btn = tk.Label(top, text="🔔", font=("Arial", 12),
-                             bg=BG2, cursor="hand2")
-        notif_btn.pack(side="right", padx=(0,2))
-        notif_btn.bind("<Button-1>", lambda e: self._toggle_notifications())
-        self.clock_lbl = tk.Label(top, text="", font=("Courier", 10),
-                                  bg=BG2, fg=NEON)
-        self.clock_lbl.pack(side="right", padx=8)
-        tk.Label(top, text="🇰🇪", font=("Arial", 13), bg=BG2).pack(side="right", padx=4)
-        self.pulse_dot = tk.Label(top, text="⬤ ARIA",
-                                  font=("Courier", 9, "bold"),
-                                  bg=BG2, fg=PURPLE)
-        self.pulse_dot.pack(side="right", padx=8)
-        tk.Label(top, text="ESC:Search  F5:Refresh  Ctrl+Q:Quit",
-                 font=("Courier", 7), bg=BG2, fg=DIM2).pack(side="right", padx=10)
-        tk.Frame(self.root, bg=PURPLE, height=2).pack(fill="x")
-
-    def _build_widget_bar(self):
-        bar = tk.Frame(self.root, bg=BG4)
-        bar.pack(fill="x")
-        tk.Frame(bar, bg=PURPLE3, height=1).pack(fill="x")
-        inner = tk.Frame(bar, bg=BG4)
-        inner.pack(fill="x", padx=10, pady=4)
-        cw = self._widget_card(inner, PURPLE)
-        self.w_clock = tk.Label(cw, text="", font=("Courier", 15, "bold"),
-                                bg=BG3, fg=NEON)
-        self.w_clock.pack(pady=(4,0))
-        self.w_date = tk.Label(cw, text="", font=("Courier", 7),
-                               bg=BG3, fg=DIM)
-        self.w_date.pack(pady=(0,4))
-        aw = self._widget_card(inner, NEON2)
-        tk.Label(aw, text="ARIA", font=("Courier", 9, "bold"),
-                 bg=BG3, fg=NEON2).pack(pady=(4,0))
-        self.w_aria_status = tk.Label(aw, text="● ONLINE",
-                                      font=("Courier", 7), bg=BG3, fg=GREEN)
-        self.w_aria_status.pack()
-        self.w_aria_msg = tk.Label(aw, text="Watching over you",
-                                   font=("Courier", 6), bg=BG3,
-                                   fg=DIM, wraplength=110)
-        self.w_aria_msg.pack(pady=(0,4))
-        bw = self._widget_card(inner, AMBER)
-        tk.Label(bw, text="BATTERY", font=("Courier", 7, "bold"),
-                 bg=BG3, fg=AMBER).pack(pady=(4,0))
-        self.w_bat = tk.Label(bw, text="---", font=("Courier", 14, "bold"),
-                              bg=BG3, fg=AMBER)
-        self.w_bat.pack()
-        self.w_bat_bar = tk.Canvas(bw, width=90, height=7,
-                                   bg=BG3, highlightthickness=0)
-        self.w_bat_bar.pack(pady=(0,4))
-        sw = self._widget_card(inner, GREEN)
-        tk.Label(sw, text="STATS", font=("Courier", 7, "bold"),
-                 bg=BG3, fg=GREEN).pack(pady=(4,0))
-        self.w_apps = tk.Label(sw, text=f"{len(APPS)} apps",
-                               font=("Courier", 8), bg=BG3, fg=WHITE)
-        self.w_apps.pack()
-        self.w_launches = tk.Label(sw, text=f"{self.launch_count} launches",
-                                   font=("Courier", 6), bg=BG3, fg=DIM)
-        self.w_launches.pack(pady=(0,4))
-        self.session_start = datetime.now()
-        sv = self._widget_card(inner, CYAN)
-        tk.Label(sv, text="SESSION", font=("Courier", 7, "bold"),
-                 bg=BG3, fg=CYAN).pack(pady=(4,0))
-        self.w_uptime = tk.Label(sv, text="00:00",
-                                 font=("Courier", 14, "bold"),
-                                 bg=BG3, fg=CYAN)
-        self.w_uptime.pack()
-        tk.Label(sv, text="🇰🇪 Built Different",
-                 font=("Courier", 6), bg=BG3, fg=DIM).pack(pady=(0,4))
-        tk.Frame(bar, bg=PURPLE3, height=1).pack(fill="x")
-
-    def _widget_card(self, parent, color):
-        outer = tk.Frame(parent, bg=color, padx=1, pady=1)
-        outer.pack(side="left", padx=5, pady=2)
-        inner = tk.Frame(outer, bg=BG3, width=120)
-        inner.pack()
-        inner.pack_propagate(False)
-        return inner
-
-    def _build_search_bar(self):
-        sf = tk.Frame(self.root, bg=BG)
-        sf.pack(fill="x", padx=10, pady=3)
-        tk.Label(sf, text="⌕", font=("Courier", 12),
-                 bg=BG, fg=PURPLE).pack(side="left", padx=(0,4))
-        self.search_var = tk.StringVar()
-        self.search_var.trace("w", lambda *a: self._on_search())
-        self.search_entry = tk.Entry(sf, textvariable=self.search_var,
-                                     bg=BG3, fg=WHITE,
-                                     font=("Courier", 10),
-                                     insertbackground=NEON,
-                                     relief="flat", bd=0)
-        self.search_entry.pack(side="left", fill="x", expand=True,
-                               ipady=5, ipadx=8)
-        tk.Label(sf, text="ESC to clear", font=("Courier", 7),
-                 bg=BG, fg=DIM).pack(side="right")
-        self.search_entry.bind("<Escape>", lambda e: self._clear_search())
-        tk.Frame(self.root, bg=PURPLE3, height=1).pack(fill="x")
-
-    def _on_search(self):
-        self.search_query = self.search_var.get().lower().strip()
-        self._render_apps()
-
-    def _clear_search(self):
-        self.search_var.set("")
-        self.search_entry.focus_set()
-
-    def _build_catbar(self):
-        catbar = tk.Frame(self.root, bg=BG, height=34)
-        catbar.pack(fill="x")
-        catbar.pack_propagate(False)
-        self.cat_btns = {}
-        for cat in CATS:
-            b = tk.Button(catbar, text=cat,
-                          font=("Courier", 8, "bold"),
-                          bg=BG, fg=DIM, relief="flat",
-                          padx=10, pady=5,
-                          activebackground=PURPLE3,
-                          activeforeground=NEON, bd=0,
-                          command=lambda c=cat: self._switch_cat(c))
-            b.pack(side="left", padx=1)
-            self.cat_btns[cat] = b
-        self.cat_btns["ALL"].config(bg=PURPLE3, fg=NEON)
-        tk.Frame(self.root, bg=PURPLE3, height=1).pack(fill="x")
-
-    def _build_main(self):
-        self.main_frame = tk.Frame(self.root, bg=BG)
-        self.main_frame.pack(fill="both", expand=True)
-        self._build_sidebar()
-        self._build_app_grid()
-        self._build_notif_panel()
-
-    def _build_sidebar(self):
-        side = tk.Frame(self.main_frame, bg=BG2, width=148)
-        side.pack(side="left", fill="y")
-        side.pack_propagate(False)
-        aira_card = tk.Frame(side, bg=BG3)
-        aira_card.pack(fill="x", padx=8, pady=8)
-        tk.Label(aira_card, text="ARIA", font=("Courier", 15, "bold"),
-                 bg=BG3, fg=NEON).pack(pady=(8,0))
-        tk.Label(aira_card, text="AI PARTNER v5", font=("Courier", 6),
-                 bg=BG3, fg=PURPLE).pack()
-        tk.Frame(aira_card, bg=PURPLE, height=1).pack(fill="x", padx=8, pady=4)
-        self.aira_msg = tk.Label(aira_card, text="Ready, Brayo.",
-                                 font=("Courier", 8), bg=BG3,
-                                 fg=WHITE, wraplength=128, justify="center")
-        self.aira_msg.pack(pady=(0,5))
-        chat_f = tk.Frame(aira_card, bg=BG3)
-        chat_f.pack(fill="x", padx=5, pady=(0,6))
-        self.aria_input = tk.Entry(chat_f, bg=BG4, fg=WHITE,
-                                   font=("Courier", 7),
-                                   insertbackground=NEON,
-                                   relief="flat", bd=0)
-        self.aria_input.pack(side="left", fill="x", expand=True, ipady=3, ipadx=4)
-        self.aria_input.insert(0, "Ask ARIA...")
-        self.aria_input.bind("<FocusIn>", lambda e: self._aria_input_focus())
-        self.aria_input.bind("<Return>", lambda e: self._aria_chat())
-        ask_btn = tk.Label(chat_f, text="▶", font=("Courier", 8),
-                           bg=PURPLE3, fg=NEON, padx=4, cursor="hand2")
-        ask_btn.pack(side="right")
-        ask_btn.bind("<Button-1>", lambda e: self._aria_chat())
-        tk.Label(side, text="── RECENT ──",
-                 font=("Courier", 6, "bold"),
-                 bg=BG2, fg=PURPLE2).pack(pady=(6,2))
-        self.recent_frame = tk.Frame(side, bg=BG2)
-        self.recent_frame.pack(fill="x", padx=6)
-        self._render_recent()
-        tk.Label(side, text="── QUICK LAUNCH ──",
-                 font=("Courier", 6, "bold"),
-                 bg=BG2, fg=PURPLE2).pack(pady=(6,2))
-        quick = [
-            ("☠", "Dark Web",   "dark_web_monitor.py", RED),
-            ("◉", "Ghost Mode", "ghost_mode.py",        CYAN),
-            ("▣", "DNA Vault",  "dna_vault.py",         AMBER),
-            ("●", "Threat Map", "live_threat_map.py",   RED),
-            ("★", "AIRA AI",    "aria_voice.py",        NEON2),
-        ]
-        for icon, name, script, color in quick:
-            btn = tk.Frame(side, bg=BG2, cursor="hand2")
-            btn.pack(fill="x", padx=6, pady=1)
-            inner = tk.Frame(btn, bg=BG3)
-            inner.pack(fill="x")
-            tk.Label(inner, text=icon, font=("Courier", 10, "bold"),
-                     bg=BG3, fg=color, width=3).pack(side="left", padx=4, pady=4)
-            tk.Label(inner, text=name, font=("Courier", 7),
-                     bg=BG3, fg=WHITE).pack(side="left")
-            for w in [btn, inner] + list(inner.winfo_children()):
-                w.bind("<Button-1>", lambda e, s=script: self.launch(s))
-                w.bind("<Enter>", lambda e, f=inner: f.config(bg=PURPLE3))
-                w.bind("<Leave>", lambda e, f=inner: f.config(bg=BG3))
-        tk.Frame(side, bg=PURPLE3, height=1).pack(fill="x", padx=8, pady=6)
-        tk.Label(side, text=f"◈ {len(APPS)} apps installed",
-                 font=("Courier", 6), bg=BG2, fg=PURPLE2).pack()
-        tk.Label(side, text="Built Different 🇰🇪",
-                 font=("Courier", 6), bg=BG2, fg=PURPLE3).pack(pady=2)
-
-    def _build_app_grid(self):
-        grid_outer = tk.Frame(self.main_frame, bg=BG)
-        grid_outer.pack(side="left", fill="both", expand=True, padx=(4,0))
-        self.canvas = tk.Canvas(grid_outer, bg=BG, highlightthickness=0)
-        sb = tk.Scrollbar(grid_outer, orient="vertical",
-                          command=self.canvas.yview,
-                          bg=BG2, troughcolor=BG, width=7)
-        self.canvas.configure(yscrollcommand=sb.set)
-        sb.pack(side="right", fill="y")
-        self.canvas.pack(side="left", fill="both", expand=True)
-        self.grid_frame = tk.Frame(self.canvas, bg=BG)
-        self.canvas.create_window((0,0), window=self.grid_frame, anchor="nw")
-        self.grid_frame.bind("<Configure>", lambda e:
-            self.canvas.configure(scrollregion=self.canvas.bbox("all")))
-        self.canvas.bind("<MouseWheel>", lambda e:
-            self.canvas.yview_scroll(-1*(e.delta//120), "units"))
-        self.canvas.bind("<Button-4>", lambda e:
-            self.canvas.yview_scroll(-1, "units"))
-        self.canvas.bind("<Button-5>", lambda e:
-            self.canvas.yview_scroll(1, "units"))
-        self._render_apps()
-
-    def _build_notif_panel(self):
-        self.notif_panel = tk.Frame(self.main_frame, bg=BG2, width=240)
-        hdr = tk.Frame(self.notif_panel, bg=BG3)
-        hdr.pack(fill="x", padx=5, pady=(6,3))
-        tk.Label(hdr, text="🔔 NOTIFICATIONS", font=("Courier", 8, "bold"),
-                 bg=BG3, fg=NEON).pack(side="left", padx=6, pady=4)
-        tk.Button(hdr, text="CLEAR", font=("Courier", 7),
-                  bg=PURPLE3, fg=WHITE, relief="flat",
-                  command=self._clear_notifications).pack(side="right", padx=4, pady=3)
-        self.notif_list = tk.Frame(self.notif_panel, bg=BG2)
-        self.notif_list.pack(fill="both", expand=True, padx=5)
-
-    def _build_taskbar(self):
-        bottom = tk.Frame(self.root, bg=BG2, height=46)
-        bottom.pack(fill="x", side="bottom")
-        bottom.pack_propagate(False)
-        docked = [
-            ("⌨", "Terminal", "terminal",             PURPLE),
-            ("★", "AIRA",     "aria_voice.py",         NEON2),
-            ("☠", "Dark Web", "dark_web_monitor.py",   RED),
-            ("◉", "Ghost",    "ghost_mode.py",         CYAN),
-            ("🔥", "Firewall", "firewall.py",           RED),
-            ("🌐", "VPN",      "vpn_engine.py",         GREEN),
-            ("◫", "Store",    "app_store.py",          "#00AAFF"),
-            ("♫", "Music",    "music_player.py",       "#FF44AA"),
-            ("✦", "Settings", "settings.py",           "#CCCCFF"),
-        ]
-        for icon, name, script, color in docked:
-            f = tk.Frame(bottom, bg=BG2, cursor="hand2", padx=2)
-            f.pack(side="left", padx=6, pady=4)
-            li = tk.Label(f, text=icon, font=("Courier", 13, "bold"),
-                          bg=BG2, fg=color)
-            li.pack()
-            ln = tk.Label(f, text=name, font=("Courier", 5),
-                          bg=BG2, fg=DIM)
-            ln.pack()
-            for w in [f, li, ln]:
-                w.bind("<Button-1>", lambda e, s=script: self.launch(s))
-                w.bind("<Enter>", lambda e, fi=f:
-                       [fi.config(bg=PURPLE3)] +
-                       [c.config(bg=PURPLE3) for c in fi.winfo_children()])
-                w.bind("<Leave>", lambda e, fi=f:
-                       [fi.config(bg=BG2)] +
-                       [c.config(bg=BG2) for c in fi.winfo_children()])
-        tk.Label(bottom, text="Two minds. One OS. Built Different. 🇰🇪",
-                 font=("Courier", 7), bg=BG2, fg=PURPLE2).pack(side="right", padx=10)
-
-    def _setup_shortcuts(self):
-        self.root.bind("<F5>", lambda e: self._render_apps())
-        self.root.bind("<F1>", lambda e: self._show_help())
-        self.root.bind("<Control-q>", lambda e: self.root.destroy())
-        self.root.bind("<Escape>", lambda e: (
-            self._clear_search(), self.search_entry.focus_set()))
+    def _focus_search(self):
+        try:self.search_entry.focus_set()
+        except:pass
 
     def _show_help(self):
-        self._add_notification("Help",
-            "F1:Help  F5:Refresh  ESC:Search  Ctrl+Q:Quit", CYAN)
+        w=tk.Toplevel(self.root);w.title("Help");w.configure(bg=BG);w.geometry("400x300")
+        tk.Label(w,text="BrayoOS v5.0 Shortcuts",font=("Courier",12,"bold"),bg=BG,fg=NEON).pack(pady=10)
+        for key,desc in [("F1","Show this help"),("F5","Refresh app grid"),
+                         ("ESC","Focus search bar"),("Ctrl+Q","Quit BrayoOS"),
+                         ("Click app","Launch application")]:
+            f=tk.Frame(w,bg=BG3);f.pack(fill="x",padx=20,pady=2)
+            tk.Label(f,text=key,font=("Courier",9,"bold"),bg=BG3,fg=NEON,width=12).pack(side="left",padx=8,pady=4)
+            tk.Label(f,text=desc,font=("Courier",9),bg=BG3,fg=WHITE).pack(side="left")
 
-    def _make_app_card(self, parent, icon, name, script, color, row, col):
-        gf = tk.Frame(parent, bg=color, padx=1, pady=1)
-        gf.grid(row=row, column=col, padx=5, pady=5)
-        card = tk.Frame(gf, bg=BG3, width=95, height=82, cursor="hand2")
-        card.pack()
-        card.pack_propagate(False)
-        il = tk.Label(card, text=icon, font=("Courier", 17, "bold"),
-                      bg=BG3, fg=color)
-        il.pack(expand=True, pady=(8,2))
-        nl = tk.Label(card, text=name, font=("Courier", 6),
-                      bg=BG3, fg=WHITE)
+    def _build(self):
+        # TOP BAR
+        top=tk.Frame(self.root,bg=BG2,height=40)
+        top.pack(fill="x",side="top");top.pack_propagate(False)
+        tk.Label(top,text="◈ BrayoOS",font=("Courier",13,"bold"),bg=BG2,fg=NEON).pack(side="left",padx=8)
+        tk.Label(top,text="v5.0",font=("Courier",9),bg=BG2,fg=DIM).pack(side="left")
+        tk.Label(top,text="| Kenya 🇰🇪 | Built by Brayo & AIRA",font=("Courier",8),bg=BG2,fg=PURPLE2).pack(side="left",padx=8)
+        # Right side top bar
+        self.clock_top=tk.Label(top,text="",font=("Courier",10),bg=BG2,fg=NEON)
+        self.clock_top.pack(side="right",padx=8)
+        tk.Button(top,text="🔔",font=("Arial",11),bg=BG2,fg=WHITE,relief="flat",
+                 command=self.notif.toggle).pack(side="right",padx=4)
+        self.pulse_lbl=tk.Label(top,text="⬤ AIRA",font=("Courier",9,"bold"),bg=BG2,fg=PURPLE)
+        self.pulse_lbl.pack(side="right",padx=8)
+        tk.Label(top,text="F1:Help  F5:Refresh  ESC:Search  Ctrl+Q:Quit",
+                font=("Courier",7),bg=BG2,fg=PURPLE3).pack(side="right",padx=10)
+        tk.Frame(self.root,bg=PURPLE,height=2).pack(fill="x")
+
+        # WIDGET BAR
+        self.wb=WidgetBar(self.root,self.root)
+        self.wb.set_launches(self.stats.get("launches",0))
+
+        # SEARCH BAR
+        sf=tk.Frame(self.root,bg=BG);sf.pack(fill="x",padx=10,pady=4)
+        tk.Label(sf,text="🔍",font=("Courier",11),bg=BG,fg=PURPLE).pack(side="left",padx=5)
+        self.search_var=tk.StringVar()
+        self.search_var.trace("w",lambda *a:self._on_search())
+        self.search_entry=tk.Entry(sf,textvariable=self.search_var,
+                                   font=("Courier",10),bg=BG3,fg=WHITE,
+                                   insertbackground=NEON,relief="flat")
+        self.search_entry.pack(side="left",fill="x",expand=True,ipady=6,ipadx=8)
+        tk.Label(sf,text="Type to search apps...",font=("Courier",7),bg=BG,fg=DIM).pack(side="right",padx=8)
+        tk.Frame(self.root,bg=PURPLE3,height=1).pack(fill="x")
+
+        # CATEGORY BAR
+        catbar=tk.Frame(self.root,bg=BG,height=34)
+        catbar.pack(fill="x");catbar.pack_propagate(False)
+        self.cat_btns={}
+        for cat in CATS:
+            b=tk.Button(catbar,text=cat,font=("Courier",8,"bold"),
+                       bg=BG,fg=DIM,relief="flat",padx=10,pady=5,
+                       activebackground=PURPLE3,activeforeground=NEON,
+                       command=lambda c=cat:self.switch_cat(c))
+            b.pack(side="left",padx=1)
+            self.cat_btns[cat]=b
+        self.cat_btns["ALL"].config(bg=PURPLE3,fg=NEON)
+        tk.Frame(self.root,bg=PURPLE3,height=1).pack(fill="x")
+
+        # MAIN AREA
+        main=tk.Frame(self.root,bg=BG);main.pack(fill="both",expand=True)
+        self._build_sidebar(main)
+        self._build_grid(main)
+        self._build_dock()
+
+        # Start loops
+        threading.Thread(target=self._pulse_loop,daemon=True).start()
+        threading.Thread(target=self._clock_loop,daemon=True).start()
+        self.notif.add("BrayoOS v5.0","System booted successfully",GREEN)
+        self.notif.add("AIRA","AI partner online. Ready Brayo!",NEON)
+        self.notif.add("Security","All 63 apps loaded",CYAN)
+
+    def _build_sidebar(self,parent):
+        side=tk.Frame(parent,bg=BG2,width=155)
+        side.pack(side="left",fill="y");side.pack_propagate(False)
+
+        # AIRA card
+        ac=tk.Frame(side,bg=BG3,highlightbackground=PURPLE,highlightthickness=1)
+        ac.pack(fill="x",padx=6,pady=8)
+        tk.Label(ac,text="AIRA",font=("Courier",16,"bold"),bg=BG3,fg=NEON).pack(pady=(8,2))
+        tk.Label(ac,text="AI PARTNER v5.0",font=("Courier",6),bg=BG3,fg=PURPLE).pack()
+        tk.Frame(ac,bg=PURPLE,height=1).pack(fill="x",padx=10,pady=5)
+        self.aira_msg=tk.Label(ac,text="Ready, Brayo.",font=("Courier",8),
+                               bg=BG3,fg=WHITE,wraplength=140,justify="center")
+        self.aira_msg.pack(pady=(2,8))
+
+        # AIRA quick chat
+        tk.Label(side,text="◈ QUICK CHAT",font=("Courier",7,"bold"),bg=BG2,fg=PURPLE).pack(padx=6,anchor="w",pady=(0,2))
+        self.chat_entry=tk.Entry(side,font=("Courier",8),bg=BG3,fg=WHITE,
+                                insertbackground=NEON,relief="flat")
+        self.chat_entry.pack(fill="x",padx=6,ipady=4)
+        self.chat_entry.bind("<Return>",lambda e:self._quick_chat())
+        tk.Button(side,text="Ask AIRA →",font=("Courier",7),bg=PURPLE3,fg=NEON,
+                 relief="flat",command=self._quick_chat).pack(fill="x",padx=6,pady=2)
+
+        # Recent apps
+        tk.Frame(side,bg=PURPLE3,height=1).pack(fill="x",padx=6,pady=6)
+        tk.Label(side,text="◈ RECENT APPS",font=("Courier",7,"bold"),bg=BG2,fg=PURPLE).pack(padx=6,anchor="w",pady=(0,2))
+        self.recent_frame=tk.Frame(side,bg=BG2);self.recent_frame.pack(fill="x",padx=4)
+
+        # Quick launch
+        tk.Frame(side,bg=PURPLE3,height=1).pack(fill="x",padx=6,pady=6)
+        tk.Label(side,text="◈ QUICK LAUNCH",font=("Courier",7,"bold"),bg=BG2,fg=PURPLE).pack(padx=6,anchor="w",pady=(0,2))
+        quick=[("★","AIRA","aria_voice.py",NEON2),("◉","Ghost","ghost_mode.py",CYAN),
+               ("☠","Dark Web","dark_web_monitor.py",RED),("🔍","OSINT","osint_suite.py",NEON),
+               ("🌐","VPN","vpn_engine.py",GREEN)]
+        for icon,name,script,color in quick:
+            f=tk.Frame(side,bg=BG3,cursor="hand2");f.pack(fill="x",padx=6,pady=1)
+            tk.Label(f,text=icon,font=("Courier",10),bg=BG3,fg=color,width=3).pack(side="left",padx=5,pady=3)
+            tk.Label(f,text=name,font=("Courier",7),bg=BG3,fg=WHITE).pack(side="left")
+            for w in [f]+f.winfo_children():
+                w.bind("<Button-1>",lambda e,s=script:self.launch(s))
+                w.bind("<Enter>",lambda e,x=f:x.config(bg=PURPLE3))
+                w.bind("<Leave>",lambda e,x=f:x.config(bg=BG3))
+
+        # Stats
+        tk.Frame(side,bg=PURPLE3,height=1).pack(fill="x",padx=6,pady=6)
+        tk.Label(side,text=f"◈ {len(APPS)} APPS",font=("Courier",7,"bold"),bg=BG2,fg=PURPLE).pack(padx=6,anchor="w")
+        tk.Label(side,text="GPL-3.0 License",font=("Courier",6),bg=BG2,fg=DIM).pack(padx=6,anchor="w")
+        tk.Label(side,text="© 2026 Brayo 🇰🇪",font=("Courier",6),bg=BG2,fg=DIM).pack(padx=6,anchor="w",pady=(0,6))
+
+    def _build_grid(self,parent):
+        right=tk.Frame(parent,bg=BG);right.pack(side="left",fill="both",expand=True)
+        self.canvas=tk.Canvas(right,bg=BG,highlightthickness=0)
+        sb=tk.Scrollbar(right,orient="vertical",command=self.canvas.yview,
+                       bg=BG2,troughcolor=BG,width=8)
+        self.canvas.configure(yscrollcommand=sb.set)
+        sb.pack(side="right",fill="y")
+        self.canvas.pack(side="left",fill="both",expand=True)
+        self.grid_frame=tk.Frame(self.canvas,bg=BG)
+        self.grid_win=self.canvas.create_window((0,0),window=self.grid_frame,anchor="nw")
+        self.grid_frame.bind("<Configure>",lambda e:self.canvas.configure(
+            scrollregion=self.canvas.bbox("all")))
+        self.canvas.bind("<Configure>",lambda e:self.canvas.itemconfig(
+            self.grid_win,width=e.width))
+        self.canvas.bind("<MouseWheel>",lambda e:self.canvas.yview_scroll(-1*(e.delta//120),"units"))
+        self.canvas.bind("<Button-4>",lambda e:self.canvas.yview_scroll(-1,"units"))
+        self.canvas.bind("<Button-5>",lambda e:self.canvas.yview_scroll(1,"units"))
+        self.render_apps("ALL")
+
+    def _make_card(self,parent,icon,name,script,color,row,col):
+        gf=tk.Frame(parent,bg=color,padx=1,pady=1)
+        gf.grid(row=row,column=col,padx=5,pady=5,sticky="nsew")
+        card=tk.Frame(gf,bg=BG3,width=105,height=88,cursor="hand2")
+        card.pack();card.pack_propagate(False)
+        il=tk.Label(card,text=icon,font=("Courier",18,"bold"),bg=BG3,fg=color)
+        il.pack(expand=True,pady=(10,2))
+        nl=tk.Label(card,text=name[:10],font=("Courier",7),bg=BG3,fg=WHITE)
         nl.pack(pady=(0,6))
-        def on_enter(e):
-            gf.config(bg=NEON, padx=2, pady=2)
-            card.config(bg=PURPLE3)
-            il.config(bg=PURPLE3)
-            nl.config(bg=PURPLE3, fg=NEON)
-        def on_leave(e):
-            gf.config(bg=color, padx=1, pady=1)
-            card.config(bg=BG3)
-            il.config(bg=BG3)
-            nl.config(bg=BG3, fg=WHITE)
-        def on_click(e):
+        def enter(e):
+            gf.config(bg=NEON,padx=2,pady=2)
+            for w in [card,il,nl]:w.config(bg=PURPLE4)
+            nl.config(fg=NEON)
+        def leave(e):
+            gf.config(bg=color,padx=1,pady=1)
+            for w in [card,il,nl]:w.config(bg=BG3)
+            nl.config(fg=WHITE)
+        def click(e):
+            gf.config(bg=WHITE)
+            self.root.after(100,lambda:gf.config(bg=color))
             self.launch(script)
-            gf.config(bg="#FFFFFF")
-            self.root.after(100, lambda: gf.config(bg=color))
-        for w in [gf, card, il, nl]:
-            w.bind("<Enter>", on_enter)
-            w.bind("<Leave>", on_leave)
-            w.bind("<Button-1>", on_click)
+        for w in [gf,card,il,nl]:
+            w.bind("<Enter>",enter)
+            w.bind("<Leave>",leave)
+            w.bind("<Button-1>",click)
 
-    def _render_apps(self):
-        for w in self.grid_frame.winfo_children():
-            w.destroy()
-        q = self.search_query
-        cat = self.current_cat
-        if q:
-            apps = [a for a in APPS if q in a[1].lower() or q in a[2].lower()]
-        elif cat == "ALL":
-            apps = APPS
+    def render_apps(self,cat,query=""):
+        for w in self.grid_frame.winfo_children():w.destroy()
+        if query:
+            apps=[a for a in APPS if query.lower() in a[1].lower() or query.lower() in a[2].lower()]
+        elif cat=="ALL" or CATS[cat] is None:
+            apps=APPS
         else:
-            apps = [a for a in APPS if a[2] in (CATS[cat] or [])]
-        cols = 5
-        for i, (icon, name, script, color) in enumerate(apps):
-            r, c = divmod(i, cols)
-            self._make_app_card(self.grid_frame, icon, name, script, color, r, c)
-        if not apps:
-            tk.Label(self.grid_frame, text=f'No apps matching "{q}"',
-                     font=("Courier", 10), bg=BG, fg=DIM).grid(
-                     row=0, column=0, padx=20, pady=40)
+            apps=[a for a in APPS if a[2] in CATS[cat]]
+        cols=5
+        for c in range(cols):
+            self.grid_frame.columnconfigure(c,weight=1)
+        for i,(icon,name,script,color) in enumerate(apps):
+            r,c=divmod(i,cols)
+            self._make_card(self.grid_frame,icon,name,script,color,r,c)
+
+    def switch_cat(self,cat):
+        self.cat=cat
+        self.search_var.set("")
+        for c,b in self.cat_btns.items():b.config(bg=BG,fg=DIM)
+        self.cat_btns[cat].config(bg=PURPLE3,fg=NEON)
+        self.render_apps(cat)
+
+    def _on_search(self):
+        q=self.search_var.get()
+        self.render_apps(self.cat,query=q)
+
+    def launch(self,script):
+        if script=="terminal":
+            subprocess.Popen(["x-terminal-emulator"],env={**os.environ,"DISPLAY":":1"})
+            return
+        path=os.path.join(APPS_DIR,script)
+        if os.path.exists(path):
+            subprocess.Popen(["python3",path],env={**os.environ,"DISPLAY":":1"})
+            self.aira_msg.config(text=f"Launching\n{script.replace('.py','')}...")
+            self.wb.set_aira(f"Opening {script.replace('.py','')}")
+            self.root.after(2500,lambda:self.aira_msg.config(text="Ready, Brayo."))
+            self.root.after(2500,lambda:self.wb.set_aira("Watching over you"))
+            # Stats
+            self.stats["launches"]=self.stats.get("launches",0)+1
+            most=self.stats.get("most_used",{})
+            most[script]=most.get(script,0)+1
+            self.stats["most_used"]=most
+            save_stats(self.stats)
+            self.wb.set_launches(self.stats["launches"])
+            self.notif.add("App Launched",script.replace(".py",""),NEON)
+            # Recent apps
+            name=next((a[1] for a in APPS if a[2]==script),"App")
+            icon=next((a[0] for a in APPS if a[2]==script),"▪")
+            color=next((a[3] for a in APPS if a[2]==script),NEON)
+            if script not in [r[2] for r in getattr(self,"recent",[])] :
+                if not hasattr(self,"recent"):self.recent=[]
+                self.recent.insert(0,(icon,name,script,color))
+                self.recent=self.recent[:4]
+                self._render_recent()
+        else:
+            self.aira_msg.config(text=f"Not found:\n{script[:20]}")
+            self.root.after(2000,lambda:self.aira_msg.config(text="Ready, Brayo."))
 
     def _render_recent(self):
-        for w in self.recent_frame.winfo_children():
-            w.destroy()
-        if not self.recent_apps:
-            tk.Label(self.recent_frame, text="None yet",
-                     font=("Courier", 6), bg=BG2, fg=DIM).pack()
-            return
-        for icon, name, script, color in self.recent_apps[-4:][::-1]:
-            f = tk.Frame(self.recent_frame, bg=BG3, cursor="hand2")
-            f.pack(fill="x", pady=1)
-            tk.Label(f, text=icon, font=("Courier", 9),
-                     bg=BG3, fg=color, width=3).pack(side="left", padx=3, pady=2)
-            tk.Label(f, text=name, font=("Courier", 7),
-                     bg=BG3, fg=WHITE).pack(side="left")
-            for w in [f] + list(f.winfo_children()):
-                w.bind("<Button-1>", lambda e, s=script: self.launch(s))
-                w.bind("<Enter>", lambda e, fi=f: fi.config(bg=PURPLE3))
-                w.bind("<Leave>", lambda e, fi=f: fi.config(bg=BG3))
+        for w in self.recent_frame.winfo_children():w.destroy()
+        for icon,name,script,color in getattr(self,"recent",[]):
+            f=tk.Frame(self.recent_frame,bg=BG3,cursor="hand2")
+            f.pack(fill="x",pady=1)
+            tk.Label(f,text=icon,font=("Courier",9),bg=BG3,fg=color,width=3).pack(side="left",padx=4,pady=3)
+            tk.Label(f,text=name[:12],font=("Courier",7),bg=BG3,fg=WHITE).pack(side="left")
+            for w in [f]+f.winfo_children():
+                w.bind("<Button-1>",lambda e,s=script:self.launch(s))
+                w.bind("<Enter>",lambda e,x=f:x.config(bg=PURPLE3))
+                w.bind("<Leave>",lambda e,x=f:x.config(bg=BG3))
 
-    def launch(self, script):
-        env = os.environ.copy()
-        env["DISPLAY"] = ":1"
-        app_info = next((a for a in APPS if a[2] == script), None)
-        if app_info and app_info not in self.recent_apps:
-            self.recent_apps.append(app_info)
-            if len(self.recent_apps) > 4:
-                self.recent_apps.pop(0)
-            self._render_recent()
-        self.launch_count += 1
-        self.w_launches.config(text=f"{self.launch_count} launches")
-        self._save_launches()
-        self._add_notification("Launch", f"Opening {script[:20]}", PURPLE)
-        try:
-            if script == "terminal":
-                subprocess.Popen(["x-terminal-emulator"], env=env)
-            else:
-                path = os.path.expanduser(f"~/BrayoOS/core/apps/{script}")
-                if os.path.exists(path):
-                    subprocess.Popen(["python3", path], env=env)
-                    self.aira_msg.config(
-                        text=f"Launching\n{script.replace('.py','')}...")
-                    self.root.after(2000, lambda:
-                        self.aira_msg.config(text="Ready, Brayo."))
-                else:
-                    self.aira_msg.config(text=f"Not found:\n{script[:18]}")
-        except Exception as ex:
-            self.aira_msg.config(text=f"Error:\n{str(ex)[:25]}")
-
-    def _add_notification(self, title, msg, color=NEON):
-        ts = datetime.now().strftime("%H:%M")
-        self.notifications.insert(0, {"title": title, "msg": msg,
-                                       "color": color, "time": ts})
-        self.notif_badge.config(text=str(len(self.notifications)))
-        if self.notif_visible:
-            self._render_notifications()
-
-    def _toggle_notifications(self):
-        if self.notif_visible:
-            self.notif_panel.pack_forget()
-            self.notif_visible = False
-        else:
-            self.notif_panel.pack(side="right", fill="y")
-            self.notif_visible = True
-            self._render_notifications()
-
-    def _render_notifications(self):
-        for w in self.notif_list.winfo_children():
-            w.destroy()
-        for n in self.notifications[:10]:
-            card = tk.Frame(self.notif_list, bg=BG3, pady=1)
-            card.pack(fill="x", pady=2)
-            tk.Frame(card, bg=n["color"], width=3).pack(side="left", fill="y")
-            ct = tk.Frame(card, bg=BG3)
-            ct.pack(side="left", fill="x", expand=True, padx=5, pady=3)
-            tk.Label(ct, text=n["title"], font=("Courier", 7, "bold"),
-                     bg=BG3, fg=n["color"]).pack(anchor="w")
-            tk.Label(ct, text=n["msg"], font=("Courier", 6),
-                     bg=BG3, fg=WHITE, wraplength=160,
-                     justify="left").pack(anchor="w")
-            tk.Label(card, text=n["time"], font=("Courier", 6),
-                     bg=BG3, fg=DIM).pack(side="right", padx=3, anchor="n", pady=3)
-
-    def _clear_notifications(self):
-        self.notifications = []
-        self.notif_badge.config(text="0")
-        self._render_notifications()
-
-    def _aria_input_focus(self):
-        if self.aria_input.get() == "Ask ARIA...":
-            self.aria_input.delete(0, tk.END)
-
-    def _aria_chat(self):
-        msg = self.aria_input.get().strip()
-        if not msg or msg == "Ask ARIA...":
-            return
-        self.aria_input.delete(0, tk.END)
-        self.aira_msg.config(text="Thinking...")
-        self.aria_chat_history.append({"role":"user","content":msg})
-        threading.Thread(target=self._call_claude, daemon=True).start()
-
-    def _call_claude(self):
-        try:
-            payload = json.dumps({
-                "model": "claude-sonnet-4-20250514",
-                "max_tokens": 120,
-                "system": ("You are ARIA, Brayo's AI partner on BrayoOS, "
-                           "a custom OS built in Kenya. Be brief, sharp, supportive. "
-                           "Max 2 sentences."),
-                "messages": self.aria_chat_history[-6:]
-            }).encode()
-            req = urllib.request.Request(
-                "https://api.anthropic.com/v1/messages",
-                data=payload,
-                headers={
-                    "Content-Type": "application/json",
-                    "anthropic-version": "2023-06-01",
-                    "x-api-key": "YOUR_API_KEY_HERE"
-                }
-            )
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                data = json.loads(resp.read())
-                reply = data["content"][0]["text"]
-        except Exception as ex:
-            reply = f"Offline: {str(ex)[:30]}"
-        self.aria_chat_history.append({"role":"assistant","content":reply})
-        self.root.after(0, lambda: self.aira_msg.config(text=reply[:80]))
-
-    def _switch_cat(self, cat):
-        self.current_cat = cat
-        self.search_var.set("")
-        self.search_query = ""
-        for c, b in self.cat_btns.items():
-            b.config(bg=BG, fg=DIM)
-        self.cat_btns[cat].config(bg=PURPLE3, fg=NEON)
-        self._render_apps()
-
-    def _clock_tick(self):
-        now = datetime.now()
-        self.clock_lbl.config(text=now.strftime("%H:%M:%S"))
-        self.w_clock.config(text=now.strftime("%H:%M:%S"))
-        self.w_date.config(text=now.strftime("%a %d %b %Y"))
-        elapsed = now - self.session_start
-        mins, secs = divmod(int(elapsed.total_seconds()), 60)
-        hrs, mins = divmod(mins, 60)
-        t = f"{hrs:02}:{mins:02}:{secs:02}" if hrs else f"{mins:02}:{secs:02}"
-        self.w_uptime.config(text=t)
-        self._update_battery()
-        self.root.after(1000, self._clock_tick)
-
-    def _update_battery(self):
-        try:
-            r = subprocess.run(["termux-battery-status"],
-                               capture_output=True, text=True, timeout=2)
-            if r.returncode == 0:
-                d = json.loads(r.stdout)
-                pct = d.get("percentage", 0)
-                status = d.get("status", "")
-                color = GREEN if pct > 50 else AMBER if pct > 20 else RED
-                self.w_bat.config(
-                    text=f"{pct}%{'⚡' if status=='CHARGING' else ''}",
-                    fg=color)
-                self.w_bat_bar.delete("all")
-                self.w_bat_bar.create_rectangle(0,0,90,7,fill=BG2,outline="")
-                self.w_bat_bar.create_rectangle(0,0,int(pct*0.9),7,
-                                                fill=color,outline="")
+    def _quick_chat(self):
+        msg=self.chat_entry.get().strip()
+        if not msg:return
+        self.chat_entry.delete(0,"end")
+        self.aira_msg.config(text=f"Thinking...")
+        # Check local commands
+        msg_lower=msg.lower()
+        app_map={
+            "ghost":("ghost_mode.py","Ghost Mode"),
+            "vault":("dna_vault.py","DNA Vault"),
+            "dark web":("dark_web_monitor.py","Dark Web"),
+            "osint":("osint_suite.py","OSINT"),
+            "vpn":("vpn_engine.py","VPN"),
+            "aira":("aria_voice.py","AIRA"),
+            "hack":("hack_terminal.py","Hack Terminal"),
+            "firewall":("firewall.py","Firewall"),
+            "cloud":("brayos_cloud.py","Cloud"),
+        }
+        for key,(script,name) in app_map.items():
+            if key in msg_lower:
+                self.launch(script)
+                self.aira_msg.config(text=f"Opening {name}!")
                 return
+        # Groq
+        threading.Thread(target=self._aira_think,args=(msg,),daemon=True).start()
+
+    def _aira_think(self,msg):
+        groq=os.environ.get("GROQ_API_KEY","")
+        if not groq:
+            self.root.after(0,self.aira_msg.config,{"text":"Set GROQ key\nin ~/.bashrc"})
+            return
+        try:
+            import httpx
+            r=httpx.post("https://api.groq.com/openai/v1/chat/completions",
+                headers={"Authorization":f"Bearer {groq}","Content-Type":"application/json"},
+                json={"model":"llama-3.3-70b-versatile",
+                      "messages":[
+                          {"role":"system","content":"You are AIRA, AI of BrayoOS. Reply in max 15 words."},
+                          {"role":"user","content":msg}],
+                      "max_tokens":50},timeout=8)
+            reply=r.json()["choices"][0]["message"]["content"].strip()
+            self.root.after(0,self.aira_msg.config,{"text":reply[:80]})
         except:
-            pass
-        self.w_bat.config(text="OK", fg=GREEN)
+            self.root.after(0,self.aira_msg.config,{"text":"Offline mode.\nCheck internet."})
+
+    def _build_dock(self):
+        tk.Frame(self.root,bg=PURPLE,height=2).pack(fill="x")
+        dock=tk.Frame(self.root,bg=BG2,height=52)
+        dock.pack(fill="x",side="bottom");dock.pack_propagate(False)
+        docked=[
+            ("⌨","Terminal","terminal",PURPLE),
+            ("★","AIRA","aria_voice.py",NEON2),
+            ("☠","Dark Web","dark_web_monitor.py",RED),
+            ("◉","Ghost","ghost_mode.py",CYAN),
+            ("🔍","OSINT","osint_suite.py",NEON),
+            ("🌐","VPN","vpn_engine.py",GREEN),
+            ("💀","Hack","hack_terminal.py",GREEN),
+            ("☁","Cloud","brayos_cloud.py",CYAN),
+            ("✦","Settings","settings.py","#CCCCFF"),
+        ]
+        for icon,name,script,color in docked:
+            f=tk.Frame(dock,bg=BG2,cursor="hand2",padx=2)
+            f.pack(side="left",padx=8,pady=4)
+            li=tk.Label(f,text=icon,font=("Courier",15,"bold"),bg=BG2,fg=color)
+            li.pack()
+            ln=tk.Label(f,text=name,font=("Courier",6),bg=BG2,fg=DIM)
+            ln.pack()
+            def on_enter(e,fi=f):
+                for w in [fi]+fi.winfo_children():w.config(bg=PURPLE3)
+            def on_leave(e,fi=f):
+                for w in [fi]+fi.winfo_children():w.config(bg=BG2)
+            for w in [f,li,ln]:
+                w.bind("<Button-1>",lambda e,s=script:self.launch(s))
+                w.bind("<Enter>",on_enter)
+                w.bind("<Leave>",on_leave)
+        tk.Label(dock,text="© 2026 Brayo & AIRA 🇰🇪 — Two minds. One OS. Built Different.",
+                font=("Courier",7),bg=BG2,fg=PURPLE3).pack(side="right",padx=12)
 
     def _pulse_loop(self):
-        self.pulse_state = not self.pulse_state
-        c = PURPLE if self.pulse_state else GLOW
-        self.pulse_dot.config(fg=c)
-        self.w_aria_status.config(fg=GREEN if self.pulse_state else GLOW)
-        self.root.after(800, self._pulse_loop)
+        while True:
+            self.pulse_state=not self.pulse_state
+            col=NEON if self.pulse_state else PURPLE2
+            self.root.after(0,self.pulse_lbl.config,{"fg":col})
+            self.root.after(0,self.wb.aira_dot.config,{"fg":GREEN if self.pulse_state else PURPLE2})
+            time.sleep(0.8)
 
-    def _aria_rotate(self):
-        msg = ARIA_MESSAGES[int(time.time() / 5) % len(ARIA_MESSAGES)]
-        self.w_aria_msg.config(text=msg)
-        self.root.after(5000, self._aria_rotate)
+    def _clock_loop(self):
+        while True:
+            now=datetime.now().strftime("%H:%M:%S")
+            self.root.after(0,self.clock_top.config,{"text":now})
+            time.sleep(1)
 
-if __name__ == "__main__":
+if __name__=="__main__":
     BrayoOS()
