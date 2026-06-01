@@ -19,6 +19,16 @@ os.makedirs(MEM_DIR,exist_ok=True)
 # ── APPS v5.0 ──────────────────────────────────────────────────
 APPS=[
     ("★","AIRA AI","aria_voice.py",NEON2),
+    ("🔒","App Lock","app_lock.py","#FF0044"),
+    ("🎓","Flashcards","flashcards.py","#CC44FF"),
+    ("📅","Habits","habit_tracker.py","#44FF88"),
+    ("💱","Currency","currency_converter.py","#FFD700"),
+    ("🍅","Pomodoro","pomodoro.py","#FF4400"),
+    ("📐","Units","unit_converter.py","#44FFFF"),
+    ("⌨️","Typing","typing_test.py","#CC44FF"),
+    ("💰","Budget","budget_manager.py","#FFD700"),
+    ("🎲","Rnd Tools","random_tools.py","#44FF88"),
+
     ("⚡","Code Gen","code_generator.py","#CC44FF"),
     ("🚀","Speed Test","speed_test.py","#44FF88"),
     ("⏰","Alarms","alarm_system.py","#FFD700"),
