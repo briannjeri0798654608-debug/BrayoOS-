@@ -1,0 +1,25 @@
+BrayoOS Surveillance Report — 2026-05-28 10:50:12.088669
+
+[11:08:43] 🎥 Surveillance system ARMED
+[11:09:03] ⚠️ USB device connected
+[11:11:03] ⚠️ USB device connected
+[11:12:13] ⚠️ Bluetooth probe received
+[11:12:33] ⚠️ USB device connected
+[11:14:33] ⚠️ Bluetooth probe received
+[11:14:39] 📸 Photo saved: snap_20260521_111436.jpg
+[11:14:41] 💾 Exported to surveillance_export_20260521.txt
+[11:15:13] ⚠️ Location access requested
+[11:18:24] ⚠️ Network scan detected from 192.168.1.1
+[11:18:27] 📸 Photo saved: snap_20260521_111824.jpg
+[11:19:14] ⚠️ Motion detected near device
+[11:19:16] 📸 Photo saved: snap_20260521_111914.jpg
+[10:50:04] ⚠️ Bluetooth probe received
+[10:50:04] ⚠️ USB device connected
+[10:50:04] ⚠️ Bluetooth probe received
+[10:50:04] 📸 Photo saved: snap_20260521_111436.jpg
+[10:50:04] 💾 Exported to surveillance_export_20260521.txt
+[10:50:04] ⚠️ Location access requested
+[10:50:04] ⚠️ Network scan detected from 192.168.1.1
+[10:50:04] 📸 Photo saved: snap_20260521_111824.jpg
+[10:50:04] ⚠️ Motion detected near device
+[10:50:04] 📸 Photo saved: snap_20260521_111914.jpg

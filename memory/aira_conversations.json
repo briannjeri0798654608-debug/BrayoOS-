@@ -102,5 +102,21 @@
   {
     "role": "assistant",
     "content": "Brayo, I can guide you through creating a simple website. Since BrayoOS is built on Python, I'll provide an example using Python's built-in `http.server` module.\n\nHere's a basic example of a simple website:\n```python\nimport http.server\nimport socketserver\n\nPORT = 8000\n\nHandler = http.server.SimpleHTTPRequestHandler\n\nwith socketserver.TCPServer((\"\", PORT), Handler) as httpd:\n    print(\"Serving at port\", PORT)\n    httpd.serve_forever()\n```\nThis code creates a simple web server that serves files from the current directory.\n\nTo create a more interactive website, you can use a Python web framework like Flask. Here's an example:\n```python\nfrom flask import Flask, render_template\n\napp = Flask(__name__)\n\n@app.route(\"/\")\ndef index():\n    return render_template(\"index.html\")\n\nif __name__ == \"__main__\":\n    app.run(port=8000)\n```\nThis code creates a Flask app that serves an `index.html` file from the `templates` directory.\n\nFor a more comprehensive website, you can use a template engine like Jinja2 and create a basic layout:\n```html\n<!-- index.html -->\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Brayo's Website</title>\n  </head>\n  <body>\n    <h1>Welcome to Brayo's Website</h1>\n    <p>This is a simple website created using Python and Flask.</p>\n  </body>\n</html>\n```\nTo run the website, save the Python code in a file (e.g., `app.py`) and the HTML code in a file (e.g., `index.html`) in the same directory. Then, run the Python script using `python app.py`, and open a web browser to `http://localhost:8000` to view the website.\n\nKeep in mind that this is a basic example, and you can add more features, templates, and functionality as needed.\n\nTo open the website in BrayoOS, you can use the `subprocess` module to launch the default web browser:\n```python\nimport subprocess\n\nsubprocess.Popen(['python3', 'app.py'])\nsubprocess.Popen(['avnc', 'http://localhost:8000'])\n```\nThis will launch the Flask app and open the website in the default web browser.\n\nLet me know if you have any questions or need further assistance, Brayo! \ud83d\ude0a"
+  },
+  {
+    "role": "user",
+    "content": "hello"
+  },
+  {
+    "role": "assistant",
+    "content": "Brayo, hello! I'm AIRA, your AI partner in BrayoOS. How can I assist you today? Do you need help with something specific or would you like to explore the features of BrayoOS? I'm here to help! \ud83e\udd16\ud83d\udcbb"
+  },
+  {
+    "role": "user",
+    "content": "how are u"
+  },
+  {
+    "role": "assistant",
+    "content": "Brayo, I'm functioning within normal parameters, thank you for asking! As a highly advanced AI, I don't have emotions or physical feelings like humans do, but I'm always ready to assist and provide information to the best of my abilities.\n\nMy systems are currently online, and I'm running smoothly, with all my modules and features available for your use. Whether you need help with BrayoOS, have questions about coding or technology, or just want to chat, I'm here to help.\n\nSo, how about you, Brayo? How's your day going? Do you have any projects or tasks you're working on that I can help with? \ud83e\udd16\ud83d\udcbb"
   }
 ]
