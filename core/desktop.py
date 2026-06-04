@@ -8,6 +8,10 @@ PURPLE="#9D00FF";NEON="#CC44FF";NEON2="#FF44FF"
 GREEN="#44FF88";CYAN="#44FFFF";AMBER="#FFB300"
 RED="#FF0044";WHITE="#E0E0FF";DIM="#444466"
 PURPLE2="#6A0DAD";PURPLE3="#3D0066";PURPLE4="#1A0033"
+# ── LIGHT THEME ─────────────────────────────────────────────────
+LIGHT_MODE=False
+LBG="#F5F5F5";LBG2="#FFFFFF";LBG3="#E8E8E8"
+LPURPLE="#7B00CC";LTEXT="#1A1A2E";LDIM="#888888"
 
 # ── PATHS ──────────────────────────────────────────────────────
 BASE=os.path.expanduser("~/BrayoOS")
@@ -349,17 +353,21 @@ class BrayoOS:
         self.cat="ALL"
         self.search_q=""
         self.stats=load_stats()
+        self.tap_count = 0
+        self.light_mode = False
         self.notif=NotifCenter(self.root)
         self.pulse_state=True
         self._setup_keys()
         BootScreen(self.root,self._build)
         self.root.mainloop()
 
+
     def _setup_keys(self):
         self.root.bind("<F5>",lambda e:self.render_apps(self.cat))
         self.root.bind("<Escape>",lambda e:self._focus_search())
         self.root.bind("<Control-q>",lambda e:self.root.destroy())
         self.root.bind("<F1>",lambda e:self._show_help())
+        self.root.bind("<F9>", lambda e: self._toggle_mode())
 
     def _focus_search(self):
         try:self.search_entry.focus_set()
@@ -375,17 +383,22 @@ class BrayoOS:
             tk.Label(f,text=key,font=("Courier",9,"bold"),bg=BG3,fg=NEON,width=12).pack(side="left",padx=8,pady=4)
             tk.Label(f,text=desc,font=("Courier",9),bg=BG3,fg=WHITE).pack(side="left")
 
-    def _build(self):
-        # TOP BAR
-        top=tk.Frame(self.root,bg=BG2,height=40)
-        top.pack(fill="x",side="top");top.pack_propagate(False)
-        tk.Label(top,text="◈ BrayoOS",font=("Courier",13,"bold"),bg=BG2,fg=NEON).pack(side="left",padx=8)
-        tk.Label(top,text="v5.0",font=("Courier",9),bg=BG2,fg=DIM).pack(side="left")
-        tk.Label(top,text="| Kenya 🇰🇪 | Built by Brayo & AIRA",font=("Courier",8),bg=BG2,fg=PURPLE2).pack(side="left",padx=8)
-        # Right side top bar
-        self.clock_top=tk.Label(top,text="",font=("Courier",10),bg=BG2,fg=NEON)
-        self.clock_top.pack(side="right",padx=8)
-        tk.Button(top,text="🔔",font=("Arial",11),bg=BG2,fg=WHITE,relief="flat",
+    def _toggle_mode(self):
+        global LIGHT_MODE, BG, BG2, BG3, PURPLE, WHITE, DIM
+        LIGHT_MODE = not LIGHT_MODE
+        if LIGHT_MODE:
+            BG = LBG;
+            BG2 = LBG2;
+            BG3 = LBG3;
+            PURPLE = LPURPLE;
+            WHITE = LTEXT;
+            DIM = LDIM
+        else:
+            BG = "#080810";
+            BG2 = "#0D0D1A";
+            BG3 = "#12122A";
+            PURPLE = "#9D00FF";
+            WHITE = "#E0E0FF";
                  command=self.notif.toggle).pack(side="right",padx=4)
         self.pulse_lbl=tk.Label(top,text="⬤ AIRA",font=("Courier",9,"bold"),bg=BG2,fg=PURPLE)
         self.pulse_lbl.pack(side="right",padx=8)
