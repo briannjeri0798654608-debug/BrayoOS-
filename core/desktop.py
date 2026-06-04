@@ -249,6 +249,8 @@ class NotifCenter:
 class WidgetBar:
     def __init__(self,parent,root):
         self.root=root
+        self.tap_count = 0
+        self.last_tap = 0
         self.frame=tk.Frame(parent,bg=BG4,height=82)
         self.frame.pack(fill="x")
         self.frame.pack_propagate(False)
@@ -298,7 +300,9 @@ class WidgetBar:
         # Version widget
         vw=self._widget(inner,PURPLE)
         tk.Label(vw,text="VERSION",font=("Courier",7,"bold"),bg=BG3,fg=PURPLE).pack(pady=(4,0))
-        tk.Label(vw,text="v5.0",font=("Courier",14,"bold"),bg=BG3,fg=NEON).pack()
+        self.ver_lbl = tk.Label(vw, text="v5.0", font=("Courier", 14, "bold"), bg=BG3, fg=NEON)
+        self.ver_lbl.pack()
+        self.ver_lbl.bind("<Button-1>", self._ver_tap)
         tk.Label(vw,text="Brayo & AIRA",font=("Courier",6),bg=BG3,fg=DIM).pack(pady=(0,4))
 
         tk.Frame(self.frame,bg=PURPLE3,height=1).pack(fill="x")
@@ -321,6 +325,16 @@ class WidgetBar:
         self.uptime_lbl.config(text=f"{h:02}:{m:02}:{s:02}" if h else f"{m:02}:{s:02}")
         self._get_battery()
         self.root.after(1000,self._tick)
+
+        def _ver_tap(self, e):
+            now = time.time()
+            if now - self.last_tap > 2: self.tap_count = 0
+            self.tap_count += 1
+            self.last_tap = now
+            if self.tap_count >= 5:
+                self.tap_count = 0
+                self.ver_lbl.config(fg="#FF0044")
+                self.root.after(500, lambda: self.ver_lbl.config(fg=NEON))
 
     def _get_battery(self):
         try:
