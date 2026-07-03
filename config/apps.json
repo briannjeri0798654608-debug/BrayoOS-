@@ -1,0 +1,47 @@
+{
+  "visible": [
+    "aria_voice.py",
+    "smart_notes.py",
+    "browser.py",
+    "file_manager.py",
+    "calculator.py",
+    "weather.py",
+    "music_player.py",
+    "tasks.py",
+    "editor.py",
+    "settings.py",
+    "system_dashboard.py",
+    "system_monitor.py",
+    "password_manager.py",
+    "secure_messenger.py",
+    "pomodoro.py",
+    "flashcards.py",
+    "budget_manager.py",
+    "currency_converter.py",
+    "unit_converter.py",
+    "typing_test.py",
+    "alarm_system.py",
+    "qr_generator.py"
+  ],
+
+  "security_lab": [
+    "network_scanner.py",
+    "osint_suite.py",
+    "wifi_auditor.py",
+    "firewall.py",
+    "vpn_engine.py",
+    "hack_terminal.py",
+    "file_encryptor.py",
+    "live_threat_map.py",
+    "wifi_passwords.py"
+  ],
+
+  "hidden": [
+    "lie_detector.py",
+    "signal_interceptor.py",
+    "ip_grabber.py",
+    "dark_web_browser.py",
+    "dark_web_monitor.py",
+    "surveillance.py"
+  ]
+}

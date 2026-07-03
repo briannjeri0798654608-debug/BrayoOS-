@@ -326,15 +326,15 @@ class WidgetBar:
         self._get_battery()
         self.root.after(1000,self._tick)
 
-    def _ver_tap(self, e):
-        now = time.time()
-        if now - self.last_tap > 2: self.tap_count = 0
-        self.tap_count += 1
-        self.last_tap = now
-        if self.tap_count >= 5:
-            self.tap_count = 0
-            self.ver_lbl.config(fg="#FF0044")
-            self.root.after(500, lambda: self.ver_lbl.config(fg=NEON))
+        def _ver_tap(self, e):
+            now = time.time()
+            if now - self.last_tap > 2: self.tap_count = 0
+            self.tap_count += 1
+            self.last_tap = now
+            if self.tap_count >= 5:
+                self.tap_count = 0
+                self.ver_lbl.config(fg="#FF0044")
+                self.root.after(500, lambda: self.ver_lbl.config(fg=NEON))
 
     def _get_battery(self):
         try:
@@ -372,7 +372,7 @@ class BrayoOS:
         self.notif=NotifCenter(self.root)
         self.pulse_state=True
         self._setup_keys()
-        BootScreen(self.root,self._build_ui)
+        BootScreen(self.root,self._setup_keys)
         self.root.mainloop()
 
 
@@ -397,13 +397,18 @@ class BrayoOS:
             tk.Label(f,text=key,font=("Courier",9,"bold"),bg=BG3,fg=NEON,width=12).pack(side="left",padx=8,pady=4)
             tk.Label(f,text=desc,font=("Courier",9),bg=BG3,fg=WHITE).pack(side="left")
 
-    def _build_ui(self):
-        top=tk.Frame(self.root,bg=BG2,height=36)
-        top.pack(fill="x");top.pack_propagate(False)
-        tk.Frame(top,bg=PURPLE,width=4).pack(side="left",fill="y")
-        tk.Label(top,text="◈ BrayoOS v5.1",font=("Courier",11,"bold"),bg=BG2,fg=NEON).pack(side="left",padx=10)
-        self.clock_top=tk.Label(top,text="",font=("Courier",10),bg=BG2,fg=PURPLE)
-        self.clock_top.pack(side="left",padx=10)
+    def _toggle_mode(self):
+        global LIGHT_MODE, BG, BG2, BG3, PURPLE, WHITE, DIM
+        LIGHT_MODE = not LIGHT_MODE
+        if LIGHT_MODE:
+            BG = LBG;
+            BG2 = LBG2;
+            BG3 = LBG3;
+            PURPLE = LPURPLE;
+            WHITE = LTEXT;
+            DIM = LDIM
+        else:
+            pass
         self.pulse_lbl=tk.Label(top,text="⬤ AIRA",font=("Courier",9,"bold"),bg=BG2,fg=PURPLE)
         self.pulse_lbl.pack(side="right",padx=8)
         tk.Label(top,text="F1:Help  F5:Refresh  ESC:Search  Ctrl+Q:Quit",

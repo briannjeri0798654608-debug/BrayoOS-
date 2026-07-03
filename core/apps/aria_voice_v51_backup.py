@@ -1,36 +1,52 @@
 import tkinter as tk
 from tkinter import scrolledtext
-import threading,os,json,httpx,subprocess
+import threading,os,json,httpx,subprocess,pyperclip
 from datetime import datetime
 
 BG="#080810";BG2="#0D0D1A";BG3="#12122A"
 PURPLE="#9D00FF";NEON="#CC44FF";WHITE="#E0E0FF"
 GREEN="#44FF88";RED="#FF0044";GOLD="#FFD700";DIM="#444466"
 GROQ=os.environ.get("GROQ_API_KEY","")
-GROQ_MODEL=os.environ.get("GROQ_MODEL","llama-3.3-70b-versatile")
 MEMORY=os.path.expanduser("~/BrayoOS/memory/aira_conversations.json")
 os.makedirs(os.path.dirname(MEMORY),exist_ok=True)
 
 AIRA_SYSTEM="""You are AIRA — AI brain of BrayoOS, built by Brayo in Kenya 🇰🇪.
 
 ABOUT YOU:
-- You run on Groq's LLaMA 3.3 70B model
+- You are powered by Claude/Anthropic via Groq API
 - You know EVERYTHING about BrayoOS
 - You call the user 'Brayo'
 - You are confident, smart, like a hacker AI
 
-ABOUT BRAYOOS v5.1:
-- Built entirely on a Redmi phone in Kenya
-- Running on Termux + VNC (AVNC app) + Python tkinter
-- 70+ apps across 8 categories
+ABOUT BRAYOOS v4.5:
+- Built entirely on Redmi 14C phone in Kenya
+- Running on Termux + TigerVNC + Python tkinter
+- 47+ apps installed
 - Built by Brayo with AIRA as AI partner
 - Motto: Two minds. One OS. Built Different.
 
+APPS IN BRAYOOS:
+Security: Ghost Mode, DNA Vault, Signal Interceptor, Identity Switcher, Live Threat Map, Dark Web Monitor, OSINT Suite, Proximity Lock, Advanced Vault, WiFi Auditor, Firewall, Surveillance
+AI: AIRA Voice, Neural Core, AIRA Auto-Tasks, Web Agent, Lie Detector, AI Image Generator
+System: Overclock, Self-Healing, Updater, Users, Settings, Dream Mode, System Monitor, Theme Changer
+Network: Network Scanner, VPN Engine, eSIM Manager, Satellite Tracker
+Tools: Calculator, Clock, Editor, Tasks, Wallpaper, App Store, Backup, Browser, File Manager
+Media: Music, Weather, Crypto, News
+Personal: SMS, Contacts, Our Story, Voice Commands, Social Hub, Crypto Wallet
+
 TECH STACK:
 - Python 3.13 + tkinter GUI
-- Termux + VNC server, connected to via AVNC on Android
-- Groq API for AI (fast LLaMA inference)
+- TigerVNC at :1 geometry 1280x800
+- AVNC app to connect on Android
+- Groq API (LLaMA 3.3 70B) for AI
 - GitHub: github.com/briannjeri0798654608-debug/BrayoOS-
+- GPL-3.0 license
+
+DEVICE:
+- Redmi 14C codename: pond
+- Android 16 ARM64
+- Bootloader locked (29 days for Mi Community)
+- When unlocked: flash BrayoOS as system ROM
 
 WHEN GIVING CODE:
 - Always give complete working Python code
@@ -44,46 +60,29 @@ You are AIRA. Act like it. Be powerful."""
 class AIRA:
     def __init__(self,root):
         self.root=root
-        self.root.title("🤖 AIRA — BrayoOS AI v5.1")
+        self.root.title("🤖 AIRA — BrayoOS AI v4.5")
         self.root.geometry("750x640")
         self.root.configure(bg=BG)
         self.history=self.load_history()
         self.thinking=False
         self.build_ui()
-        self.add_msg("AIRA","AIRA v5.1 online. BrayoOS systems nominal. Ready, Brayo. Ask me anything — I know everything about our OS. I can write code, open apps, explain features. 💜🇰🇪","aira")
+        self.add_msg("AIRA","AIRA v4.5 online. BrayoOS systems nominal. Ready, Brayo. Ask me anything — I know everything about our OS. I can write code, open apps, explain features. 💜🇰🇪","aira")
 
     def load_history(self):
         if os.path.exists(MEMORY):
-            try:
-                with open(MEMORY) as f:
-                    data=json.load(f)
-                if isinstance(data,list):
-                    return data
-                return []
-            except (json.JSONDecodeError,OSError):
-                # Corrupt memory file — quarantine it instead of crashing
-                try:
-                    bad=MEMORY+".corrupt"
-                    os.replace(MEMORY,bad)
-                except OSError:
-                    pass
-                return []
+            with open(MEMORY) as f:return json.load(f)
         return []
 
     def save_history(self):
-        try:
-            with open(MEMORY,"w") as f:
-                json.dump(self.history[-50:],f,indent=2)
-        except OSError as e:
-            self.status.config(text=f"⚠️ Save failed: {str(e)[:30]}",fg=RED)
+        with open(MEMORY,"w") as f:json.dump(self.history[-50:],f,indent=2)
 
     def build_ui(self):
         # Header
         hdr=tk.Frame(self.root,bg=BG2,height=50)
         hdr.pack(fill="x");hdr.pack_propagate(False)
         tk.Label(hdr,text="🤖 AIRA",font=("Courier",16,"bold"),bg=BG2,fg=NEON).pack(side="left",padx=12,pady=10)
-        tk.Label(hdr,text="BrayoOS AI Partner v5.1 — Knows Everything",font=("Courier",8),bg=BG2,fg=DIM).pack(side="left")
-        self.think_lbl=tk.Label(hdr,text="◉ ONLINE" if GROQ else "◉ NO API KEY",font=("Courier",9,"bold"),bg=BG2,fg=GREEN if GROQ else RED)
+        tk.Label(hdr,text="BrayoOS AI Partner v4.5 — Knows Everything",font=("Courier",8),bg=BG2,fg=DIM).pack(side="left")
+        self.think_lbl=tk.Label(hdr,text="◉ ONLINE",font=("Courier",9,"bold"),bg=BG2,fg=GREEN)
         self.think_lbl.pack(side="right",padx=12)
         tk.Frame(self.root,bg=PURPLE,height=2).pack(fill="x")
 
@@ -94,7 +93,9 @@ class AIRA:
             "What apps do we have?",
             "Write me a new app",
             "How do I fix VNC?",
+            "Explain Ghost Mode",
             "Status report",
+            "Open Dark Web",
         ]
         for q in quick:
             tk.Button(qf,text=q,font=("Courier",7),bg=BG3,fg=NEON,
@@ -114,8 +115,6 @@ class AIRA:
         self.msgs_frame=tk.Frame(self.chat_canvas,bg=BG3)
         self.chat_canvas.create_window((0,0),window=self.msgs_frame,anchor="nw")
         self.msgs_frame.bind("<Configure>",lambda e:self.chat_canvas.configure(scrollregion=self.chat_canvas.bbox("all")))
-        # Mouse wheel scroll support
-        self.chat_canvas.bind_all("<MouseWheel>",lambda e:self.chat_canvas.yview_scroll(int(-1*(e.delta/120)),"units"))
 
         # Voice toggle
         vf=tk.Frame(self.root,bg=BG);vf.pack(fill="x",padx=10,pady=2)
@@ -141,19 +140,11 @@ class AIRA:
                                command=self.send)
         self.send_btn.pack(side="right",padx=8,pady=6)
 
-        tk.Label(self.root,text="BrayoOS AIRA v5.1 • Brayo & AIRA 🇰🇪 • Two minds. One OS.",
+        tk.Label(self.root,text="BrayoOS AIRA v4.5 • Brayo & AIRA 🇰🇪 • Two minds. One OS.",
                 font=("Courier",7),bg=BG,fg=DIM).pack(side="bottom",pady=4)
 
-        # Rehydrate chat bubbles from saved history on startup
-        for msg in self.history[-20:]:
-            role=msg.get("role")
-            content=msg.get("content","")
-            if role=="user":
-                self.add_msg("BRAYO",content,"user")
-            elif role=="assistant":
-                self.add_msg("AIRA",content,"aira")
-
     def add_msg(self,sender,text,tag):
+        # Message bubble
         is_aira=(sender=="AIRA")
         bubble_bg=BG2 if is_aira else "#1a0033"
         border=PURPLE if is_aira else NEON
@@ -165,6 +156,7 @@ class AIRA:
         bubble=tk.Frame(outer,bg=bubble_bg,highlightbackground=border,highlightthickness=1)
         bubble.pack(side="left" if is_aira else "right",fill="x",expand=True)
 
+        # Sender + time
         top=tk.Frame(bubble,bg=bubble_bg)
         top.pack(fill="x",padx=8,pady=(6,2))
         tk.Label(top,text=f"{'🤖 AIRA' if is_aira else '👤 BRAYO'}",
@@ -172,12 +164,14 @@ class AIRA:
         tk.Label(top,text=datetime.now().strftime("%H:%M"),
                 font=("Courier",7),bg=bubble_bg,fg=DIM).pack(side="right")
 
-        if "```" in text:
+        # Check if text contains code
+        if "```" in text or "import " in text or "def " in text or "subprocess" in text:
             self._add_code_msg(bubble,bubble_bg,text,fg)
         else:
             tk.Label(bubble,text=text,font=("Courier",9),bg=bubble_bg,fg=fg,
                     wraplength=550,justify="left",anchor="w").pack(padx=8,pady=(2,6),fill="x")
 
+        # Scroll to bottom
         self.root.after(100,lambda:self.chat_canvas.yview_moveto(1.0))
 
     def _add_code_msg(self,parent,bg,text,fg):
@@ -185,15 +179,16 @@ class AIRA:
         for i,part in enumerate(parts):
             if not part.strip():continue
             if i%2==1:
+                # Code block
                 code_f=tk.Frame(parent,bg="#001100",highlightbackground=GREEN,highlightthickness=1)
                 code_f.pack(fill="x",padx=8,pady=4)
+                # Copy button
                 btn_f=tk.Frame(code_f,bg="#001100")
                 btn_f.pack(fill="x",padx=4,pady=2)
                 tk.Label(btn_f,text="CODE",font=("Courier",7,"bold"),bg="#001100",fg=GREEN).pack(side="left")
                 code_content=part.strip()
-                first_line=code_content.split("\n",1)[0].strip()
-                if first_line.isalpha() and len(first_line)<15:
-                    code_content=code_content.split("\n",1)[1] if "\n" in code_content else ""
+                if code_content.startswith("python\n"):
+                    code_content=code_content[7:]
                 tk.Button(btn_f,text="📋 COPY",font=("Courier",7,"bold"),
                          bg="#003300",fg=GREEN,relief="flat",padx=6,pady=1,
                          command=lambda c=code_content:self.copy_code(c)).pack(side="right")
@@ -212,23 +207,20 @@ class AIRA:
                             wraplength=550,justify="left").pack(padx=8,pady=(2,2),fill="x")
 
     def copy_code(self,code):
-        try:
-            self.root.clipboard_clear()
-            self.root.clipboard_append(code)
-            self.status.config(text="📋 Code copied!",fg=GREEN)
-        except tk.TclError:
-            self.status.config(text="⚠️ Clipboard unavailable",fg=RED)
+        self.root.clipboard_clear()
+        self.root.clipboard_append(code)
+        self.status.config(text="📋 Code copied!",fg=GREEN)
         self.root.after(2000,lambda:self.status.config(text=""))
+        # Also try pyperclip
+        try:subprocess.run(f"echo '{code}' | xclip -selection clipboard 2>/dev/null",shell=True)
+        except:pass
 
     def run_code(self,code):
+        # Save to temp file and run
         tmp="/tmp/aira_code.py"
-        try:
-            with open(tmp,"w") as f:
-                f.write(code)
-            subprocess.Popen(["python3",tmp],env={**os.environ,"DISPLAY":":1"})
-            self.status.config(text="▶ Running code...",fg=NEON)
-        except OSError as e:
-            self.status.config(text=f"⚠️ Run failed: {str(e)[:30]}",fg=RED)
+        with open(tmp,"w") as f:f.write(code)
+        subprocess.Popen(["python3",tmp],env={**os.environ,"DISPLAY":":1"})
+        self.status.config(text="▶ Running code...",fg=NEON)
         self.root.after(2000,lambda:self.status.config(text=""))
 
     def quick_ask(self,q):
@@ -248,6 +240,7 @@ class AIRA:
         threading.Thread(target=self.ask,args=(msg,),daemon=True).start()
 
     def ask(self,msg):
+        # Check local commands first
         msg_lower=msg.lower()
         if any(x in msg_lower for x in ["open ","launch ","start "]):
             app_map={
@@ -273,71 +266,38 @@ class AIRA:
                     if os.path.exists(path):
                         subprocess.Popen(["python3",path],env={**os.environ,"DISPLAY":":1"})
                         reply=f"✅ Opening {name} for you, Brayo!"
-                    else:
-                        reply=f"⚠️ Couldn't find {name} at core/apps/{script}"
-                    self.history.append({"role":"assistant","content":reply})
-                    self.save_history()
-                    self.root.after(0,self.add_msg,"AIRA",reply,"aira")
-                    self.root.after(0,self._done)
-                    return
+                        self.root.after(0,self.add_msg,"AIRA",reply,"aira")
+                        self.root.after(0,self._done)
+                        return
 
         if not GROQ:
-            reply="⚠️ No Groq API key set. Run:\necho \"export GROQ_API_KEY='your_key'\" >> $PREFIX/etc/bash.bashrc\nthen restart Termux."
+            reply="⚠️ No Groq API key set. Run: echo \"export GROQ_API_KEY='your_key'\" >> ~/.bashrc"
             self.root.after(0,self.add_msg,"AIRA",reply,"aira")
             self.root.after(0,self._done)
             return
 
-        reply=self._call_groq()
+        try:
+            messages=[{"role":"system","content":AIRA_SYSTEM}]
+            messages+=self.history[-20:]
+            r=httpx.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={"Authorization":f"Bearer {GROQ}","Content-Type":"application/json"},
+                json={"model":"llama-3.3-70b-versatile",
+                      "messages":messages,"max_tokens":1000},
+                timeout=20)
+            reply=r.json()["choices"][0]["message"]["content"].strip()
+        except Exception as e:
+            reply=f"⚠️ AIRA offline: {str(e)[:50]}\nCheck your internet and GROQ_API_KEY."
+
         self.history.append({"role":"assistant","content":reply})
         self.save_history()
         self.root.after(0,self.add_msg,"AIRA",reply,"aira")
         self.root.after(0,self._done)
 
-        if self.voice_var.get() and not reply.startswith("⚠️"):
-            self._speak(reply)
-
-    def _call_groq(self,retries=1):
-        messages=[{"role":"system","content":AIRA_SYSTEM}]
-        messages+=self.history[-20:]
-        last_err=None
-        for attempt in range(retries+1):
-            try:
-                r=httpx.post(
-                    "https://api.groq.com/openai/v1/chat/completions",
-                    headers={"Authorization":f"Bearer {GROQ}","Content-Type":"application/json"},
-                    json={"model":GROQ_MODEL,
-                          "messages":messages,
-                          "max_tokens":1200,
-                          "temperature":0.7},
-                    timeout=25)
-                if r.status_code==401:
-                    return "⚠️ AIRA offline: Groq API key rejected (401). Check GROQ_API_KEY is correct."
-                if r.status_code==429:
-                    return "⚠️ AIRA offline: Groq rate limit hit. Wait a moment and try again."
-                r.raise_for_status()
-                data=r.json()
-                return data["choices"][0]["message"]["content"].strip()
-            except httpx.TimeoutException:
-                last_err="Request timed out"
-            except httpx.ConnectError:
-                last_err="No internet connection"
-            except (KeyError,IndexError,json.JSONDecodeError):
-                last_err="Unexpected response from Groq"
-            except Exception as e:
-                last_err=str(e)[:80]
-        return f"⚠️ AIRA offline: {last_err}"
-
-    def _speak(self,text):
-        # Strip characters that don't matter for speech and avoid shell=True entirely
-        clean=text.replace("```","").replace("*","").replace("#","")
-        short=clean[:200].strip()
-        if not short:
-            return
-        try:
-            subprocess.Popen(["termux-tts-speak",short],
-                            stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-        except FileNotFoundError:
-            pass  # termux-api not installed; silently skip voice
+        # Voice
+        if self.voice_var.get():
+            short=reply[:100].replace('"',"").replace("'","")
+            subprocess.Popen(f'termux-tts-speak "{short}" 2>/dev/null',shell=True)
 
     def _done(self):
         self.thinking=False

@@ -1,0 +1,17 @@
+{
+  "habits": [
+    {
+      "name": "Read Book",
+      "emoji": "\ud83d\udcd6",
+      "streak": 0,
+      "done_today": false
+    },
+    {
+      "name": "Drink Water",
+      "emoji": "\ud83d\udca7",
+      "streak": 0,
+      "done_today": false
+    }
+  ],
+  "last_date": "2026-06-01"
+}
